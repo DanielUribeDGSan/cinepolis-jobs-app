@@ -2,6 +2,9 @@ import React from "react";
 import { Appbar } from "react-native-paper";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { SafeAreaView, ScrollView, View, StatusBar } from "react-native";
+import { colors } from "@/app/utils/sizes/constants/colors";
+import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
+import { containers } from "@/app/utils/sizes/constants/containers";
 
 interface LayoutAppBarProps {
   children: React.ReactNode;
@@ -20,22 +23,21 @@ export const LayoutAppBar = ({
   title = "Login",
   onBackPress,
   onMenuPress,
-  backgroundColor = "#05102a",
-  titleColor = "#ffffff",
-  iconColor = "#ffffff",
-  statusBarStyle = "light-content", // "light-content" = texto blanco, "dark-content" = texto oscuro
-  statusBarBackgroundColor = "#05102a",
+  backgroundColor = colors.primary,
+  titleColor = colors.white,
+  iconColor = colors.white,
+  statusBarStyle = "light-content",
+  statusBarBackgroundColor = colors.primary,
 }: LayoutAppBarProps) => {
+  const { width, height } = useGetFontSize();
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-      {/* Configuración de la barra de estado */}
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
       <StatusBar
         barStyle={statusBarStyle}
         backgroundColor={statusBarBackgroundColor}
         translucent={false}
       />
 
-      {/* App Bar usando React Native Paper */}
       <Appbar.Header
         style={{
           backgroundColor: backgroundColor,
@@ -65,10 +67,15 @@ export const LayoutAppBar = ({
         )}
       </Appbar.Header>
 
-      {/* Contenido principal */}
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={{ paddingTop: 30, paddingHorizontal: 20, flex: 1 }}>
+          <View
+            style={{
+              paddingTop: height(containers.topScreen),
+              paddingHorizontal: width(containers.horizontalScreen),
+              flex: 1,
+            }}
+          >
             {children}
           </View>
         </ScrollView>

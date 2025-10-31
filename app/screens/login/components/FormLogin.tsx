@@ -7,12 +7,16 @@ import useFormLogin from "../hooks/useFormLogin";
 import InputEmail from "@/app/ui/components/inputs/InputEmail";
 import InputPassword from "@/app/ui/components/inputs/InputPassword";
 
-import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
+import InputCheckbox from "@/app/ui/components/inputs/InputCheckbox";
+import { router } from "expo-router";
+import LinkButton from "@/app/ui/components/buttons/LinkButton";
+import Button from "@/app/ui/components/buttons/Button";
+import { containers } from "@/app/utils/sizes/constants/containers";
 
 const FormLogin = () => {
-  const { control } = useFormLogin();
-  const { height } = useGetFontSize();
+  const { control, height } = useFormLogin();
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View className="flex-1">
@@ -25,8 +29,29 @@ const FormLogin = () => {
             label="Email"
             containerStyle={{ marginBottom: height("1%") }}
           />
-          <InputPassword name="password" control={control} label="password" />
+          <InputPassword
+            name="password"
+            control={control}
+            label="password"
+            containerStyle={{ marginBottom: height("1%") }}
+          />
         </View>
+        <View className="flex-row justify-between items-center">
+          <InputCheckbox
+            name="remember"
+            control={control}
+            label="Recuérdame"
+            containerStyle={{ marginBottom: height("1%") }}
+          />
+          <LinkButton
+            onPress={() => router.push("/routes/auth/RegisterScreen")}
+            label="¿Olvidaste tu contraseña?"
+          />
+        </View>
+        <Button
+          label="Iniciar sesión"
+          style={{ marginTop: height(containers.topComponent) }}
+        />
       </View>
     </TouchableWithoutFeedback>
   );

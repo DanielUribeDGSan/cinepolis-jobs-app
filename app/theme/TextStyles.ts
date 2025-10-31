@@ -38,12 +38,18 @@ export const TextStyles = StyleSheet.create({
   },
   p: {
     fontSize: wp(fontSizes.p),
-    fontWeight: "normal",
     lineHeight: hp(fontSizes.lineHeightP),
+  },
+  button: {
+    fontSize: wp(fontSizes.button),
+    lineHeight: hp(fontSizes.lineHeightButton),
   },
   small: {
     fontSize: wp(fontSizes.small),
-    fontWeight: "normal",
     lineHeight: hp(fontSizes.lineHeightSmall),
+  },
+  medium: {
+    fontSize: wp(fontSizes.medium),
+    lineHeight: hp(fontSizes.lineHeightMedium),
   },
 });

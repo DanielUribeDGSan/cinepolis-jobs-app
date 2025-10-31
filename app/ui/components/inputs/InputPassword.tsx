@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Control, FieldError } from "react-hook-form";
 import { TextInput } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";

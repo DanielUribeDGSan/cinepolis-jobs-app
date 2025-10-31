@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { TextInput, HelperText, TextInputProps } from "react-native-paper";
 import { Controller, Control, FieldError } from "react-hook-form";
-import { Animated, Easing, StyleProp, ViewStyle } from "react-native";
+import { Animated, StyleProp, ViewStyle } from "react-native";
 import LayoutInput from "../../layouts/LayoutInput";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import useInputBase from "./hooks/useInputBase";
 
 interface InputBaseProps extends Omit<TextInputProps, "error"> {
   name: string;
@@ -42,76 +43,19 @@ const InputBase: React.FC<InputBaseProps> = ({
   containerStyle,
   ...restProps
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const isFirstRender = useRef(true);
-
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const borderScaleAnim = useRef(new Animated.Value(1)).current;
-  const glowAnim = useRef(new Animated.Value(0)).current;
-
-  const responsiveFontSize = fontSize || wp("4%");
-  const responsiveHeight = inputHeight || hp("8%");
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    if (isFocused) {
-      Animated.parallel([
-        Animated.spring(scaleAnim, {
-          toValue: 1.03,
-          friction: 5,
-          tension: 40,
-          useNativeDriver: true,
-        }),
-        Animated.spring(borderScaleAnim, {
-          toValue: 1.05,
-          friction: 6,
-          tension: 50,
-          useNativeDriver: true,
-        }),
-        Animated.timing(glowAnim, {
-          toValue: 1,
-          duration: 300,
-          easing: Easing.out(Easing.cubic),
-          useNativeDriver: true,
-        }),
-      ]).start();
-    } else {
-      Animated.sequence([
-        Animated.timing(scaleAnim, {
-          toValue: 1.08,
-          duration: 100,
-          easing: Easing.out(Easing.back(2)),
-          useNativeDriver: true,
-        }),
-
-        Animated.parallel([
-          Animated.spring(scaleAnim, {
-            toValue: 1,
-            friction: 6,
-            tension: 80,
-            useNativeDriver: true,
-          }),
-          Animated.spring(borderScaleAnim, {
-            toValue: 1,
-            friction: 5,
-            tension: 60,
-            useNativeDriver: true,
-          }),
-          Animated.timing(glowAnim, {
-            toValue: 0,
-            duration: 200,
-            easing: Easing.in(Easing.cubic),
-            useNativeDriver: true,
-          }),
-        ]),
-      ]).start();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFocused]);
+  const {
+    isActive,
+    scaleAnim,
+    borderScaleAnim,
+    responsiveFontSize,
+    responsiveHeight,
+    setIsFocused,
+  } = useInputBase({
+    control,
+    name,
+    inputHeight,
+    fontSize,
+  });
 
   return (
     <>
@@ -130,17 +74,19 @@ const InputBase: React.FC<InputBaseProps> = ({
           >
             <LayoutInput
               backgroundColor={
-                isFocused ? focusedBackgroundColor : backgroundColor
+                isActive ? focusedBackgroundColor : backgroundColor
               }
               borderRadius={borderRadius}
               error={error}
-              borderColor={isFocused ? focusedBorderColor : borderColor}
-              borderWidth={isFocused ? 2 : 0}
+              borderColor={isActive ? focusedBorderColor : borderColor}
+              borderWidth={isActive ? 2 : 0}
             >
               <TextInput
                 {...restProps}
                 value={value}
-                onChangeText={onChange}
+                onChangeText={(text) => {
+                  onChange(text);
+                }}
                 onBlur={(e) => {
                   setIsFocused(false);
                   onBlur();

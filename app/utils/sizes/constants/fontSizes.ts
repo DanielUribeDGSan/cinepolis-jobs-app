@@ -13,6 +13,10 @@ export const fontSizes = {
   lineHeightH6: "1.5%",
   p: "5%",
   lineHeightP: "2.5%",
+  button: "5%",
+  lineHeightButton: "2.5%",
+  medium: "4%",
+  lineHeightMedium: "2%",
   small: "3%",
   lineHeightSmall: "1.5%",
 };
@@ -25,6 +29,10 @@ export const spacesSizes = {
   rightSection: "3%",
   horizontalSection: "3%",
   verticalSection: "3%",
+  borderRadiusButton: "1%",
+  paddingButton: "1%",
+  heightButton: "8%",
+  widthButton: "1%",
 };
 
 export type SpacesSizesKey = keyof typeof spacesSizes;
