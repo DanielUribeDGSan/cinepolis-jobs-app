@@ -8,7 +8,7 @@ import {
   View,
   Text,
 } from "react-native";
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { TextStyles } from "@/app/theme/TextStyles";
 
@@ -32,7 +32,7 @@ const InputCheckbox: React.FC<InputCheckboxProps> = ({
   label,
   disabled = false,
   backgroundColor = colors.primary,
-  borderRadius = wp("1%"),
+  borderRadius = hp("0.5%"),
   checkedColor = colors.primary,
   uncheckedColor = colors.primary,
   containerStyle,
@@ -40,19 +40,19 @@ const InputCheckbox: React.FC<InputCheckboxProps> = ({
 }) => {
   const sizeConfigs = {
     small: {
-      padding: wp("2%"),
+      padding: hp("1%"),
       checkboxScale: 0.8,
-      containerSize: wp("5%"),
+      containerSize: hp("2.5%"),
     },
     medium: {
-      padding: wp("2.5%"),
+      padding: hp("2.5%"),
       checkboxScale: 0.9,
-      containerSize: wp("7%"),
+      containerSize: hp("7%"),
     },
     large: {
-      padding: wp("3%"),
+      padding: hp("3%"),
       checkboxScale: 1,
-      containerSize: wp("8%"),
+      containerSize: hp("8%"),
     },
   };
 

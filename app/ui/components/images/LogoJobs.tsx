@@ -16,7 +16,7 @@ interface LogoJobsProps {
 }
 
 const LogoJobs = ({
-  width = wp("70%"),
+  width = wp("60%"),
   height = hp("10%"),
   imageSource = require("@/assets/images/logos/logo-black.png"),
   className,

@@ -1,6 +1,6 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
-import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { SafeAreaView, ScrollView, View, StatusBar } from "react-native";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
@@ -53,7 +53,7 @@ export const LayoutAppBar = ({
           title={title}
           titleStyle={{
             color: titleColor,
-            fontSize: wp("5%"),
+            fontSize: hp("2.5%"),
             fontWeight: "600",
           }}
         />

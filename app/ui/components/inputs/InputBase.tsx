@@ -3,10 +3,7 @@ import { TextInput, HelperText, TextInputProps } from "react-native-paper";
 import { Controller, Control, FieldError } from "react-hook-form";
 import { Animated, StyleProp, ViewStyle } from "react-native";
 import LayoutInput from "../../layouts/LayoutInput";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import useInputBase from "./hooks/useInputBase";
 
 interface InputBaseProps extends Omit<TextInputProps, "error"> {
@@ -132,7 +129,7 @@ const InputBase: React.FC<InputBaseProps> = ({
           visible={!!error}
           style={{
             marginBottom: hp("1.5%"),
-            fontSize: wp("3.5%"),
+            fontSize: hp("3.5%"),
           }}
         >
           {error.message}

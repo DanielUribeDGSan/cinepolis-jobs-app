@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useWatch, Control } from "react-hook-form";
 import { Animated, Easing } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 interface UseInputBaseProps {
   control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -27,8 +24,8 @@ const useInputBase = ({
   const borderScaleAnim = useMemo(() => new Animated.Value(1), []);
   const glowAnim = useMemo(() => new Animated.Value(0), []);
 
-  const responsiveFontSize = fontSize || wp("4%");
-  const responsiveHeight = inputHeight || hp("8%");
+  const responsiveFontSize = fontSize || hp("2%");
+  const responsiveHeight = inputHeight || hp("7%");
 
   const watchedValue = useWatch({ control, name });
   const hasContent = useMemo(() => {
