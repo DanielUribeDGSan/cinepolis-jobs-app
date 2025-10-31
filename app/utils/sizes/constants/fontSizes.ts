@@ -17,4 +17,15 @@ export const fontSizes = {
   lineHeightSmall: "1.5%",
 };
 
+export const spacesSizes = {
+  bottomTitle: "3%",
+  bottomSection: "3%",
+  topSection: "3%",
+  leftSection: "3%",
+  rightSection: "3%",
+  horizontalSection: "3%",
+  verticalSection: "3%",
+};
+
+export type SpacesSizesKey = keyof typeof spacesSizes;
 export type FontSizeKey = keyof typeof fontSizes;

@@ -4,19 +4,9 @@ import { TextInput } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import InputBase from "./InputBase";
+import { InputsProps } from "./types/InputsProps";
 
-interface InputPasswordProps {
-  name: string;
-  control: Control<any>;
-  label: string;
-  placeholder?: string;
-  error?: FieldError;
-  backgroundColor?: string;
-  borderRadius?: number;
-  disabled?: boolean;
-}
-
-const InputPassword: React.FC<InputPasswordProps> = ({
+const InputPassword: React.FC<InputsProps> = ({
   name,
   control,
   label,

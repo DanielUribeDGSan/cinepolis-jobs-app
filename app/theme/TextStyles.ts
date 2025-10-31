@@ -2,7 +2,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { fontSizes } from "../utils/font-sizes/constants/fontSizes";
+import { fontSizes } from "../utils/sizes/constants/fontSizes";
 import { StyleSheet } from "react-native";
 
 export const TextStyles = StyleSheet.create({

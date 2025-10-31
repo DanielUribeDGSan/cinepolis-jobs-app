@@ -2,22 +2,9 @@ import React from "react";
 import { Control, FieldError } from "react-hook-form";
 import { TextInput as RNTextInput } from "react-native";
 import InputBase from "./InputBase";
+import { InputsProps } from "./types/InputsProps";
 
-interface InputNumberProps {
-  name: string;
-  control: Control<any>;
-  label: string;
-  placeholder?: string;
-  error?: FieldError;
-  backgroundColor?: string;
-  borderRadius?: number;
-  disabled?: boolean;
-  maxLength?: number;
-  allowDecimals?: boolean;
-  allowNegative?: boolean;
-}
-
-const InputNumber: React.FC<InputNumberProps> = ({
+const InputNumber: React.FC<InputsProps> = ({
   name,
   control,
   label,

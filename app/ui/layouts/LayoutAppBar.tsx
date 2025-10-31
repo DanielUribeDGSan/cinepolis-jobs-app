@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View, StatusBar } from "react-native";
 
 interface LayoutAppBarProps {
   children: React.ReactNode;
@@ -14,6 +14,8 @@ interface LayoutAppBarProps {
   backgroundColor?: string;
   titleColor?: string;
   iconColor?: string;
+  statusBarStyle?: "light-content" | "dark-content" | "default";
+  statusBarBackgroundColor?: string;
 }
 
 export const LayoutAppBar = ({
@@ -24,9 +26,18 @@ export const LayoutAppBar = ({
   backgroundColor = "#05102a",
   titleColor = "#ffffff",
   iconColor = "#ffffff",
+  statusBarStyle = "light-content", // "light-content" = texto blanco, "dark-content" = texto oscuro
+  statusBarBackgroundColor = "#05102a",
 }: LayoutAppBarProps) => {
   return (
     <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+      {/* Configuración de la barra de estado */}
+      <StatusBar
+        barStyle={statusBarStyle}
+        backgroundColor={statusBarBackgroundColor}
+        translucent={false}
+      />
+
       {/* App Bar usando React Native Paper */}
       <Appbar.Header
         style={{

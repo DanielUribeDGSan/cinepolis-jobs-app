@@ -2,19 +2,9 @@ import React from "react";
 import { Control, FieldError } from "react-hook-form";
 import { TextInput as RNTextInput } from "react-native";
 import InputBase from "./InputBase";
+import { InputsProps } from "./types/InputsProps";
 
-interface InputEmailProps {
-  name: string;
-  control: Control<any>;
-  label: string;
-  placeholder?: string;
-  disabled?: boolean;
-  error?: FieldError;
-  backgroundColor?: string;
-  borderRadius?: number;
-}
-
-const InputEmail: React.FC<InputEmailProps> = ({
+const InputEmail: React.FC<InputsProps> = ({
   name,
   control,
   label,

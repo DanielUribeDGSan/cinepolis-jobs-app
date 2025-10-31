@@ -1,24 +1,8 @@
 import React from "react";
-import { Control, FieldError } from "react-hook-form";
 import InputBase from "./InputBase";
+import { InputsProps } from "./types/InputsProps";
 
-interface InputTextProps {
-  name: string;
-  control: Control<any>;
-  label: string;
-  placeholder?: string;
-  secureTextEntry?: boolean;
-  keyboardType?: "default" | "email-address" | "numeric" | "phone-pad";
-  autoCapitalize?: "none" | "sentences" | "words" | "characters";
-  multiline?: boolean;
-  numberOfLines?: number;
-  disabled?: boolean;
-  error?: FieldError;
-  backgroundColor?: string;
-  borderRadius?: number;
-}
-
-const InputText: React.FC<InputTextProps> = ({
+const InputText: React.FC<InputsProps> = ({
   name,
   control,
   label,
