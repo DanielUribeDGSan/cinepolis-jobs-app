@@ -1,0 +1,58 @@
+
+  # Dependencies
+  node_modules/
+  
+  # Build
+  build/
+  dist/
+  *.bundle.js
+  
+  # Platform
+  ios/
+  android/
+  
+  # Generated files
+  coverage/
+  .expo/
+  .expo-shared/
+  
+  # Environment
+  .env
+  .env.local
+  
+  # IDE
+  .vscode/
+  .idea/
+  
+  # OS
+  .DS_Store
+  Thumbs.db
+  ```
+  
+  ### `.eslintignore`
+  ```
+  # Dependencies
+  node_modules/
+  
+  # Build
+  build/
+  dist/
+  *.bundle.js
+  
+  # Platform
+  ios/
+  android/
+  
+  # Generated files
+  coverage/
+  .expo/
+  .expo-shared/
+  
+  # Config files
+  *.config.js
+  babel.config.js
+  metro.config.js
+  
+  # Environment
+  .env
+  .env.local

@@ -3,7 +3,7 @@ import { StyleProp, ViewStyle } from "react-native";
 
 export interface InputsProps {
   name: string;
-  control: Control<any>;
+  control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
   label: string;
   placeholder?: string;
   disabled?: boolean;

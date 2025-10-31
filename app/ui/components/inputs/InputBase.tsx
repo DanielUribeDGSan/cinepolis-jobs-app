@@ -10,7 +10,7 @@ import {
 
 interface InputBaseProps extends Omit<TextInputProps, "error"> {
   name: string;
-  control: Control<any>;
+  control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError;
   backgroundColor?: string;
   borderRadius?: number;
@@ -110,6 +110,7 @@ const InputBase: React.FC<InputBaseProps> = ({
         ]),
       ]).start();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   return (
