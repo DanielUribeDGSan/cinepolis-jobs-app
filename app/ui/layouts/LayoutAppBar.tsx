@@ -1,9 +1,6 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { SafeAreaView, ScrollView, View, StatusBar } from "react-native";
 
 interface LayoutAppBarProps {
