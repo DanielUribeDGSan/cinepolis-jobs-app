@@ -13,6 +13,7 @@ import { router } from "expo-router";
 import LinkButton from "@/app/ui/components/buttons/LinkButton";
 import Button from "@/app/ui/components/buttons/Button";
 import { containers } from "@/app/utils/sizes/constants/containers";
+import { colors } from "@/app/utils/sizes/constants/colors";
 
 const FormLogin = () => {
   const { control, height } = useFormLogin();
@@ -51,6 +52,7 @@ const FormLogin = () => {
         <Button
           label="Iniciar sesión"
           style={{ marginTop: height(containers.topComponent) }}
+          styleText={{ color: colors.white }}
         />
       </View>
     </TouchableWithoutFeedback>

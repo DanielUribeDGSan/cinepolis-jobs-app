@@ -2,6 +2,8 @@ import React from "react";
 import { TextInput as RNTextInput } from "react-native";
 import InputBase from "./InputBase";
 import { InputsProps } from "./types/InputsProps";
+import { colors } from "@/app/utils/sizes/constants/colors";
+import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 
 const InputEmail: React.FC<InputsProps> = ({
   name,
@@ -9,8 +11,8 @@ const InputEmail: React.FC<InputsProps> = ({
   label,
   placeholder = "ejemplo@correo.com",
   error,
-  backgroundColor = "#eceef1",
-  borderRadius = 10,
+  backgroundColor = colors.inputsGray,
+  borderRadius = spacesSizes.borderRadiusButton,
   ...restProps
 }) => {
   const formatEmail = (text: string): string => {

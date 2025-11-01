@@ -3,7 +3,18 @@ const { withNativeWind } = require("nativewind/metro");
 
 const config = getDefaultConfig(__dirname);
 
-// Configurar Expo Router para usar screens/ en lugar de app/
+config.transformer = {
+  ...config.transformer,
+  minifierConfig: {
+    ...config.transformer?.minifierConfig,
+  },
+};
+
+config.resolver = {
+  ...config.resolver,
+  blacklistRE: /node_modules\/.*\/node_modules\/react-native\/.*/,
+};
+
 config.resolver.alias = {
   ...config.resolver.alias,
   app: "./routes",

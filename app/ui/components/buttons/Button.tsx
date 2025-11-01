@@ -4,14 +4,14 @@ import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { StyleProp, Text, TextStyle, TouchableOpacity } from "react-native";
 
 interface ButtonProps {
   label: string;
   className?: string;
   classNameText?: string;
   style?: StyleProps;
-  styleText?: StyleProps;
+  styleText?: StyleProp<TextStyle>;
 }
 const Button: React.FC<ButtonProps> = ({
   label,

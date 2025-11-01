@@ -5,13 +5,15 @@ import { Animated, StyleProp, ViewStyle } from "react-native";
 import LayoutInput from "../../layouts/LayoutInput";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import useInputBase from "./hooks/useInputBase";
+import { colors } from "@/app/utils/sizes/constants/colors";
+import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 
 interface InputBaseProps extends Omit<TextInputProps, "error"> {
   name: string;
   control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
   error?: FieldError;
   backgroundColor?: string;
-  borderRadius?: number;
+  borderRadius?: string;
   focusedBackgroundColor?: string;
   focusedBorderColor?: string;
   borderColor?: string;
@@ -25,10 +27,10 @@ const InputBase: React.FC<InputBaseProps> = ({
   name,
   control,
   error,
-  backgroundColor = "#eceef1",
-  borderRadius = 10,
-  focusedBackgroundColor = "#ffffff",
-  focusedBorderColor = "#c7cdd6",
+  backgroundColor = colors.inputsGray,
+  borderRadius = spacesSizes.borderRadiusButton,
+  focusedBackgroundColor = colors.white,
+  focusedBorderColor = colors.borderColor,
   borderColor = "transparent",
   mode = "flat",
   style,

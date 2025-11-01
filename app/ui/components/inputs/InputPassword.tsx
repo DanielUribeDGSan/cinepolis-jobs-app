@@ -4,6 +4,8 @@ import { TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import InputBase from "./InputBase";
 import { InputsProps } from "./types/InputsProps";
+import { colors } from "@/app/utils/sizes/constants/colors";
+import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 
 const InputPassword: React.FC<InputsProps> = ({
   name,
@@ -11,8 +13,8 @@ const InputPassword: React.FC<InputsProps> = ({
   label,
   placeholder = "Ingresa tu contraseña",
   error,
-  backgroundColor = "#eceef1",
-  borderRadius = 10,
+  backgroundColor = colors.inputsGray,
+  borderRadius = spacesSizes.borderRadiusButton,
   disabled = false,
   ...restProps
 }) => {

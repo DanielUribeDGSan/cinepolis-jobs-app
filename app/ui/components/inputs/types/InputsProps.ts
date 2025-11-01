@@ -9,7 +9,7 @@ export interface InputsProps {
   disabled?: boolean;
   error?: FieldError;
   backgroundColor?: string;
-  borderRadius?: number;
+  borderRadius?: string;
   className?: string;
   maxLength?: number;
   allowDecimals?: boolean;

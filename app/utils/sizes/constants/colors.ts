@@ -11,4 +11,5 @@ export const colors = {
   darkGray: "#a9a9a9",
   veryDarkGray: "#808080",
   veryLightGray: "#d3d3d3",
+  borderColor: "#c7cdd6",
 };

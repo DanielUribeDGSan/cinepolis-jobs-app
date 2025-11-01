@@ -15,7 +15,7 @@ export const fontSizes = {
   lineHeightP: "2.5%",
   button: "2%",
   lineHeightButton: "2.5%",
-  medium: "2%",
+  medium: "1.7%",
   lineHeightMedium: "2%",
   small: "3%",
   lineHeightSmall: "1.5%",
@@ -31,7 +31,7 @@ export const spacesSizes = {
   verticalSection: "3%",
   borderRadiusButton: "1%",
   paddingButton: "1%",
-  heightButton: "8%",
+  heightButton: "7%",
   widthButton: "1%",
 };
 

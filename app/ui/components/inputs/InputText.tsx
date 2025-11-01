@@ -1,6 +1,8 @@
 import React from "react";
 import InputBase from "./InputBase";
 import { InputsProps } from "./types/InputsProps";
+import { colors } from "@/app/utils/sizes/constants/colors";
+import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 
 const InputText: React.FC<InputsProps> = ({
   name,
@@ -14,8 +16,8 @@ const InputText: React.FC<InputsProps> = ({
   numberOfLines = 1,
   disabled = false,
   error,
-  backgroundColor = "#eceef1",
-  borderRadius = 10,
+  backgroundColor = colors.inputsGray,
+  borderRadius = spacesSizes.borderRadiusButton,
   ...restProps
 }) => {
   return (
