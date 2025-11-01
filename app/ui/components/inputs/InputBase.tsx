@@ -1,9 +1,8 @@
 import React from "react";
-import { TextInput, HelperText, TextInputProps } from "react-native-paper";
+import { TextInput, TextInputProps } from "react-native-paper";
 import { Controller, Control, FieldError } from "react-hook-form";
 import { Animated, StyleProp, ViewStyle } from "react-native";
 import LayoutInput from "../../layouts/LayoutInput";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import useInputBase from "./hooks/useInputBase";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
@@ -27,6 +26,7 @@ const InputBase: React.FC<InputBaseProps> = ({
   name,
   control,
   error,
+  label,
   backgroundColor = colors.inputsGray,
   borderRadius = spacesSizes.borderRadiusButton,
   focusedBackgroundColor = colors.white,
@@ -56,88 +56,85 @@ const InputBase: React.FC<InputBaseProps> = ({
     fontSize,
   });
 
+  const getBorderColor = () => {
+    if (error) return colors.error;
+    if (isActive) return focusedBorderColor;
+    return borderColor;
+  };
+
+  const getLabel = () => {
+    if (error) return error.message;
+    return label;
+  };
+
   return (
-    <>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Animated.View
-            className={className ?? ""}
-            style={{
-              transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
-              ...(containerStyle && typeof containerStyle === "object"
-                ? containerStyle
-                : {}),
-            }}
+    <Controller
+      control={control}
+      name={name}
+      render={({ field: { onChange, onBlur, value } }) => (
+        <Animated.View
+          className={className ?? ""}
+          style={{
+            transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
+            ...(containerStyle && typeof containerStyle === "object"
+              ? containerStyle
+              : {}),
+          }}
+        >
+          <LayoutInput
+            backgroundColor={
+              isActive ? focusedBackgroundColor : backgroundColor
+            }
+            borderRadius={borderRadius}
+            error={error}
+            borderColor={getBorderColor()}
+            borderWidth={error || isActive ? 2 : 0}
           >
-            <LayoutInput
-              backgroundColor={
-                isActive ? focusedBackgroundColor : backgroundColor
-              }
-              borderRadius={borderRadius}
-              error={error}
-              borderColor={isActive ? focusedBorderColor : borderColor}
-              borderWidth={isActive ? 2 : 0}
-            >
-              <TextInput
-                {...restProps}
-                value={value}
-                onChangeText={(text) => {
-                  onChange(text);
-                }}
-                onBlur={(e) => {
-                  setIsFocused(false);
-                  onBlur();
-                  restProps.onBlur?.(e);
-                }}
-                onFocus={(e) => {
-                  setIsFocused(true);
-                  restProps.onFocus?.(e);
-                }}
-                mode={mode}
-                error={!!error}
-                underlineStyle={{
-                  display: "none",
-                  ...(underlineStyle && typeof underlineStyle === "object"
-                    ? underlineStyle
-                    : {}),
-                }}
-                contentStyle={{
+            <TextInput
+              {...restProps}
+              label={getLabel()}
+              value={value}
+              onChangeText={(text) => {
+                onChange(text);
+              }}
+              onBlur={(e) => {
+                setIsFocused(false);
+                onBlur();
+                restProps.onBlur?.(e);
+              }}
+              onFocus={(e) => {
+                setIsFocused(true);
+                restProps.onFocus?.(e);
+              }}
+              mode={mode}
+              error={!!error}
+              underlineStyle={{
+                display: "none",
+                ...(underlineStyle && typeof underlineStyle === "object"
+                  ? underlineStyle
+                  : {}),
+              }}
+              contentStyle={{
+                backgroundColor: "transparent",
+                fontSize: responsiveFontSize,
+                height: responsiveHeight,
+                ...(contentStyle && typeof contentStyle === "object"
+                  ? contentStyle
+                  : {}),
+              }}
+              style={[
+                {
                   backgroundColor: "transparent",
                   fontSize: responsiveFontSize,
                   height: responsiveHeight,
-                  ...(contentStyle && typeof contentStyle === "object"
-                    ? contentStyle
-                    : {}),
-                }}
-                style={[
-                  {
-                    backgroundColor: "transparent",
-                    fontSize: responsiveFontSize,
-                    height: responsiveHeight,
-                  },
-                  style,
-                ]}
-              />
-            </LayoutInput>
-          </Animated.View>
-        )}
-      />
-
-      {error && (
-        <HelperText
-          type="error"
-          visible={!!error}
-          style={{
-            marginBottom: hp("1.5%"),
-            fontSize: hp("3.5%"),
-          }}
-        >
-          {error.message}
-        </HelperText>
+                },
+                style,
+              ]}
+            />
+          </LayoutInput>
+        </Animated.View>
       )}
-    </>
+    />
   );
 };
 

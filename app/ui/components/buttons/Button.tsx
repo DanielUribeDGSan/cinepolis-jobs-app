@@ -12,6 +12,7 @@ interface ButtonProps {
   classNameText?: string;
   style?: StyleProps;
   styleText?: StyleProp<TextStyle>;
+  onPress?: () => void;
 }
 const Button: React.FC<ButtonProps> = ({
   label,
@@ -19,11 +20,13 @@ const Button: React.FC<ButtonProps> = ({
   classNameText,
   style,
   styleText,
+  onPress,
 }) => {
   const { height, width } = useGetFontSize();
   return (
     <TouchableOpacity
       activeOpacity={0.7}
+      onPress={onPress}
       className={`inline-flex bg-theme-2 items-center justify-center ${className ?? ""}`}
       style={[
         {

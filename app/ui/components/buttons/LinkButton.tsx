@@ -2,26 +2,24 @@ import { colors } from "@/app/utils/sizes/constants/colors";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import { TextStyles } from "../../../theme/TextStyles";
-
-interface LinkButtonProps {
-  onPress: () => void;
-  label: string;
-  color?: string;
-  textClassName?: string;
-}
+import { LinkButtonProps } from "./types/LinkButtonProps";
 
 const LinkButton: React.FC<LinkButtonProps> = ({
   onPress,
   label,
   color,
+  outline = true,
   textClassName,
+  fontSize = "medium",
 }) => {
+  const fontSizeStyle = fontSize ? TextStyles[fontSize] : TextStyles.medium;
+
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
       <Text
-        className={`underline ${textClassName || `text-[${colors.secondary}]`}`}
+        className={` ${outline ? "underline" : ""} ${textClassName ?? `text-[${colors.secondary}]`}`}
         style={{
-          ...TextStyles.medium,
+          ...fontSizeStyle,
           ...(color && { color }),
         }}
       >

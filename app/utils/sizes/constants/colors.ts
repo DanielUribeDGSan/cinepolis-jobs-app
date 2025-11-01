@@ -12,4 +12,5 @@ export const colors = {
   veryDarkGray: "#808080",
   veryLightGray: "#d3d3d3",
   borderColor: "#c7cdd6",
+  error: "#ff4c4c",
 };

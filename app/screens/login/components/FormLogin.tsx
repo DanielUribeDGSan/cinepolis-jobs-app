@@ -14,9 +14,10 @@ import LinkButton from "@/app/ui/components/buttons/LinkButton";
 import Button from "@/app/ui/components/buttons/Button";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import TitleAndButton from "@/app/ui/components/utils/TitleAndButton";
 
 const FormLogin = () => {
-  const { control, height } = useFormLogin();
+  const { control, errors, height, handleSubmit, onSubmit } = useFormLogin();
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -29,14 +30,17 @@ const FormLogin = () => {
             control={control}
             label="Email"
             containerStyle={{ marginBottom: height("1%") }}
+            error={errors.email}
           />
           <InputPassword
             name="password"
             control={control}
             label="password"
             containerStyle={{ marginBottom: height("1%") }}
+            error={errors.password}
           />
         </View>
+
         <View className="flex-row justify-between items-center">
           <InputCheckbox
             name="remember"
@@ -47,12 +51,28 @@ const FormLogin = () => {
           <LinkButton
             onPress={() => router.push("/routes/auth/RegisterScreen")}
             label="¿Olvidaste tu contraseña?"
+            color={colors.secondary}
           />
         </View>
+
         <Button
           label="Iniciar sesión"
-          style={{ marginTop: height(containers.topComponent) }}
+          style={{ marginVertical: height(containers.topComponent) }}
           styleText={{ color: colors.white }}
+          onPress={handleSubmit(onSubmit)}
+        />
+
+        <TitleAndButton
+          className="flex-column justify-center items-center"
+          textClassName="font-bold"
+          colorLinkButton={colors.secondary}
+          textClassNameLinkButton="font-bold"
+          title="¿No tienes una cuenta?"
+          onPress={() => router.push("/routes/auth/RegisterScreen")}
+          label="Regístrate"
+          fontSize="p"
+          styleText={{ marginBottom: height(containers.bottomText) }}
+          outline={false}
         />
       </View>
     </TouchableWithoutFeedback>

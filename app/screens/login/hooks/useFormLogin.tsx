@@ -5,9 +5,12 @@ import { SchemaLogin } from "../schemas/SchemaLogin";
 import { LoginForm } from "../types/LoginForm";
 import { defaultValuesLogin } from "../data/defaultValuesLogin";
 import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
+import { useLoginUser } from "./mutate/useLoginUser";
+import { useCallback } from "react";
 
 const useFormLogin = () => {
   const { height } = useGetFontSize();
+  const { mutateAsync: loginUser } = useLoginUser();
   const {
     control,
     handleSubmit,
@@ -18,10 +21,22 @@ const useFormLogin = () => {
     defaultValues: defaultValuesLogin,
   });
 
+  const onSubmit = useCallback(
+    async (data: LoginForm) => {
+      const body = {
+        userName: data.email,
+        password: data.password,
+      };
+      await loginUser(body);
+    },
+    [loginUser]
+  );
+
   return {
     control,
     errors,
     isValid,
+    onSubmit,
     handleSubmit,
     height,
   };

@@ -5,6 +5,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { Provider as PaperProvider } from "react-native-paper";
+import Toast from "react-native-toast-message";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import "../global.css";
@@ -20,6 +22,8 @@ export { ErrorBoundary } from "expo-router";
 export const unstable_settings = {
   initialRouteName: "index",
 };
+
+const queryClient = new QueryClient();
 
 SplashScreen.preventAutoHideAsync();
 
@@ -54,28 +58,31 @@ function RootLayoutNav() {
     colorScheme === "dark" ? navigationDarkTheme : navigationLightTheme;
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <ThemeProvider value={navigationTheme}>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="routes/auth/LoginScreen"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="routes/auth/RegisterScreen"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="routes/home/(tabs)"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="routes/home/modal"
-            options={{ presentation: "modal", headerShown: false }}
-          />
-        </Stack>
-      </ThemeProvider>
-    </PaperProvider>
+    <QueryClientProvider client={queryClient}>
+      <PaperProvider theme={paperTheme}>
+        <ThemeProvider value={navigationTheme}>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="routes/auth/LoginScreen"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="routes/auth/RegisterScreen"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="routes/home/(tabs)"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="routes/home/modal"
+              options={{ presentation: "modal", headerShown: false }}
+            />
+          </Stack>
+        </ThemeProvider>
+        <Toast />
+      </PaperProvider>
+    </QueryClientProvider>
   );
 }
