@@ -1,12 +1,12 @@
 import { ScrollView, Text } from "react-native";
 
-export default function TabHomeScreen() {
+export default function TabProfileScreen() {
   return (
     <ScrollView
       style={{ flex: 1, padding: 1 }}
       className="bg-theme-backgroundScreen"
     >
-      <Text>Hola</Text>
+      <Text>Perfil</Text>
     </ScrollView>
   );
 }

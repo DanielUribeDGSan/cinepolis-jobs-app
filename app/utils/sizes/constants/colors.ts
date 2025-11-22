@@ -13,4 +13,5 @@ export const colors = {
   veryLightGray: "#d3d3d3",
   borderColor: "#c7cdd6",
   error: "#ff4c4c",
+  backgroundScreen: "#f5f5f5",
 };

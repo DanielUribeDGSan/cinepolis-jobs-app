@@ -1,3 +1,4 @@
+import { colors } from "./app/utils/sizes/constants/colors";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -11,10 +12,21 @@ module.exports = {
       colors: {
         // Colores de Cinépolis
         theme: {
-          1: "#05102a",
-          2: "#4781ff",
-          3: "#15274d",
-          4: "#edf2ff",
+          1: colors.primary,
+          2: colors.secondary,
+          3: colors.tertiary,
+          4: colors.quaternary,
+          inputsGray: colors.inputsGray,
+          white: colors.white,
+          black: colors.black,
+          gray: colors.gray,
+          lightGray: colors.lightGray,
+          darkGray: colors.darkGray,
+          veryDarkGray: colors.veryDarkGray,
+          veryLightGray: colors.veryLightGray,
+          borderColor: colors.borderColor,
+          error: colors.error,
+          backgroundScreen: colors.backgroundScreen,
         },
 
         // Grises personalizados
