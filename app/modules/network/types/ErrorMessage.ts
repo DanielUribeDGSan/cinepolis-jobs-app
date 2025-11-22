@@ -3,7 +3,7 @@ export interface ErrorMessage {
   data: {
     success: boolean;
     error: string;
-    dataError: string;
-    data: boolean;
+    dataError: string | null;
+    data: boolean | null;
   };
 }

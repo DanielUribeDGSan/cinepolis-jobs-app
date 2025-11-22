@@ -1,13 +1,8 @@
 import React from "react";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 
-import LogoJobs from "@/app/ui/components/images/LogoJobs";
-
-import useFormLogin from "../hooks/useFormLogin";
 import InputEmail from "@/app/ui/components/inputs/InputEmail";
 import InputPassword from "@/app/ui/components/inputs/InputPassword";
-
-import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import InputCheckbox from "@/app/ui/components/inputs/InputCheckbox";
 import { router } from "expo-router";
 import LinkButton from "@/app/ui/components/buttons/LinkButton";
@@ -15,14 +10,24 @@ import Button from "@/app/ui/components/buttons/Button";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import TitleAndButton from "@/app/ui/components/utils/TitleAndButton";
+import useFormRegister from "../hooks/useFormRegister";
+import { TextStylesTemplates } from "@/app/theme/TextStylesTemplates";
 
-const FormLogin = () => {
-  const { control, errors, height, handleSubmit, onSubmit } = useFormLogin();
+const FormRegister = () => {
+  const { control, errors, height, handleSubmit, onSubmit } = useFormRegister();
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View className="flex-1">
-        <LogoJobs style={{ marginBottom: height(spacesSizes.bottomTitle) }} />
+        <Text
+          className="text-center"
+          style={[
+            { marginVertical: height(containers.bottomComponent) },
+            TextStylesTemplates.h1Primary,
+          ]}
+        >
+          Crear cuenta
+        </Text>
 
         <View>
           <InputEmail
@@ -39,24 +44,31 @@ const FormLogin = () => {
             containerStyle={{ marginBottom: height("1%") }}
             error={errors.password}
           />
+          <InputPassword
+            name="confirmPassword"
+            control={control}
+            label="Confirmar contraseña"
+            containerStyle={{ marginBottom: height("1%") }}
+            error={errors.confirmPassword}
+          />
         </View>
 
         <View className="flex-row justify-between items-center flex-wrap">
           <InputCheckbox
             name="remember"
             control={control}
-            label="Recuérdame"
+            label="Sí, he leído y doy mi consentimiento a los "
             containerStyle={{ marginBottom: height("1%") }}
           />
           <LinkButton
             onPress={() => router.push("/routes/auth/RegisterScreen")}
-            label="¿Olvidaste tu contraseña?"
+            label="Términos y condiciones"
             color={colors.secondary}
           />
         </View>
 
         <Button
-          label="Iniciar sesión"
+          label="Crear una cuenta"
           style={{ marginVertical: height(containers.topComponent) }}
           styleText={{ color: colors.white }}
           onPress={handleSubmit(onSubmit)}
@@ -67,9 +79,9 @@ const FormLogin = () => {
           textClassName="font-bold"
           colorLinkButton={colors.secondary}
           textClassNameLinkButton="font-bold"
-          title="¿No tienes una cuenta?"
-          onPress={() => router.push("/routes/auth/RegisterScreen")}
-          label="Regístrate"
+          title="¿Ya tienes una cuenta?"
+          onPress={() => router.push("/routes/auth/LoginScreen")}
+          label="Inicia sesión"
           fontSize="p"
           styleText={{ marginBottom: height(containers.bottomText) }}
           outline={false}
@@ -79,4 +91,4 @@ const FormLogin = () => {
   );
 };
 
-export default FormLogin;
+export default FormRegister;

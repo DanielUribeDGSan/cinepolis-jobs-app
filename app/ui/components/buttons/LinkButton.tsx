@@ -10,7 +10,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   color,
   outline = true,
   textClassName,
-  fontSize = "medium",
+  fontSize = "p",
 }) => {
   const fontSizeStyle = fontSize ? TextStyles[fontSize] : TextStyles.medium;
 

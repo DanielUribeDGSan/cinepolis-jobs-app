@@ -42,5 +42,6 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
 
   // Mostrar problemas
-  "problems.showCurrentInStatus": true
+  "problems.showCurrentInStatus": true,
+  "java.compile.nullAnalysis.mode": "automatic"
 }

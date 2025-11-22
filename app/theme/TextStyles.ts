@@ -9,7 +9,7 @@ export const TextStyles = StyleSheet.create({
     lineHeight: hp(fontSizes.lineHeightH1),
   },
   h2: {
-    fontSize: hp(fontSizes.p),
+    fontSize: hp(fontSizes.h2),
     fontWeight: "bold",
     lineHeight: hp(fontSizes.lineHeightH2),
   },

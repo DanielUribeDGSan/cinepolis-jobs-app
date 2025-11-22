@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { DataTable } from "react-native-paper";
 
 import {
+  DataTable,
   Card,
   Title,
   Paragraph,
@@ -14,16 +14,12 @@ import {
   List,
   Divider,
   Surface,
-  Text,
 } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TabOneScreen() {
   const [page, setPage] = useState<number>(0);
   const [numberOfItemsPerPageList] = useState([2, 3, 4]);
-  const [itemsPerPage, onItemsPerPageChange] = useState(
-    numberOfItemsPerPageList[0]
-  );
+  const [itemsPerPage, setItemsPerPage] = useState(numberOfItemsPerPageList[0]);
 
   const [items] = useState([
     {
@@ -55,9 +51,10 @@ export default function TabOneScreen() {
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, items.length);
 
-  useEffect(() => {
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
     setPage(0);
-  }, [itemsPerPage]);
+  };
 
   return (
     <ScrollView style={{ flex: 1, padding: 1 }}>
@@ -83,7 +80,7 @@ export default function TabOneScreen() {
           label={`${from + 1}-${to} of ${items.length}`}
           numberOfItemsPerPageList={numberOfItemsPerPageList}
           numberOfItemsPerPage={itemsPerPage}
-          onItemsPerPageChange={onItemsPerPageChange}
+          onItemsPerPageChange={handleItemsPerPageChange}
           showFastPaginationControls
           selectPageDropdownLabel={"Rows per page"}
         />
