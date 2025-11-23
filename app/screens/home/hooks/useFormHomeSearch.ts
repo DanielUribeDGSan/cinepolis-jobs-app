@@ -5,9 +5,12 @@ import { SchemaHomeSearch } from "../schema/SchemaHomeSearch";
 import { useCallback } from "react";
 import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
 import { HomeSearchForm } from "../types/HomeSearchForm";
+import { useGetText } from "@/app/modules/translations/hooks/useGetText";
 
 const useFormHomeSearch = () => {
   const { height } = useGetFontSize();
+  const { text: textSearch } = useGetText({ idResourceCode: 4 });
+  const { text: textButtonSearch } = useGetText({ idResourceCode: 263 });
 
   const {
     control,
@@ -28,6 +31,8 @@ const useFormHomeSearch = () => {
     control,
     errors,
     isValid,
+    textSearch,
+    textButtonSearch,
     onSubmit,
     handleSubmit,
     height,

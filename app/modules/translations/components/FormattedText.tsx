@@ -4,7 +4,7 @@ import { useTranslations } from "../contexts/TranslationsContext";
 
 interface FormattedTextProps extends Omit<TextProps, "children"> {
   idResourceCode: number;
-  pageCode?: string; // Opcional: para buscar en un pageCode específico
+  pageCode?: string;
   styleChildren?: TextStyle;
 }
 

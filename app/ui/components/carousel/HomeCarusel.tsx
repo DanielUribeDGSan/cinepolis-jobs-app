@@ -65,7 +65,7 @@ const OnboardingSlider: React.FC<OnboardingSliderProps> = ({
         ref={carouselRef}
         loop
         width={wp("100%")}
-        height={hp("60%")}
+        height={hp("55%")}
         data={slides}
         scrollAnimationDuration={1000}
         autoPlay={true}
@@ -135,18 +135,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: hp("2%"),
+    paddingBottom: hp("7%"),
   },
   paginationDot: {
-    width: hp("0.5%"),
-    height: hp("0.5%"),
-    borderRadius: hp("0.5%"),
+    width: hp("0.7%"),
+    height: hp("0.7%"),
+    borderRadius: hp("1%"),
     backgroundColor: "rgba(255, 255, 255, 0.3)",
     marginHorizontal: hp("0.5%"),
   },
   paginationDotActive: {
     backgroundColor: "#FFFFFF",
-    width: hp("2%"),
+    width: hp("5%"),
   },
 });
 

@@ -1,6 +1,8 @@
 export const containers = {
-  horizontalScreen: "2%",
+  horizontalScreen: "2.5%",
+  horizontalScreenContent: "1%",
   topScreen: "1%",
+  bottomScreen: "1%",
   bottomText: "1%",
   topSection: "4%",
   topComponent: "3%",

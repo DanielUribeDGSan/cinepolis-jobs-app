@@ -1,5 +1,6 @@
-import { ScrollView, Text } from "react-native";
+import { ScrollView } from "react-native";
 import { useScrollDetection } from "@/app/ui/layouts/tab-layout/hooks/useScrollDetection";
+import LanguageSelector from "@/app/modules/lenguage/components/LanguageSelector";
 
 export default function TabProfileScreen() {
   const { handleScroll } = useScrollDetection();
@@ -13,7 +14,7 @@ export default function TabProfileScreen() {
       keyboardShouldPersistTaps="handled"
       nestedScrollEnabled={true}
     >
-      <Text>Perfil</Text>
+      <LanguageSelector />
     </ScrollView>
   );
 }

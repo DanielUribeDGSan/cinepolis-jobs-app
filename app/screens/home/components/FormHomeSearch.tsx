@@ -4,36 +4,58 @@ import React from "react";
 import useFormHomeSearch from "../hooks/useFormHomeSearch";
 
 import Button from "@/app/ui/components/buttons/Button";
-import { containers } from "@/app/utils/sizes/constants/containers";
 import { colors } from "@/app/utils/sizes/constants/colors";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import BannerInfoVacancies from "./BannerInfoVacancies";
+import { containers } from "@/app/utils/sizes/constants/containers";
 
 const FormHomeSearch = () => {
-  const { control, height, onSubmit, handleSubmit } = useFormHomeSearch();
+  const { control, textSearch, textButtonSearch, onSubmit, handleSubmit } =
+    useFormHomeSearch();
+
   return (
-    <View>
+    <View style={styles.container}>
+      <BannerInfoVacancies />
+
       <InputText
         name="search"
         control={control}
-        label="Search"
+        label={textSearch}
         leftIcon={{ name: "search", size: "2.2%", color: colors.primary }}
+        backgroundColor={colors.inputsGray}
       />
 
       <InputText
         name="location"
         control={control}
-        label="Location"
+        label={textSearch}
         leftIcon={{ name: "map-marker", size: "2.2%", color: colors.primary }}
+        backgroundColor={colors.inputsGray}
       />
 
       <Button
-        label="Buscar"
-        style={{ marginVertical: height(containers.topComponent) }}
+        label={textButtonSearch}
+        style={styles.button}
         styleText={{ color: colors.white }}
         onPress={handleSubmit(onSubmit)}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: hp(containers.horizontalScreen),
+    backgroundColor: colors.white,
+    borderTopRightRadius: hp("3%"),
+    borderTopLeftRadius: hp("3%"),
+    padding: hp("1%"),
+  },
+
+  button: {
+    marginTop: hp("1%"),
+  },
+});
 
 export default FormHomeSearch;
