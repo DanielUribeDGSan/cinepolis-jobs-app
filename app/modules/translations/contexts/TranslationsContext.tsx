@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { useFetchTranslations } from "../hooks/useFetchTranslations";
 import { Translation } from "../types/Translations";
+import { useLanguage } from "../../lenguage/contexts/LanguageContext";
 
 interface TranslationsContextType {
   translations: Translation[];
@@ -34,16 +35,37 @@ const PageCodeTranslations: React.FC<{
   pageCode: string;
   onData: (pageCode: string, translations: Translation[]) => void;
 }> = ({ pageCode, onData }) => {
+  const { currentLanguage } = useLanguage();
   const { data: translations = [] } = useFetchTranslations(pageCode);
   const prevTranslationsRef = useRef<Translation[]>([]);
+  const prevLanguageRef = useRef<string>(currentLanguage);
+
+  // Resetear las traducciones previas cuando cambia el idioma
+  // React Query manejará automáticamente el refetch cuando cambia el query key
+  useEffect(() => {
+    if (prevLanguageRef.current !== currentLanguage) {
+      prevLanguageRef.current = currentLanguage;
+      prevTranslationsRef.current = [];
+    }
+  }, [currentLanguage]);
 
   useEffect(() => {
+    // Solo procesar si hay traducciones
+    if (!translations || translations.length === 0) {
+      return;
+    }
+
     const hasChanged =
+      prevTranslationsRef.current.length === 0 ||
       prevTranslationsRef.current.length !== translations.length ||
-      prevTranslationsRef.current.some(
-        (prev, index) =>
-          prev.idResourceCode !== translations[index]?.idResourceCode
-      );
+      prevTranslationsRef.current.some((prev, index) => {
+        const current = translations[index];
+        return (
+          !current ||
+          prev.idResourceCode !== current.idResourceCode ||
+          prev.text !== current.text
+        );
+      });
 
     if (hasChanged) {
       onData(pageCode, translations);
@@ -122,15 +144,25 @@ export const TranslationsProvider: React.FC<TranslationsProviderProps> = ({
 
   const handlePageData = useCallback(
     (pageCode: string, translations: Translation[]) => {
+      if (!translations || translations.length === 0) {
+        return;
+      }
+
       setTranslationsMap((prev) => {
         const currentTranslations = prev.get(pageCode) || [];
 
+        // Si el mapa está vacío o las traducciones son diferentes, actualizar
         const hasChanged =
+          currentTranslations.length === 0 ||
           currentTranslations.length !== translations.length ||
-          currentTranslations.some(
-            (curr, index) =>
-              curr.idResourceCode !== translations[index]?.idResourceCode
-          );
+          currentTranslations.some((curr, index) => {
+            const newTranslation = translations[index];
+            return (
+              !newTranslation ||
+              curr.idResourceCode !== newTranslation.idResourceCode ||
+              curr.text !== newTranslation.text
+            );
+          });
 
         if (!hasChanged) {
           return prev;
