@@ -6,6 +6,7 @@ import { containers } from "@/app/utils/sizes/constants/containers";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { usePageTranslations } from "@/app/modules/translations/hooks/usePageTranslations";
 import { PAGE_CODES } from "@/app/modules/translations/constants/pageCodes";
+import { View } from "react-native";
 
 // Constante fuera del componente para evitar recreación en cada render
 const HOME_PAGE_CODES = [PAGE_CODES.HOME];
@@ -15,11 +16,22 @@ export default function TabHomeScreen() {
 
   return (
     <LayoutAppBar
-      styleScrollViewContent={{ paddingTop: hp(containers.topScreen) }}
+      styleScrollViewContent={{ paddingTop: 0 }}
+      viewContainerContent={{
+        paddingHorizontal: 0,
+        paddingTop: 0,
+        paddingBottom: hp(containers.bottomComponent),
+      }}
     >
       <LayoutForms>
         <BannerInfoVacancies />
-        <FormHomeSearch />
+        <View
+          style={{
+            paddingHorizontal: hp(containers.horizontalScreen),
+          }}
+        >
+          <FormHomeSearch />
+        </View>
       </LayoutForms>
     </LayoutAppBar>
   );

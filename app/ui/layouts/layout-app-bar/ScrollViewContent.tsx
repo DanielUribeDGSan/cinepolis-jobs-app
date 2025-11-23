@@ -13,6 +13,7 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 interface ScrollViewContentProps {
   children: React.ReactNode;
   styleScrollViewContent?: StyleProps;
+  viewContainerContent?: StyleProps;
   showBottomFooter: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
@@ -20,6 +21,7 @@ interface ScrollViewContentProps {
 export const ScrollViewContent = ({
   children,
   styleScrollViewContent,
+  viewContainerContent,
   showBottomFooter,
   onScroll,
 }: ScrollViewContentProps) => {
@@ -39,12 +41,15 @@ export const ScrollViewContent = ({
       }}
     >
       <View
-        style={{
-          paddingTop: hp(containers.topScreen),
-          paddingHorizontal: hp(containers.horizontalScreen),
-          paddingBottom: showBottomFooter ? hp(containers.bottomFooter) : 0,
-          flex: 1,
-        }}
+        style={[
+          {
+            paddingTop: hp(containers.topScreen),
+            paddingHorizontal: hp(containers.horizontalScreen),
+            paddingBottom: showBottomFooter ? hp(containers.bottomFooter) : 0,
+            flex: 1,
+          },
+          viewContainerContent,
+        ]}
       >
         {children}
       </View>

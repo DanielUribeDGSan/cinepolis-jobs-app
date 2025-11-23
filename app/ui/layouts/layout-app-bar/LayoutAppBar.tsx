@@ -20,6 +20,7 @@ interface LayoutAppBarProps {
   showSafeArea?: boolean;
   styleScrollViewContent?: StyleProps;
   showBottomFooter?: boolean;
+  viewContainerContent?: StyleProps;
   onBackPress?: () => void;
   onMenuPress?: () => void;
 }
@@ -36,6 +37,7 @@ export const LayoutAppBar = ({
   showSafeArea = false,
   showBottomFooter = false,
   styleScrollViewContent,
+  viewContainerContent,
   onBackPress,
   onMenuPress,
 }: LayoutAppBarProps) => {
@@ -86,6 +88,7 @@ export const LayoutAppBar = ({
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
           <ScrollViewContent
             styleScrollViewContent={styleScrollViewContent}
+            viewContainerContent={viewContainerContent}
             showBottomFooter={showBottomFooter}
             onScroll={handleScroll}
           >
@@ -95,6 +98,7 @@ export const LayoutAppBar = ({
       ) : (
         <ScrollViewContent
           styleScrollViewContent={styleScrollViewContent}
+          viewContainerContent={viewContainerContent}
           showBottomFooter={showBottomFooter}
           onScroll={handleScroll}
         >
