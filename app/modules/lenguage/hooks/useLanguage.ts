@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   LanguageCode,
   LanguageStorageService,
@@ -15,12 +15,24 @@ interface UseLanguageReturn {
     name: string;
     flag: string;
   }[];
+  getLanguageCode: () => string;
 }
 
 export const useLanguage = (): UseLanguageReturn => {
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>("esp");
   const [isLoading, setIsLoading] = useState(true);
   const [isStorageAvailable, setIsStorageAvailable] = useState(false);
+
+  const getLanguageCode = useCallback(() => {
+    switch (currentLanguage) {
+      case "esp":
+        return "1";
+      case "en":
+        return "2";
+      case "pt":
+        return "3";
+    }
+  }, [currentLanguage]);
 
   const availableLanguages = [
     {
@@ -90,9 +102,10 @@ export const useLanguage = (): UseLanguageReturn => {
 
   return {
     currentLanguage,
-    changeLanguage,
     isLoading,
     isStorageAvailable,
     availableLanguages,
+    changeLanguage,
+    getLanguageCode,
   };
 };

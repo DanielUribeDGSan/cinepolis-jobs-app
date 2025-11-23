@@ -9,22 +9,42 @@ export const useScrollDetection = () => {
 
   const handleScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const currentScrollY = event.nativeEvent.contentOffset.y;
+      const { contentOffset, contentSize, layoutMeasurement } =
+        event.nativeEvent;
+      const currentScrollY = contentOffset.y;
       const scrollDifference = currentScrollY - lastScrollY.current;
 
-      // Actualizar referencias
       lastScrollY.current = currentScrollY;
       scrollY.current = currentScrollY;
 
-      // Si hay un input enfocado, no cambiar la visibilidad durante el scroll
-      // pero permitir que el scroll funcione normalmente
       if (hasFocusedInput) {
+        return;
+      }
+
+      // Verificar si hay contenido suficiente para hacer scroll
+      const hasScrollableContent =
+        contentSize.height > 0 &&
+        layoutMeasurement.height > 0 &&
+        contentSize.height > layoutMeasurement.height + 10; // 10px de tolerancia
+
+      // Si no hay contenido suficiente para hacer scroll, siempre mostrar el tab bar
+      if (!hasScrollableContent) {
+        setVisible(true);
         return;
       }
 
       // Si estamos en la parte superior (scrollY <= 0), siempre mostrar
       if (currentScrollY <= 0) {
         setVisible(true);
+        return;
+      }
+
+      // Detectar si estamos al final del scroll
+      const isAtBottom =
+        currentScrollY + layoutMeasurement.height >= contentSize.height - 10;
+
+      if (isAtBottom) {
+        setVisible(false);
         return;
       }
 

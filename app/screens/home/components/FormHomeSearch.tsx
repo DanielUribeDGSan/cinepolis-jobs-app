@@ -27,7 +27,7 @@ const FormHomeSearch = () => {
       />
 
       <Button
-        label="Iniciar sesión"
+        label="Buscar"
         style={{ marginVertical: height(containers.topComponent) }}
         styleText={{ color: colors.white }}
         onPress={handleSubmit(onSubmit)}

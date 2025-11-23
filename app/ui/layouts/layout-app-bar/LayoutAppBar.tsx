@@ -1,19 +1,12 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  StatusBar,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-  Keyboard,
-} from "react-native";
+import { SafeAreaView, View, StatusBar } from "react-native";
 import { colors } from "@/app/utils/sizes/constants/colors";
-import { containers } from "@/app/utils/sizes/constants/containers";
+
 import { StyleProps } from "@/app/types/Style";
 import { useScrollDetection } from "@/app/ui/layouts/tab-layout/hooks/useScrollDetection";
+import { ScrollViewContent } from "./ScrollViewContent";
 
 interface LayoutAppBarProps {
   children: React.ReactNode;
@@ -31,46 +24,6 @@ interface LayoutAppBarProps {
   onMenuPress?: () => void;
 }
 
-const ScrollViewContent = ({
-  children,
-  styleScrollViewContent,
-  showBottomFooter,
-  onScroll,
-}: {
-  children: React.ReactNode;
-  styleScrollViewContent?: StyleProps;
-  showBottomFooter: boolean;
-  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-}) => {
-  return (
-    <ScrollView
-      style={[{ flex: 1 }, styleScrollViewContent]}
-      contentContainerStyle={{ flexGrow: 1 }}
-      onScroll={onScroll}
-      scrollEventThrottle={16}
-      keyboardShouldPersistTaps="always"
-      nestedScrollEnabled={true}
-      scrollEnabled={true}
-      showsVerticalScrollIndicator={true}
-      onScrollBeginDrag={() => {
-        // Cerrar el teclado cuando se inicia el scroll
-        Keyboard.dismiss();
-      }}
-    >
-      <View
-        style={{
-          paddingTop: hp(containers.topScreen),
-          paddingHorizontal: hp(containers.horizontalScreen),
-          paddingBottom: showBottomFooter ? hp(containers.bottomFooter) : 0,
-          flex: 1,
-        }}
-      >
-        {children}
-      </View>
-    </ScrollView>
-  );
-};
-
 export const LayoutAppBar = ({
   children,
   title = "Login",
@@ -86,7 +39,6 @@ export const LayoutAppBar = ({
   onBackPress,
   onMenuPress,
 }: LayoutAppBarProps) => {
-  // Usar el hook de scroll (no fallará si el contexto no está disponible)
   const { handleScroll } = useScrollDetection();
 
   return (

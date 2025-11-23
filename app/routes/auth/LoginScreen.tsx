@@ -1,5 +1,5 @@
 import FormLogin from "@/app/screens/login/components/FormLogin";
-import { LayoutAppBar } from "@/app/ui/layouts/LayoutAppBar";
+import { LayoutAppBar } from "@/app/ui/layouts/layout-app-bar/LayoutAppBar";
 
 export default function LoginScreen() {
   return (
