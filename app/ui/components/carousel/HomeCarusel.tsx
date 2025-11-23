@@ -65,7 +65,7 @@ const OnboardingSlider: React.FC<OnboardingSliderProps> = ({
         ref={carouselRef}
         loop
         width={wp("100%")}
-        height={hp("55%")}
+        height={hp("60%")}
         data={slides}
         scrollAnimationDuration={1000}
         autoPlay={true}
