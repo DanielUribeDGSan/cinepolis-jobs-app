@@ -179,6 +179,8 @@ const InputBase: React.FC<InputBaseProps> = ({
                   backgroundColor: "transparent",
                   fontSize: responsiveFontSize,
                   height: responsiveHeight,
+                  fontWeight: "800",
+                  color: colors.primary,
                 },
                 style,
               ]}
