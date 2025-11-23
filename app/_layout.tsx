@@ -17,6 +17,7 @@ import {
   lightTheme,
 } from "./theme";
 import { LanguageProvider } from "./modules/lenguage/contexts/LanguageContext";
+import { TranslationsProvider } from "./modules/translations/contexts/TranslationsContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -61,30 +62,32 @@ function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
-        <PaperProvider theme={paperTheme}>
-          <ThemeProvider value={navigationTheme}>
-            <Stack>
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen
-                name="routes/auth/LoginScreen"
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="routes/auth/RegisterScreen"
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="routes/home/(tabs)"
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="routes/home/modal"
-                options={{ presentation: "modal", headerShown: false }}
-              />
-            </Stack>
-          </ThemeProvider>
-          <Toast />
-        </PaperProvider>
+        <TranslationsProvider>
+          <PaperProvider theme={paperTheme}>
+            <ThemeProvider value={navigationTheme}>
+              <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="routes/auth/LoginScreen"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="routes/auth/RegisterScreen"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="routes/home/(tabs)"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="routes/home/modal"
+                  options={{ presentation: "modal", headerShown: false }}
+                />
+              </Stack>
+            </ThemeProvider>
+            <Toast />
+          </PaperProvider>
+        </TranslationsProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );

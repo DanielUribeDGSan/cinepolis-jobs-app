@@ -11,7 +11,7 @@ export const useFetchTranslations = (pageCode: string) => {
   const idLanguage = getLanguageCode();
 
   return useFetch({
-    key: ["useFetchTranslations", pageCode],
+    key: ["useFetchTranslations", pageCode, idLanguage],
     fetchFn: () =>
       TranslationsService.getTranslations(pageCode, idLanguage).catch(
         async (error: ErrorMessage) => {
@@ -21,6 +21,6 @@ export const useFetchTranslations = (pageCode: string) => {
           });
         }
       ),
-    enabled: true,
+    enabled: !!pageCode && !!idLanguage,
   });
 };
