@@ -1,11 +1,14 @@
 import React from "react";
 import { TextInput, TextInputProps } from "react-native-paper";
 import { Controller, Control, FieldError } from "react-hook-form";
-import { Animated, StyleProp, ViewStyle } from "react-native";
+import { Animated, StyleProp, ViewStyle, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import LayoutInput from "../../layouts/LayoutInput";
 import useInputBase from "./hooks/useInputBase";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { IconConfig } from "./types/InputsProps";
 
 interface InputBaseProps extends Omit<TextInputProps, "error"> {
   name: string;
@@ -20,6 +23,8 @@ interface InputBaseProps extends Omit<TextInputProps, "error"> {
   inputHeight?: number;
   className?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  leftIcon?: IconConfig;
+  rightIcon?: IconConfig;
 }
 
 const InputBase: React.FC<InputBaseProps> = ({
@@ -40,6 +45,8 @@ const InputBase: React.FC<InputBaseProps> = ({
   inputHeight,
   className,
   containerStyle,
+  leftIcon,
+  rightIcon,
   ...restProps
 }) => {
   const {
@@ -65,6 +72,36 @@ const InputBase: React.FC<InputBaseProps> = ({
   const getLabel = () => {
     if (error) return error.message;
     return label;
+  };
+
+  const getIconColor = (iconConfig?: IconConfig) => {
+    if (iconConfig?.color) return iconConfig.color;
+    if (error) return colors.error;
+    return isActive ? focusedBorderColor : "#666";
+  };
+
+  const renderIcon = (iconConfig: IconConfig) => {
+    const IconComponent = (
+      <FontAwesome
+        name={iconConfig.name}
+        size={hp(iconConfig.size ?? "2.2%") || hp("2.2%")}
+        color={getIconColor(iconConfig)}
+      />
+    );
+
+    if (iconConfig.onPress) {
+      return (
+        <TouchableOpacity
+          onPress={iconConfig.onPress}
+          style={{ padding: 5 }}
+          activeOpacity={0.7}
+        >
+          {IconComponent}
+        </TouchableOpacity>
+      );
+    }
+
+    return IconComponent;
   };
 
   return (
@@ -108,6 +145,16 @@ const InputBase: React.FC<InputBaseProps> = ({
               }}
               mode={mode}
               error={!!error}
+              left={
+                leftIcon ? (
+                  <TextInput.Icon icon={() => renderIcon(leftIcon)} />
+                ) : undefined
+              }
+              right={
+                rightIcon ? (
+                  <TextInput.Icon icon={() => renderIcon(rightIcon)} />
+                ) : undefined
+              }
               underlineStyle={{
                 display: "none",
                 ...(underlineStyle && typeof underlineStyle === "object"

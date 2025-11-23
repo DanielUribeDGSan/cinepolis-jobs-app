@@ -1,5 +1,13 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { Control, FieldError } from "react-hook-form";
 import { StyleProp, ViewStyle } from "react-native";
+
+export interface IconConfig {
+  name: React.ComponentProps<typeof FontAwesome>["name"];
+  size?: string;
+  color?: string;
+  onPress?: () => void;
+}
 
 export interface InputsProps {
   name: string;
@@ -21,4 +29,6 @@ export interface InputsProps {
   numberOfLines?: number;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  leftIcon?: IconConfig;
+  rightIcon?: IconConfig;
 }

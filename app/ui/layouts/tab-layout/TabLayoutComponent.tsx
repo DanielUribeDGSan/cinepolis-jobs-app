@@ -5,15 +5,11 @@ import TabBarIcon from "../../icons/TabBarIcon";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-import { useTabLayoutComponent } from "./hooks/useTabLayoutComponent";
-
 export default function TabLayoutComponent() {
-  const { title } = useTabLayoutComponent();
-
   return (
     <>
       <View className="flex-1 bg-white">
-        <HeaderTop title={title} />
+        <HeaderTop />
         <Tabs
           screenOptions={{
             headerShown: false,
@@ -24,7 +20,7 @@ export default function TabLayoutComponent() {
           }}
         >
           <Tabs.Screen
-            name="index"
+            name="TabHomeScreen"
             options={{
               tabBarIcon: ({ color, focused }) => (
                 <TabBarIcon name="home" color={color} focused={focused} />
@@ -60,7 +56,7 @@ export default function TabLayoutComponent() {
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
-    bottom: hp("3.4%"),
+    bottom: hp("3%"),
     left: hp("2%"),
     right: hp("2%"),
     backgroundColor: colors.primary,

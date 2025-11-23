@@ -16,6 +16,7 @@ import {
   darkTheme,
   lightTheme,
 } from "./theme";
+import { LanguageProvider } from "./modules/lenguage/contexts/LanguageContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -59,30 +60,32 @@ function RootLayoutNav() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PaperProvider theme={paperTheme}>
-        <ThemeProvider value={navigationTheme}>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="routes/auth/LoginScreen"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="routes/auth/RegisterScreen"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="routes/home/(tabs)"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="routes/home/modal"
-              options={{ presentation: "modal", headerShown: false }}
-            />
-          </Stack>
-        </ThemeProvider>
-        <Toast />
-      </PaperProvider>
+      <LanguageProvider>
+        <PaperProvider theme={paperTheme}>
+          <ThemeProvider value={navigationTheme}>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="routes/auth/LoginScreen"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="routes/auth/RegisterScreen"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="routes/home/(tabs)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="routes/home/modal"
+                options={{ presentation: "modal", headerShown: false }}
+              />
+            </Stack>
+          </ThemeProvider>
+          <Toast />
+        </PaperProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }

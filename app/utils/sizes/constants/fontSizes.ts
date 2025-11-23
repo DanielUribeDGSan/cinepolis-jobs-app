@@ -1,6 +1,6 @@
 export const fontSizes = {
   h1: "3.5%",
-  lineHeightH1: "3.6%",
+  lineHeightH1: "3.7%",
   h2: "3%",
   lineHeightH2: "3.1%",
   h3: "2.8%",

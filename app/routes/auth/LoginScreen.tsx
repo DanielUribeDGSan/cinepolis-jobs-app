@@ -3,7 +3,7 @@ import { LayoutAppBar } from "@/app/ui/layouts/LayoutAppBar";
 
 export default function LoginScreen() {
   return (
-    <LayoutAppBar title="Login">
+    <LayoutAppBar title="Login" showAppBar={true} showSafeArea={true}>
       <FormLogin />
     </LayoutAppBar>
   );

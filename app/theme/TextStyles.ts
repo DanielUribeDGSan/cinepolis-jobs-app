@@ -5,17 +5,17 @@ import { StyleSheet } from "react-native";
 export const TextStyles = StyleSheet.create({
   h1: {
     fontSize: hp(fontSizes.h1),
-    fontWeight: "bold",
+    fontWeight: "900",
     lineHeight: hp(fontSizes.lineHeightH1),
   },
   h2: {
     fontSize: hp(fontSizes.h2),
-    fontWeight: "bold",
+    fontWeight: "800",
     lineHeight: hp(fontSizes.lineHeightH2),
   },
   h3: {
     fontSize: hp(fontSizes.h3),
-    fontWeight: "bold",
+    fontWeight: "700",
     lineHeight: hp(fontSizes.lineHeightH3),
   },
   h4: {
