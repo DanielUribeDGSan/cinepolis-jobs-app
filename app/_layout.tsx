@@ -19,6 +19,8 @@ import {
 } from "./theme";
 import { LanguageProvider } from "./modules/lenguage/contexts/LanguageContext";
 import { TranslationsProvider } from "./modules/translations/contexts/TranslationsContext";
+import { FullScreenLoaderProvider } from "./ui/loaders/full-screen/FullScreenLoaderContext";
+import FullScreenLoader from "./ui/loaders/full-screen/FullScreenLoader";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -63,32 +65,35 @@ function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
-        <TranslationsProvider>
-          <PaperProvider theme={paperTheme}>
-            <ThemeProvider value={navigationTheme}>
-              <Stack>
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="routes/auth/LoginScreen"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="routes/auth/RegisterScreen"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="routes/home/(tabs)"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="routes/home/modal"
-                  options={{ presentation: "modal", headerShown: false }}
-                />
-              </Stack>
-            </ThemeProvider>
-            <Toast />
-          </PaperProvider>
-        </TranslationsProvider>
+        <FullScreenLoaderProvider>
+          <TranslationsProvider>
+            <PaperProvider theme={paperTheme}>
+              <ThemeProvider value={navigationTheme}>
+                <Stack>
+                  <Stack.Screen name="index" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="routes/auth/LoginScreen"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="routes/auth/RegisterScreen"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="routes/home/(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="routes/home/modal"
+                    options={{ presentation: "modal", headerShown: false }}
+                  />
+                </Stack>
+              </ThemeProvider>
+              <Toast />
+              <FullScreenLoader />
+            </PaperProvider>
+          </TranslationsProvider>
+        </FullScreenLoaderProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );
