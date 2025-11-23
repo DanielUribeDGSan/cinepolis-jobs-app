@@ -9,6 +9,7 @@ import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { IconConfig } from "./types/InputsProps";
+import { useInputFocus } from "@/app/ui/layouts/tab-layout/hooks/useInputFocus";
 
 interface InputBaseProps extends Omit<TextInputProps, "error"> {
   name: string;
@@ -56,12 +57,16 @@ const InputBase: React.FC<InputBaseProps> = ({
     responsiveFontSize,
     responsiveHeight,
     setIsFocused,
+    isFocused,
   } = useInputBase({
     control,
     name,
     inputHeight,
     fontSize,
   });
+
+  // Ocultar tab bar cuando el input está enfocado
+  useInputFocus(isFocused);
 
   const getBorderColor = () => {
     if (error) return colors.error;

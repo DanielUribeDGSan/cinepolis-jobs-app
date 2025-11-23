@@ -1,10 +1,19 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { SafeAreaView, ScrollView, View, StatusBar } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  StatusBar,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  Keyboard,
+} from "react-native";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { StyleProps } from "@/app/types/Style";
+import { useScrollDetection } from "@/app/ui/layouts/tab-layout/hooks/useScrollDetection";
 
 interface LayoutAppBarProps {
   children: React.ReactNode;
@@ -17,6 +26,7 @@ interface LayoutAppBarProps {
   showAppBar?: boolean;
   showSafeArea?: boolean;
   styleScrollViewContent?: StyleProps;
+  showBottomFooter?: boolean;
   onBackPress?: () => void;
   onMenuPress?: () => void;
 }
@@ -24,20 +34,34 @@ interface LayoutAppBarProps {
 const ScrollViewContent = ({
   children,
   styleScrollViewContent,
+  showBottomFooter,
+  onScroll,
 }: {
   children: React.ReactNode;
   styleScrollViewContent?: StyleProps;
+  showBottomFooter: boolean;
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }) => {
   return (
     <ScrollView
       style={[{ flex: 1 }, styleScrollViewContent]}
       contentContainerStyle={{ flexGrow: 1 }}
+      onScroll={onScroll}
+      scrollEventThrottle={16}
+      keyboardShouldPersistTaps="always"
+      nestedScrollEnabled={true}
+      scrollEnabled={true}
+      showsVerticalScrollIndicator={true}
+      onScrollBeginDrag={() => {
+        // Cerrar el teclado cuando se inicia el scroll
+        Keyboard.dismiss();
+      }}
     >
       <View
         style={{
           paddingTop: hp(containers.topScreen),
           paddingHorizontal: hp(containers.horizontalScreen),
-          paddingBottom: hp(containers.bottomFooter),
+          paddingBottom: showBottomFooter ? hp(containers.bottomFooter) : 0,
           flex: 1,
         }}
       >
@@ -57,10 +81,14 @@ export const LayoutAppBar = ({
   statusBarBackgroundColor = colors.primary,
   showAppBar = false,
   showSafeArea = false,
+  showBottomFooter = false,
   styleScrollViewContent,
   onBackPress,
   onMenuPress,
 }: LayoutAppBarProps) => {
+  // Usar el hook de scroll (no fallará si el contexto no está disponible)
+  const { handleScroll } = useScrollDetection();
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       {showAppBar && (
@@ -104,12 +132,20 @@ export const LayoutAppBar = ({
 
       {showSafeArea ? (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-          <ScrollViewContent styleScrollViewContent={styleScrollViewContent}>
+          <ScrollViewContent
+            styleScrollViewContent={styleScrollViewContent}
+            showBottomFooter={showBottomFooter}
+            onScroll={handleScroll}
+          >
             {children}
           </ScrollViewContent>
         </SafeAreaView>
       ) : (
-        <ScrollViewContent styleScrollViewContent={styleScrollViewContent}>
+        <ScrollViewContent
+          styleScrollViewContent={styleScrollViewContent}
+          showBottomFooter={showBottomFooter}
+          onScroll={handleScroll}
+        >
           {children}
         </ScrollViewContent>
       )}

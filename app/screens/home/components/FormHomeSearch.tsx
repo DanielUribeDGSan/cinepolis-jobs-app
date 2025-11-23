@@ -2,15 +2,16 @@ import InputText from "@/app/ui/components/inputs/InputText";
 import React from "react";
 
 import useFormHomeSearch from "../hooks/useFormHomeSearch";
-import LayoutForms from "@/app/ui/layouts/LayoutForms";
+
 import Button from "@/app/ui/components/buttons/Button";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import { View } from "react-native";
 
 const FormHomeSearch = () => {
   const { control, height, onSubmit, handleSubmit } = useFormHomeSearch();
   return (
-    <LayoutForms>
+    <View>
       <InputText
         name="search"
         control={control}
@@ -31,7 +32,7 @@ const FormHomeSearch = () => {
         styleText={{ color: colors.white }}
         onPress={handleSubmit(onSubmit)}
       />
-    </LayoutForms>
+    </View>
   );
 };
 

@@ -1,10 +1,17 @@
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { View, Keyboard, Pressable } from "react-native";
 
 const LayoutForms = ({ children }: { children: React.ReactNode }) => {
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View className="flex-1">{children}</View>
-    </TouchableWithoutFeedback>
+    <Pressable
+      className="flex-1"
+      onPress={() => Keyboard.dismiss()}
+      onStartShouldSetResponder={() => false}
+      onMoveShouldSetResponder={() => false}
+    >
+      <View className="flex-1" pointerEvents="box-none">
+        {children}
+      </View>
+    </Pressable>
   );
 };
 
