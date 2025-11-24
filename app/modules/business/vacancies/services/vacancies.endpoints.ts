@@ -8,4 +8,6 @@ export const VacanciesEndpoints = {
     ciudad: string
   ) =>
     `/V1/Vacancy/SearchVacancy?puesto=${puesto}&sector=${sector}&pais=${pais}&page=${page}&perpage=${perpage}&ciudad=${ciudad}`,
+  getVacancyBySlug: (slug: string) =>
+    `/V1/Vacancy/VacancyDetailForSlug?slug=${slug}`,
 };

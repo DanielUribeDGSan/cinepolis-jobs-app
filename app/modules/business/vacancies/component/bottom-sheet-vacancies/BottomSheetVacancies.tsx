@@ -40,7 +40,6 @@ export const BottomSheetVacancies = ({
       <BottomSheetView style={styles.contentContainer}>
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
           <CardVacancy vacancies={data ?? []} />
-          <CardVacancy vacancies={data ?? []} />
         </ScrollView>
       </BottomSheetView>
     </BottomSheet>

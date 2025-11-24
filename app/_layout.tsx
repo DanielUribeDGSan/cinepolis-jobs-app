@@ -1,4 +1,4 @@
-import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { Provider as PaperProvider } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import "../global.css";
@@ -91,6 +90,10 @@ function RootLayoutNav() {
                     <Stack.Screen
                       name="routes/home/modal"
                       options={{ presentation: "modal", headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="routes/vacancies/DetailVacancyScreen"
+                      options={{ headerShown: false }}
                     />
                   </Stack>
                 </ThemeProvider>

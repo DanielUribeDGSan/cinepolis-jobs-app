@@ -5,6 +5,8 @@ import {
   VacanciesFilter,
   VacanciesResponse,
   Vacancy,
+  VacancyDetail,
+  VacancyDetailResponse,
 } from "../types/Vacancies";
 
 export const VacanciesService = {
@@ -24,6 +26,15 @@ export const VacanciesService = {
         throw error;
       });
 
+    return response.data.data;
+  },
+
+  getVacancyBySlug: async (slug: string): Promise<VacancyDetail> => {
+    const response = await apiClient
+      .get<VacancyDetailResponse>(VacanciesEndpoints.getVacancyBySlug(slug))
+      .catch((error: ErrorMessage) => {
+        throw error;
+      });
     return response.data.data;
   },
 };

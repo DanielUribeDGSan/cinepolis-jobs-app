@@ -25,3 +25,28 @@ export interface VacanciesFilter {
   perpage: number;
   ciudad: string;
 }
+
+export interface VacancyDetail {
+  idVacancy: string;
+  positionTitle: string;
+  positionCode: string;
+  supervisor: string;
+  personResponsible: string;
+  aboutUs: string;
+  imagineThis: string;
+  whatNeed: string;
+  challenge: string;
+  wePropose: string;
+  knowMore: string;
+  deiStatement: string;
+  idCountry: string;
+  country: string;
+  idCity: string;
+  city: string;
+  idSector: string;
+  sector: string;
+}
+
+export interface VacancyDetailResponse extends GeneralResponse<VacancyDetail> {
+  data: VacancyDetail;
+}
