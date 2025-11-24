@@ -51,7 +51,9 @@ const OnboardingSlider: React.FC<OnboardingSliderProps> = ({
           style={styles.backgroundImage}
           contentFit="cover"
           priority="high"
-          cachePolicy="memory-disk"
+          cachePolicy="memory"
+          recyclingKey={item.id.toString()}
+          allowDownscaling={true}
         />
 
         <View style={styles.darkOverlay} />

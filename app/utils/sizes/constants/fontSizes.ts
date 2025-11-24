@@ -19,6 +19,8 @@ export const fontSizes = {
   lineHeightMedium: "2.2%",
   small: "1.9%",
   lineHeightSmall: "2%",
+  verySmall: "1.7%",
+  lineHeightVerySmall: "1.8%",
 };
 
 export const spacesSizes = {

@@ -19,7 +19,7 @@ export const useBottomSheetVacancies = ({
 
   const snapPoints = useMemo(() => {
     const { height: screenHeight } = Dimensions.get("window");
-    return [screenHeight * 0.5, screenHeight * 0.9];
+    return [screenHeight * 0.9];
   }, []);
 
   const index = useMemo(() => (isOpen ? 0 : -1), [isOpen]);

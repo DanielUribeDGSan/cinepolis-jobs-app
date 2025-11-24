@@ -45,6 +45,10 @@ export const TextStyles = StyleSheet.create({
     fontSize: hp(fontSizes.small),
     lineHeight: hp(fontSizes.lineHeightSmall),
   },
+  verySmall: {
+    fontSize: hp(fontSizes.verySmall),
+    lineHeight: hp(fontSizes.lineHeightVerySmall),
+  },
   medium: {
     fontSize: hp(fontSizes.medium),
     lineHeight: hp(fontSizes.lineHeightMedium),

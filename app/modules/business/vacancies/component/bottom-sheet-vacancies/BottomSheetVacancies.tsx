@@ -3,7 +3,10 @@ import React from "react";
 import { useBottomSheetVacancies } from "./hooks/useBottomSheetVacancies";
 import { VacanciesFilter } from "../../types/Vacancies";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
+import { CardVacancy } from "../card-vacancy/CardVacancy";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { containers } from "@/app/utils/sizes/constants/containers";
 
 interface BottomSheetVacanciesProps {
   filters: VacanciesFilter;
@@ -17,7 +20,7 @@ export const BottomSheetVacancies = ({
   onClose,
 }: BottomSheetVacanciesProps) => {
   const {
-    data: _data,
+    data,
     isLoading: _isLoading,
     error: _error,
     bottomSheetRef,
@@ -35,7 +38,10 @@ export const BottomSheetVacancies = ({
       enablePanDownToClose
     >
       <BottomSheetView style={styles.contentContainer}>
-        <Text>Awesome 🎉</Text>
+        <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+          <CardVacancy vacancies={data ?? []} />
+          <CardVacancy vacancies={data ?? []} />
+        </ScrollView>
       </BottomSheetView>
     </BottomSheet>
   );
@@ -44,11 +50,9 @@ export const BottomSheetVacancies = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "grey",
   },
   contentContainer: {
     flex: 1,
-    padding: 36,
-    alignItems: "center",
+    padding: hp(containers.horizontalScreenContent),
   },
 });

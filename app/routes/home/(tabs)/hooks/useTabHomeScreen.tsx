@@ -12,7 +12,7 @@ export const useTabHomeScreen = () => {
     puesto: "",
     sector: "",
     pais: "",
-    page: 1,
+    page: 0,
     perpage: 10,
     ciudad: "",
   });
@@ -44,7 +44,7 @@ export const useTabHomeScreen = () => {
         puesto: data.search ?? "",
         sector: data.search ?? "",
         pais: "",
-        page: 1,
+        page: 0,
         perpage: 10,
         ciudad: "",
       });
