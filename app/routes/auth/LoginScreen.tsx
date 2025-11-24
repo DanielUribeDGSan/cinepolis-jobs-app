@@ -5,7 +5,7 @@ export default function LoginScreen() {
   return (
     <LayoutAppBar
       title="Login"
-      showAppBar={true}
+      showAppBar={false}
       showSafeArea={true}
       showBottomFooter={false}
     >

@@ -5,7 +5,7 @@ export default function RegisterScreen() {
   return (
     <LayoutAppBar
       title="Register"
-      showAppBar={true}
+      showAppBar={false}
       showSafeArea={true}
       showBottomFooter={false}
     >

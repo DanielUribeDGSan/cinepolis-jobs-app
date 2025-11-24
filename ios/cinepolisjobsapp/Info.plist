@@ -58,6 +58,13 @@
           <key>NSIncludesSubdomains</key>
           <true/>
         </dict>
+        <key>cinepolis-jobs-dev.azurewebsites.net</key>
+        <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+        </dict>
         <key>192.168.3.172</key>
         <dict>
           <key>NSExceptionAllowsInsecureHTTPLoads</key>

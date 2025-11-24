@@ -41,9 +41,18 @@ export default {
     experiments: {
       typedRoutes: true,
     },
+    updates: {
+      url: "https://u.expo.dev/04a2da44-2cb7-4c21-a82f-3581b7ebe71b",
+    },
+    runtimeVersion: "1.0.0",
     extra: {
-      apiUrl: process.env.API_URL || "http://192.168.3.172:5186/api",
+      apiUrl:
+        process.env.API_URL ||
+        "https://cinepolis-jobs-dev.azurewebsites.net/api",
       environment: process.env.NODE_ENV || "development",
+      eas: {
+        projectId: "04a2da44-2cb7-4c21-a82f-3581b7ebe71b",
+      },
     },
   },
 };

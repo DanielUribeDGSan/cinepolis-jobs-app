@@ -159,9 +159,7 @@ export const LayoutAppBar = ({
           <SafeAreaView
             edges={["top"]}
             style={{
-              backgroundColor: showAppBar
-                ? statusBarBackgroundColor || colors.primary
-                : colors.white,
+              backgroundColor: colors.primary,
             }}
           />
           <View style={{ flex: 1, backgroundColor: colors.white }}>

@@ -1,4 +1,3 @@
-// app/config/env.ts
 import Constants from "expo-constants";
 
 interface EnvConfig {
@@ -8,7 +7,9 @@ interface EnvConfig {
 
 const getEnvVars = (): EnvConfig => {
   return {
-    apiUrl: Constants.expoConfig?.extra?.apiUrl || "https://localhost:7186/api",
+    apiUrl:
+      Constants.expoConfig?.extra?.apiUrl ||
+      "https://cinepolis-jobs-dev.azurewebsites.net/api",
     environment: Constants.expoConfig?.extra?.environment || "development",
   };
 };
