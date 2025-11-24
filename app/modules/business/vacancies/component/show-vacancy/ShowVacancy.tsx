@@ -4,9 +4,21 @@ import { RenderHTMLShowVacancy } from "../render-html-vacancy/RenderHTMLShowVaca
 import { TextStyles } from "@/app/theme/TextStyles";
 import { View, Text } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { ActivityIndicator } from "react-native-paper";
+import { colors } from "@/app/utils/sizes/constants/colors";
 
 export const ShowVacancy = () => {
-  const { data, isLoading, error } = useShowVacancy();
+  const { data, isLoading } = useShowVacancy();
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        style={{ marginTop: hp("40%") }}
+        size="large"
+        color={colors.primary}
+      />
+    );
+  }
 
   return (
     <View>

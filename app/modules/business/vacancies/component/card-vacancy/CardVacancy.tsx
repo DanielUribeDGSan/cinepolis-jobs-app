@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { Vacancy } from "../../types/Vacancies";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { fontSizes } from "@/app/utils/sizes/constants/fontSizes";
@@ -10,9 +10,20 @@ import { router } from "expo-router";
 
 interface CardVacancyProps {
   vacancies: Vacancy[];
+  isLoading: boolean;
 }
 
-export const CardVacancy = ({ vacancies }: CardVacancyProps) => {
+export const CardVacancy = ({ vacancies, isLoading }: CardVacancyProps) => {
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        style={{ marginTop: hp("40%") }}
+        size="large"
+        color={colors.primary}
+      />
+    );
+  }
+
   return (
     <View className="flex  w-full " style={styles.container}>
       {vacancies.map((vacancy) => (

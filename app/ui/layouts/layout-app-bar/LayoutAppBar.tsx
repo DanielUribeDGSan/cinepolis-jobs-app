@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Appbar } from "react-native-paper";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { SafeAreaView, View, StatusBar } from "react-native";
+import {
+  View,
+  StatusBar,
+  Animated,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "@/app/utils/sizes/constants/colors";
 
 import { StyleProps } from "@/app/types/Style";
 import { useScrollDetection } from "@/app/ui/layouts/tab-layout/hooks/useScrollDetection";
 import { ScrollViewContent } from "./ScrollViewContent";
+import { useHeaderVisibility } from "./hooks/useHeaderVisibility";
 
 interface LayoutAppBarProps {
   children: React.ReactNode;
@@ -41,7 +49,53 @@ export const LayoutAppBar = ({
   onBackPress,
   onMenuPress,
 }: LayoutAppBarProps) => {
-  const { handleScroll } = useScrollDetection();
+  const { handleScroll: handleTabBarScroll } = useScrollDetection();
+  const { isVisible: isHeaderVisible, handleScroll: handleHeaderScroll } =
+    useHeaderVisibility();
+
+  const translateY = useMemo(() => new Animated.Value(0), []);
+  const opacity = useMemo(() => new Animated.Value(1), []);
+
+  useEffect(() => {
+    if (isHeaderVisible) {
+      Animated.parallel([
+        Animated.spring(translateY, {
+          toValue: 0,
+          useNativeDriver: true,
+          tension: 65,
+          friction: 11,
+        }),
+        Animated.spring(opacity, {
+          toValue: 1,
+          useNativeDriver: true,
+          tension: 65,
+          friction: 11,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.spring(translateY, {
+          toValue: -100,
+          useNativeDriver: true,
+          tension: 65,
+          friction: 11,
+        }),
+        Animated.spring(opacity, {
+          toValue: 0,
+          useNativeDriver: true,
+          tension: 65,
+          friction: 11,
+        }),
+      ]).start();
+    }
+  }, [isHeaderVisible, translateY, opacity]);
+
+  const handleCombinedScroll = (
+    event: NativeSyntheticEvent<NativeScrollEvent>
+  ) => {
+    handleTabBarScroll(event);
+    handleHeaderScroll(event);
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
@@ -53,54 +107,82 @@ export const LayoutAppBar = ({
             translucent={false}
           />
 
-          <Appbar.Header
+          <Animated.View
             style={{
-              backgroundColor: backgroundColor,
-              elevation: 0,
-              shadowOpacity: 0,
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              zIndex: 1000,
+              transform: [{ translateY }],
+              opacity,
+              pointerEvents: isHeaderVisible ? "auto" : "none",
             }}
           >
-            {onBackPress && (
-              <Appbar.BackAction onPress={onBackPress} iconColor={iconColor} />
-            )}
-
-            <Appbar.Content
-              title={title}
-              titleStyle={{
-                color: titleColor,
-                fontSize: hp("2.5%"),
-                fontWeight: "600",
+            <Appbar.Header
+              style={{
+                backgroundColor: backgroundColor,
+                elevation: 0,
+                shadowOpacity: 0,
               }}
-            />
+            >
+              {onBackPress && (
+                <Appbar.BackAction
+                  onPress={onBackPress}
+                  iconColor={iconColor}
+                />
+              )}
 
-            {onMenuPress && (
-              <Appbar.Action
-                icon="dots-vertical"
-                onPress={onMenuPress}
-                iconColor={iconColor}
+              <Appbar.Content
+                title={title}
+                titleStyle={{
+                  color: titleColor,
+                  fontSize: hp("2.5%"),
+                  fontWeight: "600",
+                }}
               />
-            )}
-          </Appbar.Header>
+
+              {onMenuPress && (
+                <Appbar.Action
+                  icon="dots-vertical"
+                  onPress={onMenuPress}
+                  iconColor={iconColor}
+                />
+              )}
+            </Appbar.Header>
+          </Animated.View>
         </>
       )}
 
       {showSafeArea ? (
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-          <ScrollViewContent
-            styleScrollViewContent={styleScrollViewContent}
-            viewContainerContent={viewContainerContent}
-            showBottomFooter={showBottomFooter}
-            onScroll={handleScroll}
-          >
-            {children}
-          </ScrollViewContent>
-        </SafeAreaView>
+        <>
+          <SafeAreaView
+            edges={["top"]}
+            style={{
+              backgroundColor: showAppBar
+                ? statusBarBackgroundColor || colors.primary
+                : colors.white,
+            }}
+          />
+          <View style={{ flex: 1, backgroundColor: colors.white }}>
+            <ScrollViewContent
+              styleScrollViewContent={styleScrollViewContent}
+              viewContainerContent={viewContainerContent}
+              showBottomFooter={showBottomFooter}
+              onScroll={handleCombinedScroll}
+              hasHeader={showAppBar && isHeaderVisible}
+            >
+              {children}
+            </ScrollViewContent>
+          </View>
+        </>
       ) : (
         <ScrollViewContent
           styleScrollViewContent={styleScrollViewContent}
           viewContainerContent={viewContainerContent}
           showBottomFooter={showBottomFooter}
-          onScroll={handleScroll}
+          onScroll={handleCombinedScroll}
+          hasHeader={showAppBar && isHeaderVisible}
         >
           {children}
         </ScrollViewContent>

@@ -21,7 +21,7 @@ export const BottomSheetVacancies = ({
 }: BottomSheetVacanciesProps) => {
   const {
     data,
-    isLoading: _isLoading,
+    isLoading,
     error: _error,
     bottomSheetRef,
     snapPoints,
@@ -39,7 +39,7 @@ export const BottomSheetVacancies = ({
     >
       <BottomSheetView style={styles.contentContainer}>
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
-          <CardVacancy vacancies={data ?? []} />
+          <CardVacancy vacancies={data ?? []} isLoading={isLoading} />
         </ScrollView>
       </BottomSheetView>
     </BottomSheet>
