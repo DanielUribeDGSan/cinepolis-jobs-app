@@ -18,6 +18,7 @@ config.resolver = {
 config.resolver.alias = {
   ...config.resolver.alias,
   app: "./routes",
+  "@": "./",
 };
 
 module.exports = withNativeWind(config, { input: "./global.css" });

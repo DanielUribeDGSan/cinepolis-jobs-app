@@ -9,9 +9,14 @@ import { View, StyleSheet } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import BannerInfoVacancies from "./BannerInfoVacancies";
 import { containers } from "@/app/utils/sizes/constants/containers";
+import { HomeSearchForm } from "../types/HomeSearchForm";
 
-const FormHomeSearch = () => {
-  const { control, textSearch, textButtonSearch, onSubmit, handleSubmit } =
+interface FormHomeSearchProps {
+  onSubmit: (data: HomeSearchForm) => Promise<void>;
+}
+
+const FormHomeSearch = ({ onSubmit }: FormHomeSearchProps) => {
+  const { control, textSearch, textButtonSearch, handleSubmit } =
     useFormHomeSearch();
 
   return (

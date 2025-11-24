@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { Provider as PaperProvider } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import "../global.css";
@@ -17,8 +18,8 @@ import {
   darkTheme,
   lightTheme,
 } from "./theme";
-import { LanguageProvider } from "./modules/lenguage/contexts/LanguageContext";
-import { TranslationsProvider } from "./modules/translations/contexts/TranslationsContext";
+import { LanguageProvider } from "./modules/localization/lenguage/contexts/LanguageContext";
+import { TranslationsProvider } from "./modules/localization/translations/contexts/TranslationsContext";
 import { FullScreenLoaderProvider } from "./ui/loaders/full-screen/FullScreenLoaderContext";
 import FullScreenLoader from "./ui/loaders/full-screen/FullScreenLoader";
 
@@ -63,38 +64,43 @@ function RootLayoutNav() {
     colorScheme === "dark" ? navigationDarkTheme : navigationLightTheme;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <FullScreenLoaderProvider>
-          <TranslationsProvider>
-            <PaperProvider theme={paperTheme}>
-              <ThemeProvider value={navigationTheme}>
-                <Stack>
-                  <Stack.Screen name="index" options={{ headerShown: false }} />
-                  <Stack.Screen
-                    name="routes/auth/LoginScreen"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="routes/auth/RegisterScreen"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="routes/home/(tabs)"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="routes/home/modal"
-                    options={{ presentation: "modal", headerShown: false }}
-                  />
-                </Stack>
-              </ThemeProvider>
-              <Toast />
-              <FullScreenLoader />
-            </PaperProvider>
-          </TranslationsProvider>
-        </FullScreenLoaderProvider>
-      </LanguageProvider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <FullScreenLoaderProvider>
+            <TranslationsProvider>
+              <PaperProvider theme={paperTheme}>
+                <ThemeProvider value={navigationTheme}>
+                  <Stack>
+                    <Stack.Screen
+                      name="index"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="routes/auth/LoginScreen"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="routes/auth/RegisterScreen"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="routes/home/(tabs)"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="routes/home/modal"
+                      options={{ presentation: "modal", headerShown: false }}
+                    />
+                  </Stack>
+                </ThemeProvider>
+                <Toast />
+                <FullScreenLoader />
+              </PaperProvider>
+            </TranslationsProvider>
+          </FullScreenLoaderProvider>
+        </LanguageProvider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }

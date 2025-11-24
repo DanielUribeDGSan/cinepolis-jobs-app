@@ -1,12 +1,13 @@
 import { showErrorMessage } from "@/app/ui/messages/Messages";
 import { useLanguage } from "../../lenguage/contexts/LanguageContext";
 
-import { useFetch } from "../../network/hooks/useFetch";
-import { ErrorMessage } from "../../network/types/ErrorMessage";
+import { useFetch } from "../../../network/hooks/useFetch";
+import { ErrorMessage } from "../../../network/types/ErrorMessage";
 import { translationsMessages } from "@/app/ui/messages/constants/translations";
-import { TranslationsService } from "../services/translations.service";
+
 import { useMemo } from "react";
 import { useFullScreenLoaderEffect } from "@/app/ui/loaders/full-screen/useFullScreenLoader";
+import { TranslationsService } from "../services/translations.service";
 
 export const useFetchTranslations = (pageCode: string) => {
   const { currentLanguage } = useLanguage();

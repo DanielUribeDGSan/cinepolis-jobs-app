@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form";
 import { defaultValuesHomeSearch } from "../data/data";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SchemaHomeSearch } from "../schema/SchemaHomeSearch";
-import { useCallback } from "react";
+
 import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
 import { HomeSearchForm } from "../types/HomeSearchForm";
-import { useGetText } from "@/app/modules/translations/hooks/useGetText";
+import { useGetText } from "@/app/modules/localization/translations/hooks/useGetText";
 
 const useFormHomeSearch = () => {
   const { height } = useGetFontSize();
@@ -22,18 +22,12 @@ const useFormHomeSearch = () => {
     defaultValues: defaultValuesHomeSearch,
   });
 
-  const onSubmit = useCallback(async (data: HomeSearchForm) => {
-    // eslint-disable-next-line no-console
-    console.log("Search data:", data);
-  }, []);
-
   return {
     control,
     errors,
     isValid,
     textSearch,
     textButtonSearch,
-    onSubmit,
     handleSubmit,
     height,
   };
