@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onPress}
-      className={`inline-flex bg-theme-2 items-center justify-center ${className ?? ""}`}
+      className={`inline-flex bg-theme-secondary items-center justify-center ${className ?? ""}`}
       style={[
         {
           borderRadius: height(spacesSizes.borderRadiusButton),

@@ -3,21 +3,9 @@ const { withNativeWind } = require("nativewind/metro");
 
 const config = getDefaultConfig(__dirname);
 
-config.transformer = {
-  ...config.transformer,
-  minifierConfig: {
-    ...config.transformer?.minifierConfig,
-  },
-};
-
-config.resolver = {
-  ...config.resolver,
-  blacklistRE: /node_modules\/.*\/node_modules\/react-native\/.*/,
-};
-
+// Mantener alias personalizados
 config.resolver.alias = {
   ...config.resolver.alias,
-  app: "./routes",
   "@": "./",
 };
 

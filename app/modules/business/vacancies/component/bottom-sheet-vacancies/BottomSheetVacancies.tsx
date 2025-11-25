@@ -1,12 +1,12 @@
 import React from "react";
 
-import { useBottomSheetVacancies } from "./hooks/useBottomSheetVacancies";
-import { VacanciesFilter } from "../../types/Vacancies";
+import { containers } from "@/app/utils/sizes/constants/containers";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { ScrollView, StyleSheet } from "react-native";
-import { CardVacancy } from "../card-vacancy/CardVacancy";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { containers } from "@/app/utils/sizes/constants/containers";
+import { VacanciesFilter } from "../../types/Vacancies";
+import { CardVacancy } from "../card-vacancy/CardVacancy";
+import { useBottomSheetVacancies } from "./hooks/useBottomSheetVacancies";
 
 interface BottomSheetVacanciesProps {
   filters: VacanciesFilter;
@@ -19,23 +19,22 @@ export const BottomSheetVacancies = ({
   isOpen = false,
   onClose,
 }: BottomSheetVacanciesProps) => {
-  const {
-    data,
-    isLoading,
-    error: _error,
-    bottomSheetRef,
-    snapPoints,
-    index,
-    handleSheetChanges,
-  } = useBottomSheetVacancies({ filters, isOpen, onClose });
+  const { data, isLoading, bottomSheetRef, snapPoints, handleSheetChanges } =
+    useBottomSheetVacancies({ filters, isOpen, onClose });
+
+  // No renderizar el BottomSheet si no está abierto para evitar problemas de inicialización
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <BottomSheet
       ref={bottomSheetRef}
       onChange={handleSheetChanges}
       snapPoints={snapPoints}
-      index={index}
+      index={1}
       enablePanDownToClose
+      animateOnMount={false}
     >
       <BottomSheetView style={styles.contentContainer}>
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">

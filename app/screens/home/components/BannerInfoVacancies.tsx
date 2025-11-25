@@ -1,10 +1,9 @@
+import FormattedText from "@/app/modules/localization/translations/components/FormattedText";
+import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { TextStyles } from "../../../theme/TextStyles";
-import FormattedText from "@/app/modules/localization/translations/components/FormattedText";
-
-import { colors } from "@/app/utils/sizes/constants/colors";
 
 const BannerInfoVacancies = () => {
   return (

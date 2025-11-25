@@ -1,8 +1,8 @@
 import BottomSheet from "@gorhom/bottom-sheet";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useFetchSearchVacancies } from "../../../hooks/useFetchSearchVacancies";
 import { VacanciesFilter } from "../../../types/Vacancies";
-import { useCallback, useMemo, useRef } from "react";
-import { Dimensions } from "react-native";
 
 interface UseBottomSheetVacanciesProps {
   filters: VacanciesFilter;
@@ -18,11 +18,30 @@ export const useBottomSheetVacancies = ({
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const snapPoints = useMemo(() => {
-    const { height: screenHeight } = Dimensions.get("window");
-    return [screenHeight * 0.9];
+    return [hp("90")];
   }, []);
 
-  const index = useMemo(() => (isOpen ? 0 : -1), [isOpen]);
+  // Controlar el BottomSheet mediante el ref cuando isOpen cambia
+  useEffect(() => {
+    if (!isOpen) {
+      if (bottomSheetRef.current) {
+        bottomSheetRef.current.close();
+      }
+      return;
+    }
+
+    // Esperar a que el BottomSheet esté completamente montado y los snapPoints estén listos
+    // Usamos requestAnimationFrame dentro de setTimeout para asegurar que el layout esté renderizado
+    const timeoutId = setTimeout(() => {
+      requestAnimationFrame(() => {
+        if (bottomSheetRef.current) {
+          bottomSheetRef.current.snapToIndex(1);
+        }
+      });
+    }, 150);
+
+    return () => clearTimeout(timeoutId);
+  }, [isOpen]);
 
   const { data, isLoading, error } = useFetchSearchVacancies(filters);
 
@@ -41,7 +60,6 @@ export const useBottomSheetVacancies = ({
     error,
     bottomSheetRef,
     snapPoints,
-    index,
     handleSheetChanges,
   };
 };

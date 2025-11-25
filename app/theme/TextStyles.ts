@@ -1,6 +1,6 @@
+import { StyleSheet } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { fontSizes } from "../utils/sizes/constants/fontSizes";
-import { StyleSheet } from "react-native";
 
 export const TextStyles = StyleSheet.create({
   h1: {

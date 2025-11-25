@@ -1,7 +1,7 @@
-// app/utils/storage/tokenStorage.ts
+// app/_utils/storage/tokenStorage.ts
 import * as SecureStore from "expo-secure-store";
 
-export const tokenStorage = {
+const tokenStorage = {
   async saveToken(token: string) {
     await SecureStore.setItemAsync("userToken", token);
   },
@@ -14,3 +14,5 @@ export const tokenStorage = {
     await SecureStore.deleteItemAsync("userToken");
   },
 };
+
+export default tokenStorage;

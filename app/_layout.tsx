@@ -1,26 +1,26 @@
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ThemeProvider } from "@react-navigation/native";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider as PaperProvider } from "react-native-paper";
 import Toast from "react-native-toast-message";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import "../global.css";
-import {
-  navigationLightTheme,
-  navigationDarkTheme,
-  darkTheme,
-  lightTheme,
-} from "./theme";
 import { LanguageProvider } from "./modules/localization/lenguage/contexts/LanguageContext";
 import { TranslationsProvider } from "./modules/localization/translations/contexts/TranslationsContext";
-import { FullScreenLoaderProvider } from "./ui/loaders/full-screen/FullScreenLoaderContext";
+import {
+  darkTheme,
+  lightTheme,
+  navigationDarkTheme,
+  navigationLightTheme,
+} from "./theme";
 import FullScreenLoader from "./ui/loaders/full-screen/FullScreenLoader";
+import { FullScreenLoaderProvider } from "./ui/loaders/full-screen/FullScreenLoaderContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -87,10 +87,7 @@ function RootLayoutNav() {
                       name="routes/home/(tabs)"
                       options={{ headerShown: false }}
                     />
-                    <Stack.Screen
-                      name="routes/home/modal"
-                      options={{ presentation: "modal", headerShown: false }}
-                    />
+
                     <Stack.Screen
                       name="routes/vacancies/DetailVacancyScreen"
                       options={{ headerShown: false }}

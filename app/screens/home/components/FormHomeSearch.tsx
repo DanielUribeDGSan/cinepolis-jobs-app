@@ -5,11 +5,11 @@ import useFormHomeSearch from "../hooks/useFormHomeSearch";
 
 import Button from "@/app/ui/components/buttons/Button";
 import { colors } from "@/app/utils/sizes/constants/colors";
-import { View, StyleSheet } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import BannerInfoVacancies from "./BannerInfoVacancies";
 import { containers } from "@/app/utils/sizes/constants/containers";
+import { StyleSheet, View } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { HomeSearchForm } from "../types/HomeSearchForm";
+import BannerInfoVacancies from "./BannerInfoVacancies";
 
 interface FormHomeSearchProps {
   onSubmit: (data: HomeSearchForm) => Promise<void>;
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    backgroundColor: colors.secondary,
     marginTop: hp("1%"),
   },
 });

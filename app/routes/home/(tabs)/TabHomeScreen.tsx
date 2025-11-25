@@ -4,14 +4,15 @@ import LayoutForms from "@/app/ui/layouts/LayoutForms";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-import { View } from "react-native";
-import OnboardingSlider from "@/app/ui/components/carousel/HomeCarusel";
 import { BottomSheetVacancies } from "@/app/modules/business/vacancies/component/bottom-sheet-vacancies/BottomSheetVacancies";
+import OnboardingSlider from "@/app/ui/components/carousel/HomeCarusel";
+import { View } from "react-native";
 import { useTabHomeScreen } from "./hooks/useTabHomeScreen";
 
 export default function TabHomeScreen() {
   const { isBottomSheetOpen, filters, slides, onSubmit, onCloseBottomSheet } =
     useTabHomeScreen();
+
   return (
     <LayoutAppBar
       styleScrollViewContent={{ paddingTop: 0 }}

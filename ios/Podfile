@@ -2,45 +2,41 @@ require File.join(File.dirname(`node --print "require.resolve('expo/package.json
 require File.join(File.dirname(`node --print "require.resolve('react-native/package.json')"`), "scripts/react_native_pods")
 
 require 'json'
-require 'pathname'
 podfile_properties = JSON.parse(File.read(File.join(__dir__, 'Podfile.properties.json'))) rescue {}
 
-ENV['RCT_NEW_ARCH_ENABLED'] = podfile_properties['newArchEnabled'] == 'true' ? '1' : '0'
-ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] = podfile_properties['EX_DEV_CLIENT_NETWORK_INSPECTOR']
+def ccache_enabled?(podfile_properties)
+  # Environment variable takes precedence
+  return ENV['USE_CCACHE'] == '1' if ENV['USE_CCACHE']
+  
+  # Fall back to Podfile properties
+  podfile_properties['apple.ccacheEnabled'] == 'true'
+end
 
-platform :ios, podfile_properties['ios.deploymentTarget'] || '13.4'
-install! 'cocoapods',
-  :deterministic_uuids => false
+ENV['RCT_NEW_ARCH_ENABLED'] ||= '0' if podfile_properties['newArchEnabled'] == 'false'
+ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] ||= podfile_properties['EX_DEV_CLIENT_NETWORK_INSPECTOR']
+ENV['RCT_USE_RN_DEP'] ||= '1' if podfile_properties['ios.buildReactNativeFromSource'] != 'true' && podfile_properties['newArchEnabled'] != 'false'
+ENV['RCT_USE_PREBUILT_RNCORE'] ||= '1' if podfile_properties['ios.buildReactNativeFromSource'] != 'true' && podfile_properties['newArchEnabled'] != 'false'
+platform :ios, podfile_properties['ios.deploymentTarget'] || '15.1'
 
 prepare_react_native_project!
 
-# If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
-# because `react-native-flipper` depends on (FlipperKit,...), which will be excluded. To fix this,
-# you can also exclude `react-native-flipper` in `react-native.config.js`
-#
-# ```js
-# module.exports = {
-#   dependencies: {
-#     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
-#   }
-# }
-# ```
-flipper_config = FlipperConfiguration.disabled
-if ENV['NO_FLIPPER'] == '1' then
-  # Explicitly disabled through environment variables
-  flipper_config = FlipperConfiguration.disabled
-elsif podfile_properties.key?('ios.flipper') then
-  # Configure Flipper in Podfile.properties.json
-  if podfile_properties['ios.flipper'] == 'true' then
-    flipper_config = FlipperConfiguration.enabled(["Debug", "Release"])
-  elsif podfile_properties['ios.flipper'] != 'false' then
-    flipper_config = FlipperConfiguration.enabled(["Debug", "Release"], { 'Flipper' => podfile_properties['ios.flipper'] })
-  end
-end
-
 target 'cinepolisjobsapp' do
   use_expo_modules!
-  config = use_native_modules!
+
+  if ENV['EXPO_USE_COMMUNITY_AUTOLINKING'] == '1'
+    config_command = ['node', '-e', "process.argv=['', '', 'config'];require('@react-native-community/cli').run()"];
+  else
+    config_command = [
+      'npx',
+      'expo-modules-autolinking',
+      'react-native-config',
+      '--json',
+      '--platform',
+      'ios'
+    ]
+  end
+
+  config = use_native_modules!(config_command)
 
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
@@ -50,142 +46,15 @@ target 'cinepolisjobsapp' do
     :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/..",
-    # Note that if you have use_frameworks! enabled, Flipper will not work if enabled
-    :flipper_configuration => flipper_config
+    :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
   )
 
   post_install do |installer|
     react_native_post_install(
       installer,
       config[:reactNativePath],
-      :mac_catalyst_enabled => false
+      :mac_catalyst_enabled => false,
+      :ccache_enabled => ccache_enabled?(podfile_properties),
     )
-
-    # This is necessary for Xcode 14, because it signs resource bundles by default
-    # when building for devices.
-    installer.target_installation_results.pod_target_installation_results
-      .each do |pod_name, target_installation_result|
-      target_installation_result.resource_bundle_targets.each do |resource_bundle_target|
-        resource_bundle_target.build_configurations.each do |config|
-          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
-        end
-      end
-    end
-
-    # Fix for react-native-worklets-core to find ReactCommon headers
-    # Create symlinks for missing headers instead of replacing the entire directory
-    headers_public_dir = File.join(installer.sandbox.root, 'Headers', 'Public')
-    reactcommon_path = File.join(headers_public_dir, 'ReactCommon')
-    react_native_modules_apple_reactcommon = File.join(headers_public_dir, 'React-NativeModulesApple', 'ReactCommon')
-    
-    if Dir.exist?(react_native_modules_apple_reactcommon)
-      # Only create symlinks for missing headers, don't replace the directory
-      FileUtils.mkdir_p(reactcommon_path) unless Dir.exist?(reactcommon_path)
-      
-      # List of headers and modulemaps that need to be symlinked
-      headers_to_link = ['RCTTurboModule.h', 'RCTTurboModuleManager.h', 'RCTInteropTurboModule.h', 'RCTBlockGuard.h']
-      
-      headers_to_link.each do |header_name|
-        header_source = File.join(react_native_modules_apple_reactcommon, header_name)
-        header_target = File.join(reactcommon_path, header_name)
-        
-        if File.exist?(header_source) && !File.exist?(header_target)
-          FileUtils.ln_sf(File.join('..', 'React-NativeModulesApple', 'ReactCommon', header_name), header_target)
-        end
-      end
-      
-      # Copy the modulemap file directly instead of symlink for better compatibility
-      modulemap_target = File.join(reactcommon_path, 'ReactCommon.modulemap')
-      target_support_modulemap = File.join(installer.sandbox.root, 'Target Support Files', 'ReactCommon', 'ReactCommon.modulemap')
-      
-      # Remove existing file or symlink if it exists
-      if File.exist?(modulemap_target) || File.symlink?(modulemap_target)
-        FileUtils.rm_f(modulemap_target)
-      end
-      
-      # Copy the modulemap file directly (more reliable than symlink)
-      if File.exist?(target_support_modulemap)
-        FileUtils.cp(target_support_modulemap, modulemap_target)
-      end
-      
-      Pod::UI.puts "✓ Created symlinks for ReactCommon headers and modulemap"
-    end
-    
-    # Add ReactCommon headers paths for pods that need them
-    # Use relative path from Pods directory to make it work with Xcode variables
-    react_native_path = File.expand_path(File.join(__dir__, '..', 'node_modules', 'react-native'))
-    reactcommon_react_path = File.join(react_native_path, 'ReactCommon', 'react')
-    turbo_module_base_path = File.join(react_native_path, 'ReactCommon', 'react', 'nativemodule', 'core')
-    ios_reactcommon_path = File.join(react_native_path, 'ReactCommon', 'react', 'nativemodule', 'core', 'platform', 'ios', 'ReactCommon')
-    
-    # Calculate relative path from Pods to node_modules for use in Xcode
-    pods_dir = installer.sandbox.root
-    react_native_relative = Pathname.new(react_native_path).relative_path_from(Pathname.new(pods_dir)).to_s
-    
-    installer.pods_project.targets.each do |target|
-      # Fix for pods that need ReactCommon headers
-      # Include all React Native pods (React-*, React-RCT*, react-native-*, RN*)
-      pods_needing_reactcommon = [
-        'react-native-worklets-core', 
-        'React-NativeModulesApple', 
-        'RNReanimated',
-        'React-ImageManager',
-        'React-FabricImage',
-        'React-Fabric',
-        'ExpoModulesCore'
-      ]
-      
-      # Also include any pod that starts with React- or React-RCT, or ExpoModules
-      # Exclude system-level pods that don't need this
-      excluded_pods = ['React-utils', 'React-debug', 'React-jsc', 'React-logger']
-      needs_reactcommon = !excluded_pods.include?(target.name) && (
-        pods_needing_reactcommon.include?(target.name) ||
-        target.name.start_with?('React-RCT') ||
-        target.name.start_with?('ExpoModules') ||
-        target.name.start_with?('React-') ||
-        target.name.start_with?('RNScreens') ||
-        target.name.start_with?('RNVectorIcons') ||
-        target.name.include?('react-native')
-      )
-      
-      if needs_reactcommon
-        Pod::UI.puts "  → Configuring ReactCommon headers for: #{target.name}" if ENV['DEBUG_PODFILE']
-        target.build_configurations.each do |build_config|
-          build_config.build_settings['HEADER_SEARCH_PATHS'] ||= ['$(inherited)']
-          # Add ReactCommon headers paths - the symlink above makes RCTTurboModule.h work
-          build_config.build_settings['HEADER_SEARCH_PATHS'] << '"$(PODS_ROOT)/Headers/Public/ReactCommon"'
-          build_config.build_settings['HEADER_SEARCH_PATHS'] << '"$(PODS_ROOT)/Headers/Public/React-NativeModulesApple/ReactCommon"'
-          # Add base path for react/bridging headers (e.g., <react/bridging/LongLivedObject.h>)
-          if Dir.exist?(reactcommon_react_path)
-            # Use absolute path and also relative using SRCROOT (points to ios/ directory)
-            build_config.build_settings['HEADER_SEARCH_PATHS'] << "\"#{react_native_path}/ReactCommon\""
-            # SRCROOT in Pods context is the ios/ directory, so ../node_modules works
-            build_config.build_settings['HEADER_SEARCH_PATHS'] << '"$(SRCROOT)/../node_modules/react-native/ReactCommon"'
-          end
-          # Add path where TurboModule.h and TurboModuleBinding.h actually are
-          # When importing <ReactCommon/TurboModule.h>, compiler looks for ReactCommon/ subdirectory in each search path
-          # TurboModule.h is at: ReactCommon/react/nativemodule/core/ReactCommon/TurboModule.h
-          # So we add: ReactCommon/react/nativemodule/core as search path
-          if Dir.exist?(turbo_module_base_path)
-            build_config.build_settings['HEADER_SEARCH_PATHS'] << "\"#{turbo_module_base_path}\""
-            # Use SRCROOT which points to ios/, so ../node_modules/react-native/... works
-            build_config.build_settings['HEADER_SEARCH_PATHS'] << '"$(SRCROOT)/../node_modules/react-native/ReactCommon/react/nativemodule/core"'
-          end
-          # Also add the iOS platform headers path
-          if Dir.exist?(ios_reactcommon_path)
-            build_config.build_settings['HEADER_SEARCH_PATHS'] << "\"#{ios_reactcommon_path}\""
-            build_config.build_settings['HEADER_SEARCH_PATHS'] << '"$(SRCROOT)/../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios/ReactCommon"'
-          end
-        end
-      end
-    end
-  end
-
-     post_integrate do |installer|
-    begin
-      expo_patch_react_imports!(installer)
-    rescue => e
-      Pod::UI.warn e
-    end
   end
 end

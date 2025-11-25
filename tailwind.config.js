@@ -1,21 +1,18 @@
-import { colors } from "./app/utils/sizes/constants/colors";
+const colors = require("./app/utils/sizes/constants/colors.js");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./app/**/*.{js,jsx,ts,tsx}",
-    "./components/**/*.{js,jsx,ts,tsx}",
-    "./app/(tabs)/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
       colors: {
         // Colores de Cinépolis
         theme: {
-          1: colors.primary,
-          2: colors.secondary,
-          3: colors.tertiary,
-          4: colors.quaternary,
+          primary: colors.primary,
+          secondary: colors.secondary,
+          tertiary: colors.tertiary,
+          quaternary: colors.quaternary,
           inputsGray: colors.inputsGray,
           white: colors.white,
           black: colors.black,

@@ -11,7 +11,7 @@ export default function TabBarIcon(props: {
   const { height } = useGetFontSize();
   return (
     <View
-      className={`rounded-full items-center justify-center ${props.focused ? "bg-theme-2" : ""}`}
+      className={`rounded-full items-center justify-center ${props.focused ? "bg-theme-secondary" : ""}`}
       style={{ width: height("5%"), height: height("5%") }}
     >
       <FontAwesome
