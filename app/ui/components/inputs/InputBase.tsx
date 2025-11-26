@@ -2,7 +2,7 @@ import { useInputFocus } from "@/app/ui/layouts/tab-layout/hooks/useInputFocus";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import { FontAwesome } from "@expo/vector-icons";
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { Control, Controller, FieldError } from "react-hook-form";
 import { Animated, StyleProp, TouchableOpacity, ViewStyle } from "react-native";
 import { TextInput, TextInputProps } from "react-native-paper";
@@ -101,6 +101,19 @@ const InputBase: React.FC<InputBaseProps> = ({
     return isActive ? focusedBorderColor : "#666";
   };
 
+  // Crear tema personalizado para React Native Paper para asegurar colores consistentes
+  const paperTheme = useMemo(
+    () => ({
+      colors: {
+        primary: colors.primary, // Color del label igual al texto
+        text: colors.primary, // Color del texto del input
+        placeholder: colors.gray, // Color del placeholder
+        error: colors.error, // Color del error
+      },
+    }),
+    []
+  );
+
   const renderIcon = (iconConfig: IconConfig) => {
     const IconComponent = (
       <FontAwesome
@@ -165,6 +178,10 @@ const InputBase: React.FC<InputBaseProps> = ({
               onFocus={handleFocus}
               mode={mode}
               error={!!error}
+              theme={paperTheme}
+              textColor={colors.primary} // Color explícito del texto
+              activeOutlineColor={colors.secondary} // Color del borde cuando está activo
+              outlineColor="transparent" // Color del borde cuando no está activo
               left={
                 leftIcon ? (
                   <TextInput.Icon icon={() => renderIcon(leftIcon)} />
@@ -185,6 +202,7 @@ const InputBase: React.FC<InputBaseProps> = ({
                 backgroundColor: "transparent",
                 fontSize: responsiveFontSize,
                 height: responsiveHeight,
+                color: colors.primary, // Color explícito del texto en contentStyle
                 ...(contentStyle && typeof contentStyle === "object"
                   ? contentStyle
                   : {}),
@@ -195,7 +213,7 @@ const InputBase: React.FC<InputBaseProps> = ({
                   fontSize: responsiveFontSize,
                   height: responsiveHeight,
                   fontWeight: "600",
-                  color: colors.primary,
+                  color: colors.primary, // Color explícito del texto
                 },
                 style,
               ]}
