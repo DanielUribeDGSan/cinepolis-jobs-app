@@ -1,6 +1,6 @@
 import React from "react";
-import { View } from "react-native";
 import { FieldError } from "react-hook-form";
+import { View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 interface LayoutInputProps {

@@ -1,6 +1,6 @@
 import { StyleProps } from "@/app/types/Style";
 import { containers } from "@/app/utils/sizes/constants/containers";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -32,13 +32,37 @@ export const ScrollViewContent = ({
 }: ScrollViewContentProps) => {
   const insets = useSafeAreaInsets();
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const wasKeyboardVisible = useRef(false);
+  const currentScrollY = useRef(0);
 
   // Detectar cuando el teclado está visible
   useEffect(() => {
     const keyboardWillShow = Keyboard.addListener(
       Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow",
       (e) => {
-        setKeyboardHeight(e.endCoordinates.height);
+        const newHeight = e.endCoordinates.height;
+        setKeyboardHeight(newHeight);
+
+        // Si el teclado acaba de aparecer (primera vez), hacer scroll solo un poco
+        // para asegurar que el input quede visible sin ir hasta el final
+        if (!wasKeyboardVisible.current && newHeight > 0) {
+          wasKeyboardVisible.current = true;
+          // Esperar a que el teclado termine de aparecer y el layout se ajuste
+          setTimeout(
+            () => {
+              // Hacer scroll solo un poco más desde la posición actual
+              // Usar un offset pequeño para que el input quede visible sin ir hasta el final
+              const additionalScroll =
+                Platform.OS === "ios" ? hp("1.5%") : hp("2%");
+              scrollViewRef.current?.scrollTo({
+                y: currentScrollY.current + additionalScroll,
+                animated: true,
+              });
+            },
+            Platform.OS === "ios" ? 100 : 150
+          );
+        }
       }
     );
 
@@ -46,6 +70,7 @@ export const ScrollViewContent = ({
       Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide",
       () => {
         setKeyboardHeight(0);
+        wasKeyboardVisible.current = false;
       }
     );
 
@@ -70,13 +95,12 @@ export const ScrollViewContent = ({
           : Math.max(insets.bottom, 20), // Mínimo 20px, máximo insets.bottom
         flex: 1,
         // Agregar padding extra solo cuando el teclado está visible para evitar que el input quede cortado
-        // pero mantenerlo mínimo para evitar espacio blanco
         ...(keyboardHeight > 0 && {
           paddingBottom:
             (showBottomFooter
               ? hp(containers.bottomFooter) + insets.bottom
               : Math.max(insets.bottom, 20)) +
-            (Platform.OS === "ios" ? hp("1.5%") : hp("2%")), // Espacio mínimo adicional
+            (Platform.OS === "ios" ? hp("5%") : hp("5.5%")), // Espacio adicional aumentado para evitar corte
         }),
       },
       viewContainerContent,
@@ -107,61 +131,43 @@ export const ScrollViewContent = ({
   const contentPaddingBottom = useMemo(() => {
     if (keyboardHeight > 0) {
       // Cuando el teclado está visible, agregar espacio suficiente para que el input no quede cortado
-      // pero sin crear espacio blanco visible
-      return Platform.OS === "ios" ? hp("2%") : hp("2.5%");
+      // Aumentado para asegurar que el input no se corte desde la primera vez
+      return Platform.OS === "ios" ? hp("5.5%") : hp("6%");
     }
     return Platform.OS === "android" ? 20 : 10;
   }, [keyboardHeight]);
 
-  // En iOS, usar solo automaticallyAdjustKeyboardInsets del ScrollView
-  // En Android, usar KeyboardAvoidingView
-  if (Platform.OS === "ios") {
-    return (
-      <ScrollView
-        style={[{ flex: 1 }, styleScrollViewContent]}
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingBottom: contentPaddingBottom,
-        }}
-        onScroll={onScroll}
-        scrollEventThrottle={16}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-        nestedScrollEnabled={true}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        // En iOS, usar automaticallyAdjustKeyboardInsets para manejar el teclado
-        // Esto evita el espacio blanco que causa KeyboardAvoidingView con behavior="padding"
-        automaticallyAdjustKeyboardInsets={true}
-        automaticallyAdjustContentInsets={false}
-      >
-        <View style={containerStyle}>{children}</View>
-      </ScrollView>
-    );
-  }
-
-  // En Android, usar KeyboardAvoidingView
+  // En iOS, usar KeyboardAvoidingView con behavior="padding" como en el ejemplo que funciona
+  // En Android, usar KeyboardAvoidingView con behavior="height"
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior="height"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={keyboardOffset}
       enabled={true}
     >
       <ScrollView
+        ref={scrollViewRef}
         style={[{ flex: 1 }, styleScrollViewContent]}
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom: contentPaddingBottom,
         }}
-        onScroll={onScroll}
+        onScroll={(e) => {
+          // Trackear la posición actual del scroll
+          currentScrollY.current = e.nativeEvent.contentOffset.y;
+          onScroll?.(e);
+        }}
         scrollEventThrottle={16}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         nestedScrollEnabled={true}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
-        overScrollMode="never"
+        overScrollMode={Platform.OS === "android" ? "never" : undefined}
+        // En iOS, también usar automaticallyAdjustKeyboardInsets para mejor manejo
+        automaticallyAdjustKeyboardInsets={Platform.OS === "ios"}
+        automaticallyAdjustContentInsets={false}
       >
         <View style={containerStyle}>{children}</View>
       </ScrollView>

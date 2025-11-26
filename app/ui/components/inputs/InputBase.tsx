@@ -74,8 +74,8 @@ const InputBase: React.FC<InputBaseProps> = ({
   const handleFocus = (e: any) => {
     setIsFocused(true);
 
-    // El KeyboardAvoidingView manejará el ajuste automático
-    // No necesitamos hacer scroll manual aquí para evitar conflictos
+    // El ScrollViewContent manejará el scroll automático cuando el teclado aparece
+    // Esto asegura que el input esté visible desde la primera vez
     restProps.onFocus?.(e);
   };
 
