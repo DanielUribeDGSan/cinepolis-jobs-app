@@ -73,20 +73,15 @@ const InputBase: React.FC<InputBaseProps> = ({
 
   const handleFocus = (e: any) => {
     setIsFocused(true);
-    // Pequeño delay para asegurar que el teclado se haya abierto
-    setTimeout(() => {
-      if (containerRef.current && inputRef.current) {
-        // Intentar hacer scroll al input usando measureInWindow
-        containerRef.current.measureInWindow(
-          (_x: number, y: number, _width: number, _height: number) => {
-            // El KeyboardAvoidingView ya maneja el ajuste automático
-            // Solo necesitamos asegurar que el input sea visible
-            // El scroll se manejará automáticamente por el KeyboardAvoidingView
-          }
-        );
-      }
-    }, 300);
+
+    // El KeyboardAvoidingView manejará el ajuste automático
+    // No necesitamos hacer scroll manual aquí para evitar conflictos
     restProps.onFocus?.(e);
+  };
+
+  const handleBlur = (e: any) => {
+    setIsFocused(false);
+    restProps.onBlur?.(e);
   };
 
   const getBorderColor = () => {
@@ -140,6 +135,7 @@ const InputBase: React.FC<InputBaseProps> = ({
           className={className ?? ""}
           style={{
             transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
+            marginBottom: 10, // Añadir margen inferior para evitar solapamientos
             ...(containerStyle && typeof containerStyle === "object"
               ? containerStyle
               : {}),
@@ -163,9 +159,8 @@ const InputBase: React.FC<InputBaseProps> = ({
                 onChange(text);
               }}
               onBlur={(e) => {
-                setIsFocused(false);
+                handleBlur(e);
                 onBlur();
-                restProps.onBlur?.(e);
               }}
               onFocus={handleFocus}
               mode={mode}
@@ -204,6 +199,10 @@ const InputBase: React.FC<InputBaseProps> = ({
                 },
                 style,
               ]}
+              // Configuraciones adicionales para mejor manejo del teclado
+              returnKeyType="next"
+              blurOnSubmit={false}
+              enablesReturnKeyAutomatically={true}
             />
           </LayoutInput>
         </Animated.View>
