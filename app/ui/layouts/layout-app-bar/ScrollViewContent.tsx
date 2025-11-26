@@ -1,12 +1,12 @@
-import React from "react";
 import { StyleProps } from "@/app/types/Style";
 import { containers } from "@/app/utils/sizes/constants/containers";
+import React from "react";
 import {
   Keyboard,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  View,
   ScrollView,
+  View,
 } from "react-native";
 
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";

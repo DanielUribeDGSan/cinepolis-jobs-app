@@ -19,8 +19,8 @@ import {
   navigationDarkTheme,
   navigationLightTheme,
 } from "./theme";
-import FullScreenLoader from "./ui/loaders/full-screen/FullScreenLoader";
-import { FullScreenLoaderProvider } from "./ui/loaders/full-screen/FullScreenLoaderContext";
+import FullScreenLoader from "./ui/components/loaders/full-screen/FullScreenLoader";
+import { FullScreenLoaderProvider } from "./ui/components/loaders/full-screen/FullScreenLoaderContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -73,6 +73,10 @@ function RootLayoutNav() {
                   <Stack>
                     <Stack.Screen
                       name="index"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="routes/home/HomeScreen"
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen

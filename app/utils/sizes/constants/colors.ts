@@ -3,6 +3,7 @@ export const colors = {
   secondary: "#4781ff",
   tertiary: "#15274d",
   quaternary: "#edf2ff",
+  quinary: "#2B4D99",
   inputsGray: "#eceef1",
   white: "#ffffff",
   black: "#000000",

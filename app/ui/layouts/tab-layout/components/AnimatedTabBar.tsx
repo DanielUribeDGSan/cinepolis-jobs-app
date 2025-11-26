@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo } from "react";
-import { Animated, TouchableOpacity, StyleSheet } from "react-native";
-import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { useTabBarVisibility } from "../contexts/TabBarVisibilityContext";
+import TabBarIcon from "@/app/ui/components/icons/TabBarIcon";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import React, { useEffect, useMemo } from "react";
+import { Animated, StyleSheet, TouchableOpacity } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import TabBarIcon from "@/app/ui/icons/TabBarIcon";
+import { useTabBarVisibility } from "../contexts/TabBarVisibilityContext";
 
 export default function AnimatedTabBar({
   state,
@@ -61,58 +61,71 @@ export default function AnimatedTabBar({
         },
       ]}
     >
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const isFocused = state.index === index;
+      {state.routes
+        .filter((route) => {
+          // Solo mostrar las 3 tabs definidas
+          const validTabNames = [
+            "TabHomeScreen",
+            "TabMyVacancies",
+            "TabProfileScreen",
+          ];
+          return validTabNames.includes(route.name);
+        })
+        .map((route, index) => {
+          const { options } = descriptors[route.key];
+          // Encontrar el índice real en state.routes para determinar si está enfocado
+          const realIndex = state.routes.findIndex((r) => r.key === route.key);
+          const isFocused = state.index === realIndex;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
+
+          const onLongPress = () => {
+            navigation.emit({
+              type: "tabLongPress",
+              target: route.key,
+            });
+          };
+
+          // Determinar el icono según la ruta
+          let iconName: React.ComponentProps<typeof TabBarIcon>["name"] =
+            "home";
+          if (route.name === "TabHomeScreen") {
+            iconName = "home";
+          } else if (route.name === "TabMyVacancies") {
+            iconName = "folder-open";
+          } else if (route.name === "TabProfileScreen") {
+            iconName = "user";
           }
-        };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key,
-          });
-        };
-
-        // Determinar el icono según la ruta
-        let iconName: React.ComponentProps<typeof TabBarIcon>["name"] = "home";
-        if (route.name === "TabHomeScreen") {
-          iconName = "home";
-        } else if (route.name === "TabMyVacancies") {
-          iconName = "folder-open";
-        } else if (route.name === "TabProfileScreen") {
-          iconName = "user";
-        }
-
-        return (
-          <TouchableOpacity
-            key={route.key}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={styles.tabButton}
-          >
-            <TabBarIcon
-              name={iconName}
-              color={isFocused ? colors.primary : colors.gray}
-              focused={isFocused}
-            />
-          </TouchableOpacity>
-        );
-      })}
+          return (
+            <TouchableOpacity
+              key={route.key}
+              accessibilityRole="button"
+              accessibilityState={isFocused ? { selected: true } : {}}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarButtonTestID}
+              onPress={onPress}
+              onLongPress={onLongPress}
+              style={styles.tabButton}
+            >
+              <TabBarIcon
+                name={iconName}
+                color={isFocused ? colors.primary : colors.gray}
+                focused={isFocused}
+              />
+            </TouchableOpacity>
+          );
+        })}
     </Animated.View>
   );
 }

@@ -72,6 +72,7 @@ const FormRegister = () => {
         style={{ marginVertical: height(containers.topComponent) }}
         styleText={{ color: colors.white }}
         onPress={handleSubmit(onSubmit)}
+        
       />
 
       <TitleAndButton

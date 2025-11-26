@@ -7,7 +7,7 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { BottomSheetVacancies } from "@/app/modules/business/vacancies/component/bottom-sheet-vacancies/BottomSheetVacancies";
 import OnboardingSlider from "@/app/ui/components/carousel/HomeCarusel";
 import { View } from "react-native";
-import { useTabHomeScreen } from "./hooks/useTabHomeScreen";
+import { useTabHomeScreen } from "../../hooks/home/tabs/useTabHomeScreen";
 
 export default function TabHomeScreen() {
   const { isBottomSheetOpen, filters, slides, onSubmit, onCloseBottomSheet } =

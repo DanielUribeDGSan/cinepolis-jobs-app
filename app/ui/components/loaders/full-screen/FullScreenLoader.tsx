@@ -1,11 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { useFullScreenLoader } from "./FullScreenLoaderContext";
+import { StyleSheet, View } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import LogoJobsAnimated from "../../components/images/LogoJobsAnimated";
+import LogoJobsAnimated from "../../images/LogoJobsAnimated";
+import { useFullScreenLoader } from "./FullScreenLoaderContext";
 
 const FullScreenLoader: React.FC = () => {
   const { isLoading } = useFullScreenLoader();

@@ -13,6 +13,7 @@ module.exports = {
           secondary: colors.secondary,
           tertiary: colors.tertiary,
           quaternary: colors.quaternary,
+          quinary: colors.quinary,
           inputsGray: colors.inputsGray,
           white: colors.white,
           black: colors.black,
