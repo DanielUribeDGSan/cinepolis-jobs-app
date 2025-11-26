@@ -4,10 +4,9 @@ import { LayoutAppBar } from "@/app/ui/layouts/layout-app-bar/LayoutAppBar";
 export default function RegisterScreen() {
   return (
     <LayoutAppBar
-      title="Register"
-      showAppBar={false}
+      showAppBar={true}
       showSafeArea={true}
-      showBottomFooter={false}
+      styleScrollViewContent={{ paddingTop: 0 }}
     >
       <FormRegister />
     </LayoutAppBar>

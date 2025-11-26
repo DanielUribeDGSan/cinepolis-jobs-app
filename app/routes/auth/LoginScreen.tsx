@@ -4,10 +4,9 @@ import { LayoutAppBar } from "@/app/ui/layouts/layout-app-bar/LayoutAppBar";
 export default function LoginScreen() {
   return (
     <LayoutAppBar
-      title="Login"
-      showAppBar={false}
+      showAppBar={true}
       showSafeArea={true}
-      showBottomFooter={false}
+      styleScrollViewContent={{ paddingTop: 0 }}
     >
       <FormLogin />
     </LayoutAppBar>
