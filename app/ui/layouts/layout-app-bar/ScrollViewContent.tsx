@@ -90,29 +90,16 @@ export const ScrollViewContent = ({
           ? hp(containers.topScreen) + headerHeight
           : hp(containers.topScreen),
         paddingHorizontal: hp(containers.horizontalScreen),
-        paddingBottom: showBottomFooter
-          ? hp(containers.bottomFooter) + insets.bottom
-          : Math.max(insets.bottom, 20), // Mínimo 20px, máximo insets.bottom
+        paddingBottom: hp(containers.bottomFooter),
         flex: 1,
         // Agregar padding extra solo cuando el teclado está visible para evitar que el input quede cortado
         ...(keyboardHeight > 0 && {
-          paddingBottom:
-            (showBottomFooter
-              ? hp(containers.bottomFooter) + insets.bottom
-              : Math.max(insets.bottom, 20)) +
-            (Platform.OS === "ios" ? hp("5%") : hp("5.5%")), // Espacio adicional aumentado para evitar corte
+          paddingBottom: hp(containers.bottomFooter),
         }),
       },
       viewContainerContent,
     ],
-    [
-      hasHeader,
-      headerHeight,
-      showBottomFooter,
-      viewContainerContent,
-      insets.bottom,
-      keyboardHeight,
-    ]
+    [hasHeader, headerHeight, viewContainerContent, keyboardHeight]
   );
 
   // Calcular offset del teclado más preciso
