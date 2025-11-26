@@ -14,7 +14,6 @@ export default function HomeScreen() {
     <LayoutAppBar
       showAppBar={true}
       showSafeArea={true}
-      showBottomFooter={false}
       styleScrollViewContent={{ paddingTop: 0 }}
       viewContainerContent={{ paddingHorizontal: 0 }}
     >

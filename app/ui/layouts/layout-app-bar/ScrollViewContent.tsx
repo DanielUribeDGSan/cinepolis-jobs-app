@@ -1,10 +1,11 @@
 import { StyleProps } from "@/app/types/Style";
 import { containers } from "@/app/utils/sizes/constants/containers";
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Keyboard,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Platform,
   ScrollView,
   View,
 } from "react-native";
@@ -31,6 +32,21 @@ export const ScrollViewContent = ({
   // Altura aproximada del Appbar.Header (56px en Android, 44px en iOS + StatusBar)
   const headerHeight = hp("7%");
 
+  const containerStyle = useMemo(
+    () => [
+      {
+        paddingTop: hasHeader
+          ? hp(containers.topScreen) + headerHeight
+          : hp(containers.topScreen),
+        paddingHorizontal: hp(containers.horizontalScreen),
+        paddingBottom: showBottomFooter ? hp(containers.bottomFooter) : 0,
+        flex: 1,
+      },
+      viewContainerContent,
+    ],
+    [hasHeader, headerHeight, showBottomFooter, viewContainerContent]
+  );
+
   return (
     <ScrollView
       style={[{ flex: 1 }, styleScrollViewContent]}
@@ -41,26 +57,13 @@ export const ScrollViewContent = ({
       nestedScrollEnabled={true}
       scrollEnabled={true}
       showsVerticalScrollIndicator={true}
+      overScrollMode={Platform.OS === "android" ? "never" : undefined}
       onScrollBeginDrag={() => {
         // Cerrar el teclado cuando se inicia el scroll
         Keyboard.dismiss();
       }}
     >
-      <View
-        style={[
-          {
-            paddingTop: hasHeader
-              ? hp(containers.topScreen) + headerHeight
-              : hp(containers.topScreen),
-            paddingHorizontal: hp(containers.horizontalScreen),
-            paddingBottom: showBottomFooter ? hp(containers.bottomFooter) : 0,
-            flex: 1,
-          },
-          viewContainerContent,
-        ]}
-      >
-        {children}
-      </View>
+      <View style={containerStyle}>{children}</View>
     </ScrollView>
   );
 };

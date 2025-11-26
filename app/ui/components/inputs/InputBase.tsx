@@ -1,19 +1,19 @@
-import React from "react";
-import { TextInput, TextInputProps } from "react-native-paper";
-import { Controller, Control, FieldError } from "react-hook-form";
-import { Animated, StyleProp, ViewStyle, TouchableOpacity } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import LayoutInput from "../../layouts/LayoutInput";
-import useInputBase from "./hooks/useInputBase";
+import { useInputFocus } from "@/app/ui/layouts/tab-layout/hooks/useInputFocus";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
+import { FontAwesome } from "@expo/vector-icons";
+import React from "react";
+import { Control, Controller, FieldError } from "react-hook-form";
+import { Animated, StyleProp, TouchableOpacity, ViewStyle } from "react-native";
+import { TextInput, TextInputProps } from "react-native-paper";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import LayoutInput from "../../layouts/LayoutInput";
+import useInputBase from "./hooks/useInputBase";
 import { IconConfig } from "./types/InputsProps";
-import { useInputFocus } from "@/app/ui/layouts/tab-layout/hooks/useInputFocus";
 
 interface InputBaseProps extends Omit<TextInputProps, "error"> {
   name: string;
-  control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   error?: FieldError;
   backgroundColor?: string;
   borderRadius?: string;
@@ -179,7 +179,7 @@ const InputBase: React.FC<InputBaseProps> = ({
                   backgroundColor: "transparent",
                   fontSize: responsiveFontSize,
                   height: responsiveHeight,
-                  fontWeight: "800",
+                  fontWeight: "600",
                   color: colors.primary,
                 },
                 style,

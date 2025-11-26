@@ -27,16 +27,16 @@ const FormHomeSearch = ({ onSubmit }: FormHomeSearchProps) => {
         name="search"
         control={control}
         label={textSearch}
-        leftIcon={{ name: "search", size: "2.2%", color: colors.primary }}
-        backgroundColor={colors.inputsGray}
+        leftIcon={{ name: "search", size: "2.2%", color: colors.gray }}
+        backgroundColor={colors.white}
       />
 
       <InputText
         name="location"
         control={control}
         label={textSearch}
-        leftIcon={{ name: "map-marker", size: "2.2%", color: colors.primary }}
-        backgroundColor={colors.inputsGray}
+        leftIcon={{ name: "map-marker", size: "2.2%", color: colors.gray }}
+        backgroundColor={colors.white}
       />
 
       <Button
@@ -52,9 +52,7 @@ const FormHomeSearch = ({ onSubmit }: FormHomeSearchProps) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: hp(containers.horizontalScreen),
-    backgroundColor: colors.white,
-    borderTopRightRadius: hp("3%"),
-    borderTopLeftRadius: hp("3%"),
+    backgroundColor: colors.lightBlue,
     padding: hp("1%"),
   },
 

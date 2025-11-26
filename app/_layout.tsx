@@ -21,6 +21,8 @@ import {
 } from "./theme";
 import FullScreenLoader from "./ui/components/loaders/full-screen/FullScreenLoader";
 import { FullScreenLoaderProvider } from "./ui/components/loaders/full-screen/FullScreenLoaderContext";
+import { DrawerComponent } from "./ui/drawer/DrawerComponent";
+import { DrawerProvider } from "./ui/drawer/DrawerContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -68,39 +70,46 @@ function RootLayoutNav() {
         <LanguageProvider>
           <FullScreenLoaderProvider>
             <TranslationsProvider>
-              <PaperProvider theme={paperTheme}>
-                <ThemeProvider value={navigationTheme}>
-                  <Stack>
-                    <Stack.Screen
-                      name="index"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="routes/home/HomeScreen"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="routes/auth/LoginScreen"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="routes/auth/RegisterScreen"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="routes/home/(tabs)"
-                      options={{ headerShown: false }}
-                    />
+              <DrawerProvider>
+                <PaperProvider theme={paperTheme}>
+                  <ThemeProvider value={navigationTheme}>
+                    <Stack>
+                      <Stack.Screen
+                        name="index"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="routes/home/HomeScreen"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="routes/home/ProfileScreen"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="routes/auth/LoginScreen"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="routes/auth/RegisterScreen"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="routes/home/(tabs)"
+                        options={{ headerShown: false }}
+                      />
 
-                    <Stack.Screen
-                      name="routes/vacancies/DetailVacancyScreen"
-                      options={{ headerShown: false }}
-                    />
-                  </Stack>
-                </ThemeProvider>
-                <Toast />
-                <FullScreenLoader />
-              </PaperProvider>
+                      <Stack.Screen
+                        name="routes/vacancies/DetailVacancyScreen"
+                        options={{ headerShown: false }}
+                      />
+                    </Stack>
+                    <DrawerComponent />
+                  </ThemeProvider>
+                  <Toast />
+                  <FullScreenLoader />
+                </PaperProvider>
+              </DrawerProvider>
             </TranslationsProvider>
           </FullScreenLoaderProvider>
         </LanguageProvider>

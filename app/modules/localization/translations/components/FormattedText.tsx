@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TextProps, StyleSheet, TextStyle } from "react-native";
+import { StyleSheet, Text, TextProps, TextStyle } from "react-native";
 import { useTranslations } from "../contexts/TranslationsContext";
 
 interface FormattedTextProps extends Omit<TextProps, "children"> {

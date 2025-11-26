@@ -1,7 +1,9 @@
 import { CinepolisLogo } from "@/app/ui/components/icons/CinepolisLogo";
 import { MenuIcon } from "@/app/ui/components/icons/MenuIcon";
 import { UserIcon } from "@/app/ui/components/icons/UserIcon";
+import { useDrawer } from "@/app/ui/drawer/DrawerContext";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import { router } from "expo-router";
 import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
@@ -24,19 +26,23 @@ export const useHeaderWithLogo = ({
   iconColor,
   backgroundColor,
 }: useHeaderWithLogoProps) => {
+  const { openDrawer } = useDrawer();
+
   const handleMenuPress = useCallback(() => {
     if (onMenuPress) {
       onMenuPress();
     } else {
-      console.log("Abrir drawer de navegación");
+      openDrawer();
     }
-  }, [onMenuPress]);
+  }, [onMenuPress, openDrawer]);
 
   const handleUserPress = useCallback(() => {
     if (onUserPress) {
       onUserPress();
     } else {
-      console.log("Navegar a perfil");
+      router.push({
+        pathname: "routes/home/ProfileScreen" as any,
+      });
     }
   }, [onUserPress]);
 
@@ -57,7 +63,16 @@ export const useHeaderWithLogo = ({
           <MenuIcon size={"5%"} color={iconColor} />
         </TouchableOpacity>
 
-        <View style={styles.logoContainer}>{renderLogo()}</View>
+        <TouchableOpacity
+          onPress={() =>
+            router.push({
+              pathname: "routes/home/HomeScreen" as any,
+            })
+          }
+          style={styles.logoContainer}
+        >
+          {renderLogo()}
+        </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleUserPress}

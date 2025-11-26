@@ -1,5 +1,5 @@
 export const containers = {
-  horizontalScreen: "1.2%",
+  horizontalScreen: "2%",
   horizontalScreenContent: "1%",
   topScreen: "1%",
   bottomScreen: "1%",
@@ -9,5 +9,5 @@ export const containers = {
   bottomComponent: "3%",
   bottomTitle: "1.5%",
   bottomParagraph: "1%",
-  bottomFooter: "10%",
+  bottomFooter: "3%",
 };

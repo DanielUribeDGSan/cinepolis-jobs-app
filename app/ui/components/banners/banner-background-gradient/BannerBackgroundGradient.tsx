@@ -1,5 +1,6 @@
 import { TextStyles } from "@/app/theme/TextStyles";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import { containers } from "@/app/utils/sizes/constants/containers";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
     paddingBottom: hp("4%"),
-    paddingHorizontal: wp("5%"),
+    paddingHorizontal: hp(containers.horizontalScreen),
   },
   textContainer: {
     width: wp("100%"),

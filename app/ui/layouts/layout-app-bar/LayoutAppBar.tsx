@@ -28,7 +28,7 @@ export const LayoutAppBar = ({
   children,
   showAppBar = false,
   showSafeArea = false,
-  showBottomFooter = false,
+  showBottomFooter = true,
   styleScrollViewContent,
   viewContainerContent,
 }: LayoutAppBarProps) => {
