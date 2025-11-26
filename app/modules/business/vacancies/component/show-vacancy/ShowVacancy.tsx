@@ -1,11 +1,13 @@
-import React from "react";
-import { useShowVacancy } from "./hooks/useShowVacancy";
-import { RenderHTMLShowVacancy } from "../render-html-vacancy/RenderHTMLShowVacancy";
 import { TextStyles } from "@/app/theme/TextStyles";
-import { View, Text } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { ActivityIndicator } from "react-native-paper";
+import BackButton from "@/app/ui/components/buttons/BackButton";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import { containers } from "@/app/utils/sizes/constants/containers";
+import React from "react";
+import { Text, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { RenderHTMLShowVacancy } from "../render-html-vacancy/RenderHTMLShowVacancy";
+import { useShowVacancy } from "./hooks/useShowVacancy";
 
 export const ShowVacancy = () => {
   const { data, isLoading } = useShowVacancy();
@@ -21,7 +23,8 @@ export const ShowVacancy = () => {
   }
 
   return (
-    <View>
+    <View style={{ paddingTop: hp(containers.topSection) }}>
+      <BackButton label="Volver" />
       <Text style={[TextStyles.h1, { marginBottom: hp("2%") }]}>
         {data?.positionTitle}
       </Text>
