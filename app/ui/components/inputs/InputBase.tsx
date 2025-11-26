@@ -4,7 +4,13 @@ import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import { FontAwesome } from "@expo/vector-icons";
 import React, { useMemo, useRef } from "react";
 import { Control, Controller, FieldError } from "react-hook-form";
-import { Animated, StyleProp, TouchableOpacity, ViewStyle } from "react-native";
+import {
+  Animated,
+  StyleProp,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  ViewStyle,
+} from "react-native";
 import { TextInput, TextInputProps } from "react-native-paper";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import LayoutInput from "../../layouts/LayoutInput";
@@ -143,87 +149,94 @@ const InputBase: React.FC<InputBaseProps> = ({
       control={control}
       name={name}
       render={({ field: { onChange, onBlur, value } }) => (
-        <Animated.View
-          ref={containerRef}
-          className={className ?? ""}
-          style={{
-            transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
-            marginBottom: 10, // Añadir margen inferior para evitar solapamientos
-            ...(containerStyle && typeof containerStyle === "object"
-              ? containerStyle
-              : {}),
+        <TouchableWithoutFeedback
+          onPress={() => {
+            // Enfocar el input cuando se hace clic en cualquier parte del contenedor
+            inputRef.current?.focus();
           }}
         >
-          <LayoutInput
-            backgroundColor={
-              isActive ? focusedBackgroundColor : backgroundColor
-            }
-            borderRadius={borderRadius}
-            error={error}
-            borderColor={getBorderColor()}
-            borderWidth={error || isActive ? 2 : 0}
+          <Animated.View
+            ref={containerRef}
+            className={className ?? ""}
+            style={{
+              transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
+              marginBottom: 10, // Añadir margen inferior para evitar solapamientos
+              ...(containerStyle && typeof containerStyle === "object"
+                ? containerStyle
+                : {}),
+            }}
           >
-            <TextInput
-              {...restProps}
-              ref={inputRef}
-              label={getLabel()}
-              value={value}
-              onChangeText={(text) => {
-                onChange(text);
-              }}
-              onBlur={(e) => {
-                handleBlur(e);
-                onBlur();
-              }}
-              onFocus={handleFocus}
-              mode={mode}
-              error={!!error}
-              theme={paperTheme}
-              textColor={colors.primary} // Color explícito del texto
-              activeOutlineColor={colors.secondary} // Color del borde cuando está activo
-              outlineColor="transparent" // Color del borde cuando no está activo
-              left={
-                leftIcon ? (
-                  <TextInput.Icon icon={() => renderIcon(leftIcon)} />
-                ) : undefined
+            <LayoutInput
+              backgroundColor={
+                isActive ? focusedBackgroundColor : backgroundColor
               }
-              right={
-                rightIcon ? (
-                  <TextInput.Icon icon={() => renderIcon(rightIcon)} />
-                ) : undefined
-              }
-              underlineStyle={{
-                display: "none",
-                ...(underlineStyle && typeof underlineStyle === "object"
-                  ? underlineStyle
-                  : {}),
-              }}
-              contentStyle={{
-                backgroundColor: "transparent",
-                fontSize: responsiveFontSize,
-                height: responsiveHeight,
-                color: colors.primary, // Color explícito del texto en contentStyle
-                ...(contentStyle && typeof contentStyle === "object"
-                  ? contentStyle
-                  : {}),
-              }}
-              style={[
-                {
+              borderRadius={borderRadius}
+              error={error}
+              borderColor={getBorderColor()}
+              borderWidth={error || isActive ? 2 : 0}
+            >
+              <TextInput
+                {...restProps}
+                ref={inputRef}
+                label={getLabel()}
+                value={value}
+                onChangeText={(text) => {
+                  onChange(text);
+                }}
+                onBlur={(e) => {
+                  handleBlur(e);
+                  onBlur();
+                }}
+                onFocus={handleFocus}
+                mode={mode}
+                error={!!error}
+                theme={paperTheme}
+                textColor={colors.primary} // Color explícito del texto
+                activeOutlineColor={colors.secondary} // Color del borde cuando está activo
+                outlineColor="transparent" // Color del borde cuando no está activo
+                left={
+                  leftIcon ? (
+                    <TextInput.Icon icon={() => renderIcon(leftIcon)} />
+                  ) : undefined
+                }
+                right={
+                  rightIcon ? (
+                    <TextInput.Icon icon={() => renderIcon(rightIcon)} />
+                  ) : undefined
+                }
+                underlineStyle={{
+                  display: "none",
+                  ...(underlineStyle && typeof underlineStyle === "object"
+                    ? underlineStyle
+                    : {}),
+                }}
+                contentStyle={{
                   backgroundColor: "transparent",
                   fontSize: responsiveFontSize,
                   height: responsiveHeight,
-                  fontWeight: "600",
-                  color: colors.primary, // Color explícito del texto
-                },
-                style,
-              ]}
-              // Configuraciones adicionales para mejor manejo del teclado
-              returnKeyType="next"
-              blurOnSubmit={false}
-              enablesReturnKeyAutomatically={true}
-            />
-          </LayoutInput>
-        </Animated.View>
+                  color: colors.primary, // Color explícito del texto en contentStyle
+                  ...(contentStyle && typeof contentStyle === "object"
+                    ? contentStyle
+                    : {}),
+                }}
+                style={[
+                  {
+                    backgroundColor: "transparent",
+                    fontSize: responsiveFontSize,
+                    height: responsiveHeight,
+                    fontWeight: "600",
+                    color: colors.primary, // Color explícito del texto
+                  },
+                  style,
+                ]}
+                // Configuraciones adicionales para mejor manejo del teclado
+                returnKeyType="next"
+                blurOnSubmit={false}
+                enablesReturnKeyAutomatically={true}
+              />
+            </LayoutInput>
+          </Animated.View>
+        </TouchableWithoutFeedback>
       )}
     />
   );
