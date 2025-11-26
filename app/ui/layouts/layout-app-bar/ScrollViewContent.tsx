@@ -3,6 +3,7 @@ import { containers } from "@/app/utils/sizes/constants/containers";
 import React, { useMemo } from "react";
 import {
   Keyboard,
+  KeyboardAvoidingView,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
@@ -47,23 +48,37 @@ export const ScrollViewContent = ({
     [hasHeader, headerHeight, showBottomFooter, viewContainerContent]
   );
 
+  const keyboardOffset = useMemo(() => {
+    if (Platform.OS === "ios") {
+      return hasHeader ? headerHeight : 0;
+    }
+    return hasHeader ? headerHeight + 20 : 20;
+  }, [hasHeader, headerHeight]);
+
   return (
-    <ScrollView
-      style={[{ flex: 1 }, styleScrollViewContent]}
-      contentContainerStyle={{ flexGrow: 1 }}
-      onScroll={onScroll}
-      scrollEventThrottle={16}
-      keyboardShouldPersistTaps="always"
-      nestedScrollEnabled={true}
-      scrollEnabled={true}
-      showsVerticalScrollIndicator={true}
-      overScrollMode={Platform.OS === "android" ? "never" : undefined}
-      onScrollBeginDrag={() => {
-        // Cerrar el teclado cuando se inicia el scroll
-        Keyboard.dismiss();
-      }}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={keyboardOffset}
     >
-      <View style={containerStyle}>{children}</View>
-    </ScrollView>
+      <ScrollView
+        style={[{ flex: 1 }, styleScrollViewContent]}
+        contentContainerStyle={{ flexGrow: 1 }}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        nestedScrollEnabled={true}
+        scrollEnabled={true}
+        showsVerticalScrollIndicator={true}
+        overScrollMode={Platform.OS === "android" ? "never" : undefined}
+        onScrollBeginDrag={() => {
+          // Cerrar el teclado cuando se inicia el scroll
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={containerStyle}>{children}</View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };

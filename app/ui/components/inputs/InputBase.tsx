@@ -2,7 +2,7 @@ import { useInputFocus } from "@/app/ui/layouts/tab-layout/hooks/useInputFocus";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import { FontAwesome } from "@expo/vector-icons";
-import React from "react";
+import React, { useRef } from "react";
 import { Control, Controller, FieldError } from "react-hook-form";
 import { Animated, StyleProp, TouchableOpacity, ViewStyle } from "react-native";
 import { TextInput, TextInputProps } from "react-native-paper";
@@ -68,6 +68,27 @@ const InputBase: React.FC<InputBaseProps> = ({
   // Ocultar tab bar cuando el input está enfocado
   useInputFocus(isFocused);
 
+  const inputRef = useRef<any>(null);
+  const containerRef = useRef<any>(null);
+
+  const handleFocus = (e: any) => {
+    setIsFocused(true);
+    // Pequeño delay para asegurar que el teclado se haya abierto
+    setTimeout(() => {
+      if (containerRef.current && inputRef.current) {
+        // Intentar hacer scroll al input usando measureInWindow
+        containerRef.current.measureInWindow(
+          (_x: number, y: number, _width: number, _height: number) => {
+            // El KeyboardAvoidingView ya maneja el ajuste automático
+            // Solo necesitamos asegurar que el input sea visible
+            // El scroll se manejará automáticamente por el KeyboardAvoidingView
+          }
+        );
+      }
+    }, 300);
+    restProps.onFocus?.(e);
+  };
+
   const getBorderColor = () => {
     if (error) return colors.error;
     if (isActive) return focusedBorderColor;
@@ -115,6 +136,7 @@ const InputBase: React.FC<InputBaseProps> = ({
       name={name}
       render={({ field: { onChange, onBlur, value } }) => (
         <Animated.View
+          ref={containerRef}
           className={className ?? ""}
           style={{
             transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
@@ -134,6 +156,7 @@ const InputBase: React.FC<InputBaseProps> = ({
           >
             <TextInput
               {...restProps}
+              ref={inputRef}
               label={getLabel()}
               value={value}
               onChangeText={(text) => {
@@ -144,10 +167,7 @@ const InputBase: React.FC<InputBaseProps> = ({
                 onBlur();
                 restProps.onBlur?.(e);
               }}
-              onFocus={(e) => {
-                setIsFocused(true);
-                restProps.onFocus?.(e);
-              }}
+              onFocus={handleFocus}
               mode={mode}
               error={!!error}
               left={

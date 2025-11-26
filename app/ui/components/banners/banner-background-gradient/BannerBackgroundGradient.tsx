@@ -1,10 +1,11 @@
+import { FormattedText } from "@/app/modules/localization/translations/components/FormattedText";
 import { TextStyles } from "@/app/theme/TextStyles";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -12,12 +13,12 @@ import {
 
 interface BannerBackgroundGradientProps {
   imagePath: string | number;
-  title: string;
+  titleIdResourceCode: number;
 }
 
 export const BannerBackgroundGradient = ({
   imagePath,
-  title,
+  titleIdResourceCode,
 }: BannerBackgroundGradientProps) => {
   return (
     <View style={styles.container}>
@@ -52,7 +53,10 @@ export const BannerBackgroundGradient = ({
               style={styles.gradientOverlay}
             >
               <View style={styles.textContainer}>
-                <Text style={styles.title}>{title}</Text>
+                <FormattedText
+                  idResourceCode={titleIdResourceCode}
+                  style={styles.title}
+                />
               </View>
             </LinearGradient>
           </View>

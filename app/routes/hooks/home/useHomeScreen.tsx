@@ -8,6 +8,7 @@ const HOME_PAGE_CODES = [PAGE_CODES.HOME];
 
 export const useHomeScreen = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
   const [filters, setFilters] = useState<VacanciesFilter>({
     puesto: "",
     sector: "",

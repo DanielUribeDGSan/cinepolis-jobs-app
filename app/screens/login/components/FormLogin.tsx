@@ -3,19 +3,19 @@ import { View } from "react-native";
 
 import LogoJobs from "@/app/ui/components/images/LogoJobs";
 
-import useFormLogin from "../hooks/useFormLogin";
 import InputEmail from "@/app/ui/components/inputs/InputEmail";
 import InputPassword from "@/app/ui/components/inputs/InputPassword";
+import useFormLogin from "../hooks/useFormLogin";
 
-import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
-import InputCheckbox from "@/app/ui/components/inputs/InputCheckbox";
-import { router } from "expo-router";
-import LinkButton from "@/app/ui/components/buttons/LinkButton";
 import Button from "@/app/ui/components/buttons/Button";
-import { containers } from "@/app/utils/sizes/constants/containers";
-import { colors } from "@/app/utils/sizes/constants/colors";
+import LinkButton from "@/app/ui/components/buttons/LinkButton";
+import InputCheckbox from "@/app/ui/components/inputs/InputCheckbox";
 import TitleAndButton from "@/app/ui/components/utils/TitleAndButton";
 import LayoutForms from "@/app/ui/layouts/LayoutForms";
+import { colors } from "@/app/utils/sizes/constants/colors";
+import { containers } from "@/app/utils/sizes/constants/containers";
+import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
+import { router } from "expo-router";
 
 const FormLogin = () => {
   const { control, errors, height, handleSubmit, onSubmit } = useFormLogin();
@@ -49,7 +49,9 @@ const FormLogin = () => {
           containerStyle={{ marginBottom: height("1%") }}
         />
         <LinkButton
-          onPress={() => router.push("/routes/auth/RegisterScreen")}
+          onPress={() =>
+            router.push({ pathname: "routes/auth/RegisterScreen" as any })
+          }
           label="¿Olvidaste tu contraseña?"
           color={colors.secondary}
         />
@@ -57,7 +59,10 @@ const FormLogin = () => {
 
       <Button
         label="Iniciar sesión"
-        style={{ marginVertical: height(containers.topComponent) }}
+        style={{
+          marginVertical: height(containers.topComponent),
+          backgroundColor: colors.secondary,
+        }}
         styleText={{ color: colors.white }}
         onPress={handleSubmit(onSubmit)}
       />
@@ -68,7 +73,9 @@ const FormLogin = () => {
         colorLinkButton={colors.secondary}
         textClassNameLinkButton="font-bold"
         title="¿No tienes una cuenta?"
-        onPress={() => router.push("/routes/auth/RegisterScreen")}
+        onPress={() =>
+          router.push({ pathname: "routes/auth/RegisterScreen" as any })
+        }
         label="Regístrate"
         fontSize="p"
         styleText={{ marginBottom: height(containers.bottomText) }}

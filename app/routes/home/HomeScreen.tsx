@@ -20,7 +20,7 @@ export default function HomeScreen() {
       <LayoutForms>
         <BannerBackgroundGradient
           imagePath={require("@/assets/images/banners/persona1.webp")}
-          title="La historia detrás de la pantalla"
+          titleIdResourceCode={47}
         />
         <FormHomeSearch onSubmit={onSubmit} />
       </LayoutForms>
