@@ -1,3 +1,4 @@
+import { useUserSession } from "@/app/modules/users/hooks/useUserSession";
 import { CinepolisLogo } from "@/app/ui/components/icons/CinepolisLogo";
 import { MenuIcon } from "@/app/ui/components/icons/MenuIcon";
 import { UserIcon } from "@/app/ui/components/icons/UserIcon";
@@ -27,6 +28,7 @@ export const useHeaderWithLogo = ({
   backgroundColor,
 }: useHeaderWithLogoProps) => {
   const { openDrawer } = useDrawer();
+  const { isAuthenticated } = useUserSession();
 
   const handleMenuPress = useCallback(() => {
     if (onMenuPress) {
@@ -40,11 +42,18 @@ export const useHeaderWithLogo = ({
     if (onUserPress) {
       onUserPress();
     } else {
-      router.push({
-        pathname: "routes/home/ProfileScreen" as any,
-      });
+      // Si hay sesión, ir al ProfileScreen, si no, ir al LoginScreen
+      if (isAuthenticated) {
+        router.push({
+          pathname: "routes/home/ProfileScreen" as any,
+        });
+      } else {
+        router.push({
+          pathname: "routes/auth/LoginScreen" as any,
+        });
+      }
     }
-  }, [onUserPress]);
+  }, [onUserPress, isAuthenticated]);
 
   const renderLogo = useCallback(() => {
     if (logoType === "svg") {

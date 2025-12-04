@@ -32,7 +32,22 @@ export default function TabProfileScreen() {
           <Text>Registro2</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ marginTop: 20, padding: 16 }}>
+      <View style={{ marginTop: 20, padding: 16, gap: 12 }}>
+        <TouchableOpacity
+          onPress={() => {
+            router.push("/routes/test/HomeTestScreen" as any);
+          }}
+          style={{
+            backgroundColor: "#34C759",
+            padding: 12,
+            borderRadius: 8,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#fff", fontWeight: "600", fontSize: 16 }}>
+            🧪 Probar Home Sin LayoutAppBar
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             router.push("/routes/test/KeyboardTestScreen" as any);

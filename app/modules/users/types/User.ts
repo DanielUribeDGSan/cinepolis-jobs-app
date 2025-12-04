@@ -8,6 +8,7 @@ export interface Roles {
 
 export interface User {
   idParty: string;
+  token: string;
   name: string;
   lastName: string;
   secondLastName: string;

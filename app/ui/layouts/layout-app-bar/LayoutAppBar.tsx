@@ -6,6 +6,7 @@ import {
   Animated,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Platform,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -103,23 +104,24 @@ export const LayoutAppBar = ({
 
       {showSafeArea ? (
         <>
-          <SafeAreaView
-            edges={["top"]}
-            style={{
-              backgroundColor: colors.primary,
-            }}
-          />
-          <View style={{ flex: 1, backgroundColor: colors.white }}>
-            <ScrollViewContent
-              styleScrollViewContent={styleScrollViewContent}
-              viewContainerContent={viewContainerContent}
-              showBottomFooter={showBottomFooter}
-              onScroll={handleCombinedScroll}
-              hasHeader={showAppBar && isHeaderVisible}
-            >
-              {children}
-            </ScrollViewContent>
-          </View>
+          {Platform.OS === "ios" && (
+            <SafeAreaView
+              edges={["top"]}
+              style={{
+                backgroundColor: colors.primary,
+              }}
+            />
+          )}
+
+          <ScrollViewContent
+            styleScrollViewContent={styleScrollViewContent}
+            viewContainerContent={viewContainerContent}
+            showBottomFooter={showBottomFooter}
+            onScroll={handleCombinedScroll}
+            hasHeader={showAppBar && isHeaderVisible}
+          >
+            {children}
+          </ScrollViewContent>
         </>
       ) : (
         <ScrollViewContent
