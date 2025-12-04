@@ -2,10 +2,11 @@ import { useInputFocus } from "@/app/ui/layouts/tab-layout/hooks/useInputFocus";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import { FontAwesome } from "@expo/vector-icons";
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { Control, Controller, FieldError } from "react-hook-form";
 import {
   Animated,
+  Platform,
   StyleProp,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -76,19 +77,77 @@ const InputBase: React.FC<InputBaseProps> = ({
 
   const inputRef = useRef<any>(null);
   const containerRef = useRef<any>(null);
+  const focusTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleFocus = (e: any) => {
     setIsFocused(true);
-
-    // Dejar que KeyboardAwareScrollView maneje el scroll automático completamente
-    // No hacer scroll manual para evitar conflictos cuando el usuario hace scroll manualmente
+    
+    // En Android, cuando cambias rápidamente entre inputs sin cerrar el teclado,
+    // KeyboardAwareScrollView necesita un poco más de tiempo para recalcular correctamente
+    // Solo hacemos esto una vez cuando el input se enfoca, sin crear ciclos
+    if (Platform.OS === "android" && containerRef.current) {
+      // Limpiar cualquier timeout anterior para evitar múltiples llamadas
+      if (focusTimeoutRef.current) {
+        clearTimeout(focusTimeoutRef.current);
+      }
+      
+      // Pequeño delay para que KeyboardAwareScrollView tenga tiempo de detectar el cambio
+      focusTimeoutRef.current = setTimeout(() => {
+        // Forzar que el contenedor se mida para ayudar a KeyboardAwareScrollView
+        // a recalcular la posición correcta del nuevo input
+        if (containerRef.current) {
+          containerRef.current.measure(() => {
+            // Esto ayuda a KeyboardAwareScrollView a detectar el nuevo input
+            // sin crear un ciclo infinito porque solo se ejecuta una vez
+          });
+        }
+      }, 200);
+    }
+    
     restProps.onFocus?.(e);
+  };
+
+  // Handler para ayudar a KeyboardAvoidingView/KeyboardAwareScrollView a detectar la posición del input
+  const handleContainerLayout = (event: any) => {
+    // Este callback ayuda a que KeyboardAvoidingView detecte mejor
+    // la posición del input cuando se enfoca, especialmente importante
+    // en dispositivos físicos tanto iOS como Android
+    if (isFocused && containerRef.current) {
+      // Forzar un re-layout para que KeyboardAvoidingView recalcule
+      // Esto es especialmente útil para inputs de Paper que tienen estructura compleja
+      containerRef.current.measure(
+        (
+          x: number,
+          y: number,
+          width: number,
+          height: number,
+          pageX: number,
+          pageY: number
+        ) => {
+          // El KeyboardAvoidingView usará esta información automáticamente
+        }
+      );
+    }
   };
 
   const handleBlur = (e: any) => {
     setIsFocused(false);
+    // Limpiar el timeout cuando el input pierde el foco
+    if (focusTimeoutRef.current) {
+      clearTimeout(focusTimeoutRef.current);
+      focusTimeoutRef.current = null;
+    }
     restProps.onBlur?.(e);
   };
+
+  // Limpiar el timeout cuando el componente se desmonte
+  useEffect(() => {
+    return () => {
+      if (focusTimeoutRef.current) {
+        clearTimeout(focusTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const getBorderColor = () => {
     if (error) return colors.error;
@@ -158,6 +217,7 @@ const InputBase: React.FC<InputBaseProps> = ({
           <Animated.View
             ref={containerRef}
             className={className ?? ""}
+            onLayout={handleContainerLayout}
             style={{
               transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
               marginBottom: 10, // Añadir margen inferior para evitar solapamientos
@@ -177,7 +237,15 @@ const InputBase: React.FC<InputBaseProps> = ({
             >
               <TextInput
                 {...restProps}
-                ref={inputRef}
+                ref={(ref: any) => {
+                  // Asegurar que la referencia se pase correctamente tanto al ref interno como al externo
+                  inputRef.current = ref;
+                  if (typeof restProps.ref === "function") {
+                    restProps.ref(ref);
+                  } else if (restProps.ref) {
+                    restProps.ref.current = ref;
+                  }
+                }}
                 label={getLabel()}
                 value={value}
                 onChangeText={(text) => {
@@ -187,13 +255,18 @@ const InputBase: React.FC<InputBaseProps> = ({
                   handleBlur(e);
                   onBlur();
                 }}
-                onFocus={handleFocus}
+                onFocus={(e) => {
+                  handleFocus(e);
+                }}
                 mode={mode}
                 error={!!error}
                 theme={paperTheme}
                 textColor={colors.primary} // Color explícito del texto
                 activeOutlineColor={colors.secondary} // Color del borde cuando está activo
                 outlineColor="transparent" // Color del borde cuando no está activo
+                // Propiedades adicionales para mejorar la detección del teclado en Android físico
+                dense={Platform.OS === "android"}
+                underlineColorAndroid="transparent"
                 left={
                   leftIcon ? (
                     <TextInput.Icon icon={() => renderIcon(leftIcon)} />

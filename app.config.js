@@ -23,6 +23,8 @@ export default {
         NSAppTransportSecurity: {
           NSAllowsArbitraryLoads: true,
         },
+        // Configuración para mejorar el comportamiento del teclado
+        UIViewControllerBasedStatusBarAppearance: true,
       },
     },
     android: {
@@ -37,7 +39,7 @@ export default {
       output: "static",
       favicon: "./assets/images/favicon.png",
     },
-    plugins: ["expo-router", "expo-secure-store"],
+    plugins: ["expo-router", "expo-secure-store", "expo-android-keyboard-fix"],
     experiments: {
       typedRoutes: true,
     },

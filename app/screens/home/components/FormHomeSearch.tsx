@@ -6,7 +6,7 @@ import useFormHomeSearch from "../hooks/useFormHomeSearch";
 import Button from "@/app/ui/components/buttons/Button";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { HomeSearchForm } from "../types/HomeSearchForm";
 import BannerInfoVacancies from "./BannerInfoVacancies";
@@ -20,46 +20,36 @@ const FormHomeSearch = ({ onSubmit }: FormHomeSearchProps) => {
     useFormHomeSearch();
 
   return (
-    <ScrollView
-      style={styles.scrollView}
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.container}>
-        <BannerInfoVacancies />
+    <View style={styles.container}>
+      <BannerInfoVacancies />
 
-        <InputText
-          name="search"
-          control={control}
-          label={textSearch}
-          leftIcon={{ name: "search", size: "2.2%", color: colors.gray }}
-          backgroundColor={colors.white}
-        />
+      <InputText
+        name="search"
+        control={control}
+        label={textSearch}
+        leftIcon={{ name: "search", size: "2.2%", color: colors.gray }}
+        backgroundColor={colors.white}
+      />
 
-        <InputText
-          name="location"
-          control={control}
-          label={textSearch}
-          leftIcon={{ name: "map-marker", size: "2.2%", color: colors.gray }}
-          backgroundColor={colors.white}
-        />
+      <InputText
+        name="location"
+        control={control}
+        label={textSearch}
+        leftIcon={{ name: "map-marker", size: "2.2%", color: colors.gray }}
+        backgroundColor={colors.white}
+      />
 
-        <Button
-          label={textButtonSearch}
-          style={styles.button}
-          styleText={{ color: colors.white }}
-          onPress={handleSubmit(onSubmit)}
-        />
-      </View>
-    </ScrollView>
+      <Button
+        label={textButtonSearch}
+        style={styles.button}
+        styleText={{ color: colors.white }}
+        onPress={handleSubmit(onSubmit)}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
-
   container: {
     paddingHorizontal: hp(containers.horizontalScreen),
     backgroundColor: colors.lightBlue,

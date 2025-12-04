@@ -1,7 +1,7 @@
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useScrollDetection } from "@/app/ui/layouts/tab-layout/hooks/useScrollDetection";
 import LanguageSelector from "@/app/modules/localization/lenguage/components/LanguageSelector";
+import { useScrollDetection } from "@/app/ui/layouts/tab-layout/hooks/useScrollDetection";
 import { router } from "expo-router";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function TabProfileScreen() {
   const { handleScroll } = useScrollDetection();
@@ -29,7 +29,24 @@ export default function TabProfileScreen() {
             router.push("/routes/auth/LoginScreen");
           }}
         >
-          <Text>Registro</Text>
+          <Text>Registro2</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ marginTop: 20, padding: 16 }}>
+        <TouchableOpacity
+          onPress={() => {
+            router.push("/routes/test/KeyboardTestScreen" as any);
+          }}
+          style={{
+            backgroundColor: "#007AFF",
+            padding: 12,
+            borderRadius: 8,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#fff", fontWeight: "600", fontSize: 16 }}>
+            🧪 Probar Teclado (Inputs Nativos)
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
