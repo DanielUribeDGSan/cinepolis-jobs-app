@@ -14,6 +14,7 @@ interface ButtonProps {
   onPress?: () => void;
   disabled?: boolean;
   size?: "small" | "medium" | "large";
+  colorLabel?: string;
 }
 const Button: React.FC<ButtonProps> = ({
   label,
@@ -24,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   onPress,
   disabled = false,
   size = "large",
+  colorLabel = colors.white,
 }) => {
   const { getSize } = useButton();
 
@@ -42,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
       ]}
     >
       <Text
-        className={`text-[${colors.white}] font-bold ${classNameText ?? ""}`}
+        className={`text-[${colorLabel}] font-bold ${classNameText ?? ""}`}
         style={[TextStyles.p, styleText]}
       >
         {label}

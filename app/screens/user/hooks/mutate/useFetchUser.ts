@@ -6,7 +6,7 @@ export const useFetchUser = () => {
   return useFetch<User>({
     key: ["user"],
     fetchFn: async () => {
-      const response = await cinepolisApi.get("/V1/Account/GetUser");
+      const response = await cinepolisApi.get("/V1/Account/Profile");
       return response.data;
     },
   });
