@@ -13,6 +13,7 @@ interface ButtonProps {
   style?: StyleProps;
   styleText?: StyleProp<TextStyle>;
   onPress?: () => void;
+  disabled?: boolean;
 }
 const Button: React.FC<ButtonProps> = ({
   label,
@@ -21,18 +22,21 @@ const Button: React.FC<ButtonProps> = ({
   style,
   styleText,
   onPress,
+  disabled = false,
 }) => {
   const { height, width } = useGetFontSize();
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onPress}
+      disabled={disabled}
       className={`inline-flex bg-theme-secondary items-center justify-center ${className ?? ""}`}
       style={[
         {
           borderRadius: height(spacesSizes.borderRadiusButton),
           padding: width(spacesSizes.paddingButton),
           height: height(spacesSizes.heightButton),
+          opacity: disabled ? 0.5 : 1,
         },
         style,
       ]}

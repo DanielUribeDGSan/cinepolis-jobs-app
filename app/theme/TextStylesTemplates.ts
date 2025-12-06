@@ -115,4 +115,20 @@ export const TextStylesTemplates = StyleSheet.create({
     ...TextStyles.p,
     color: colors.quaternary,
   },
+  smallPrimary: {
+    ...TextStyles.small,
+    color: colors.primary,
+  },
+  smallSecondary: {
+    ...TextStyles.small,
+    color: colors.secondary,
+  },
+  smallTertiary: {
+    ...TextStyles.small,
+    color: colors.tertiary,
+  },
+  smallQuaternary: {
+    ...TextStyles.small,
+    color: colors.quaternary,
+  },
 });

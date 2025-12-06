@@ -95,6 +95,10 @@ function RootLayoutNav() {
                         options={{ headerShown: false }}
                       />
                       <Stack.Screen
+                        name="routes/auth/VerificationCodeScreen"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
                         name="routes/home/(tabs)"
                         options={{ headerShown: false }}
                       />
