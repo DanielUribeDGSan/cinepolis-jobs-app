@@ -6,6 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { Control, FieldError } from "react-hook-form";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { ProfileForm } from "../types/ProfileForm";
 
 interface PersonalInfoSectionProps {
@@ -132,20 +133,24 @@ const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
             label="Guardar"
             style={{
               backgroundColor: colors.secondary,
-              marginRight: 10,
+              paddingHorizontal: hp("2%"),
+              marginRight: hp("2%"),
             }}
             styleText={{ color: colors.white }}
             onPress={onSave}
+            size="small"
           />
           <Button
             label="Cancelar"
             style={{
               backgroundColor: colors.white,
-              borderWidth: 1,
+              borderWidth: height("0.1%"),
               borderColor: colors.secondary,
+              paddingHorizontal: hp("2%"),
             }}
             styleText={{ color: colors.secondary }}
             onPress={onCancel}
+            size="small"
           />
         </View>
       )}

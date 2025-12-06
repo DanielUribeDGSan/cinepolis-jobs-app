@@ -1,12 +1,12 @@
-import React from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { Vacancy } from "../../types/Vacancies";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { fontSizes } from "@/app/utils/sizes/constants/fontSizes";
 import LinkButton from "@/app/ui/components/buttons/LinkButton";
 import { colors } from "@/app/utils/sizes/constants/colors";
-import { RenderHTMLVacancy } from "../render-html-vacancy/RenderHTMLVacancy";
+import { fontSizes } from "@/app/utils/sizes/constants/fontSizes";
 import { router } from "expo-router";
+import React from "react";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { Vacancy } from "../../types/Vacancies";
+import { RenderHTMLVacancy } from "../render-html-vacancy/RenderHTMLVacancy";
 
 interface CardVacancyProps {
   vacancies: Vacancy[];
@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     marginBottom: hp("2%"),
   },
   title: {
-    fontSize: hp(fontSizes.h4),
-    lineHeight: hp(fontSizes.lineHeightH4),
+    fontSize: fontSizes.h4,
+    lineHeight: fontSizes.lineHeightH4,
     fontWeight: "800",
     marginBottom: hp("1%"),
     color: colors.primary,
@@ -97,25 +97,25 @@ const styles = StyleSheet.create({
     marginBottom: hp("1%"),
   },
   locationTitle: {
-    fontSize: hp(fontSizes.small),
-    lineHeight: hp(fontSizes.lineHeightSmall),
+    fontSize: fontSizes.small,
+    lineHeight: fontSizes.lineHeightSmall,
     fontWeight: "600",
     color: colors.primary,
   },
   locationValue: {
-    fontSize: hp(fontSizes.small),
-    lineHeight: hp(fontSizes.lineHeightSmall),
+    fontSize: fontSizes.small,
+    lineHeight: fontSizes.lineHeightSmall,
     color: colors.primary,
   },
   categoryTitle: {
-    fontSize: hp(fontSizes.small),
-    lineHeight: hp(fontSizes.lineHeightSmall),
+    fontSize: fontSizes.small,
+    lineHeight: fontSizes.lineHeightSmall,
     fontWeight: "600",
     color: colors.primary,
   },
   categoryValue: {
-    fontSize: hp(fontSizes.small),
-    lineHeight: hp(fontSizes.lineHeightSmall),
+    fontSize: fontSizes.small,
+    lineHeight: fontSizes.lineHeightSmall,
     color: colors.primary,
   },
 });

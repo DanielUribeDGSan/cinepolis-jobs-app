@@ -23,7 +23,7 @@ interface InputBaseProps extends Omit<TextInputProps, "error"> {
   control: Control<any>;
   error?: FieldError;
   backgroundColor?: string;
-  borderRadius?: string;
+  borderRadius?: number;
   focusedBackgroundColor?: string;
   focusedBorderColor?: string;
   borderColor?: string;

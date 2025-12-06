@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Control, FieldError } from "react-hook-form";
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
 export interface IconConfig {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -11,13 +11,13 @@ export interface IconConfig {
 
 export interface InputsProps {
   name: string;
-  control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   label: string;
   placeholder?: string;
   disabled?: boolean;
   error?: FieldError;
   backgroundColor?: string;
-  borderRadius?: string;
+  borderRadius?: number;
   className?: string;
   maxLength?: number;
   allowDecimals?: boolean;
@@ -27,7 +27,7 @@ export interface InputsProps {
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
   multiline?: boolean;
   numberOfLines?: number;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   leftIcon?: IconConfig;
   rightIcon?: IconConfig;

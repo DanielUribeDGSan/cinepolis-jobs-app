@@ -43,16 +43,16 @@ export const ScrollViewContent = ({
     () => [
       {
         paddingTop: hasHeader
-          ? hp(containers.topScreen) + headerHeight
-          : hp(containers.topScreen),
-        paddingHorizontal: hp(containers.horizontalScreen),
+          ? containers.topScreen + headerHeight
+          : containers.topScreen,
+        paddingHorizontal: containers.horizontalScreen,
         paddingBottom:
           Platform.OS === "android"
             ? showBottomFooter
-              ? hp(containers.bottomFooter) + insets.bottom
+              ? containers.bottomFooter + insets.bottom
               : Math.max(insets.bottom, 20)
             : showBottomFooter
-              ? hp(containers.bottomFooter) + insets.bottom
+              ? containers.bottomFooter + insets.bottom
               : Math.max(insets.bottom, 20),
         flex: 1,
       },

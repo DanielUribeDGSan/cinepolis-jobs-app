@@ -36,7 +36,7 @@ const FormVerificationCode = () => {
       <Text
         className="text-center"
         style={[
-          { marginVertical: height(containers.bottomComponent) },
+          { marginVertical: containers.bottomComponent },
           TextStylesTemplates.h1Primary,
         ]}
       >
@@ -75,7 +75,7 @@ const FormVerificationCode = () => {
       <Button
         label="Confirmar cuenta"
         style={{
-          marginVertical: height(containers.topComponent),
+          marginVertical: containers.topComponent,
           backgroundColor: colors.secondary,
         }}
         styleText={{ color: colors.white }}

@@ -22,7 +22,7 @@ const FormLogin = () => {
 
   return (
     <LayoutForms>
-      <LogoJobs style={{ marginBottom: height(spacesSizes.bottomTitle) }} />
+      <LogoJobs style={{ marginBottom: spacesSizes.bottomTitle }} />
 
       <View>
         <InputEmail
@@ -60,7 +60,7 @@ const FormLogin = () => {
       <Button
         label="Iniciar sesión"
         style={{
-          marginVertical: height(containers.topComponent),
+          marginVertical: containers.topComponent,
           backgroundColor: colors.secondary,
         }}
         styleText={{ color: colors.white }}
@@ -78,7 +78,7 @@ const FormLogin = () => {
         }
         label="Regístrate"
         fontSize="p"
-        styleText={{ marginBottom: height(containers.bottomText) }}
+        styleText={{ marginBottom: containers.bottomText }}
         outline={false}
       />
     </LayoutForms>

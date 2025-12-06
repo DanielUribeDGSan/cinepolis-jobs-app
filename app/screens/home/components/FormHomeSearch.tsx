@@ -51,7 +51,7 @@ const FormHomeSearch = ({ onSubmit }: FormHomeSearchProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: hp(containers.horizontalScreen),
+    paddingHorizontal: containers.horizontalScreen,
     backgroundColor: colors.lightBlue,
     padding: hp("1%"),
     paddingBottom: hp("5%"), // Padding extra al final

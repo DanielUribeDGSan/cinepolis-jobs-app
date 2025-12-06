@@ -1,20 +1,25 @@
 import { TextStylesTemplates } from "@/app/theme/TextStylesTemplates";
+import LayoutForms from "@/app/ui/layouts/LayoutForms";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { fontSizes } from "@/app/utils/sizes/constants/fontSizes";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { StyleSheet, Text, View } from "react-native";
 import { useProfile } from "../hooks/useProfile";
 import AccountSection from "./AccountSection";
 import CVSection from "./CVSection";
 import PersonalInfoSection from "./PersonalInfoSection";
 import ProfileTabs from "./ProfileTabs";
 
-const ProfileContent: React.FC = () => {
+interface ProfileContentProps {
+  onOpenChangePassword: () => void;
+}
+
+const ProfileContent: React.FC<ProfileContentProps> = ({
+  onOpenChangePassword,
+}) => {
   const {
     user,
-    isLoading,
     activeTab,
     setActiveTab,
     isEditingPersonalInfo,
@@ -36,62 +41,65 @@ const ProfileContent: React.FC = () => {
   //   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Text style={[TextStylesTemplates.h1Primary, styles.welcomeText]}>
-          Bienvenid@,
-        </Text>
+    <LayoutForms>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={[TextStylesTemplates.h1Primary, styles.welcomeText]}>
+            Bienvenid@,
+          </Text>
+        </View>
+
+        <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab} />
+
+        {activeTab === "personal" && (
+          <View style={styles.content}>
+            <Text
+              style={[
+                TextStylesTemplates.h2Primary,
+                { marginBottom: height("2%") },
+              ]}
+            >
+              Datos personales
+            </Text>
+
+            <AccountSection
+              email={(user as any)?.userName || ""}
+              control={control}
+              errors={errors}
+              onOpenChangePassword={onOpenChangePassword}
+            />
+
+            <PersonalInfoSection
+              control={control}
+              errors={errors}
+              isEditing={isEditingPersonalInfo}
+              onEdit={() => setIsEditingPersonalInfo(true)}
+              onSave={handleSubmit(handleUpdatePersonalInfo)}
+              onCancel={() => setIsEditingPersonalInfo(false)}
+            />
+
+            <CVSection
+              cvFileName={(user as any)?.cvFileName}
+              onReplaceCV={handleUpdateCV}
+            />
+          </View>
+        )}
+
+        {activeTab === "vacancies" && (
+          <View style={styles.content}>
+            <Text
+              style={[
+                TextStylesTemplates.h2Primary,
+                { marginBottom: height("2%") },
+              ]}
+            >
+              Vacantes aplicadas
+            </Text>
+            <Text style={styles.emptyText}>No hay vacantes aplicadas aún</Text>
+          </View>
+        )}
       </View>
-
-      <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab} />
-
-      {activeTab === "personal" && (
-        <View style={styles.content}>
-          <Text
-            style={[
-              TextStylesTemplates.h2Primary,
-              { marginBottom: height("2%") },
-            ]}
-          >
-            Datos personales
-          </Text>
-
-          <AccountSection
-            email={(user as any)?.userName || ""}
-            control={control}
-            errors={errors}
-          />
-
-          <PersonalInfoSection
-            control={control}
-            errors={errors}
-            isEditing={isEditingPersonalInfo}
-            onEdit={() => setIsEditingPersonalInfo(true)}
-            onSave={handleSubmit(handleUpdatePersonalInfo)}
-            onCancel={() => setIsEditingPersonalInfo(false)}
-          />
-
-          <CVSection
-            cvFileName={(user as any)?.cvFileName}
-            onReplaceCV={handleUpdateCV}
-          />
-        </View>
-      )}
-
-      {activeTab === "vacancies" && (
-        <View style={styles.content}>
-          <Text
-            style={[
-              TextStylesTemplates.h2Primary,
-              { marginBottom: height("2%") },
-            ]}
-          >
-            Vacantes aplicadas
-          </Text>
-          <Text style={styles.emptyText}>No hay vacantes aplicadas aún</Text>
-        </View>
-      )}
-    </ScrollView>
+    </LayoutForms>
   );
 };
 
@@ -106,8 +114,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    paddingVertical: hp(containers.topSection),
-    paddingHorizontal: hp(containers.horizontalScreen),
+    paddingVertical: containers.topSection,
+    paddingHorizontal: containers.horizontalScreen,
     alignItems: "center",
     backgroundColor: colors.white,
   },
@@ -116,10 +124,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   content: {
-    padding: hp(containers.horizontalScreen),
+    padding: containers.horizontalScreen,
   },
   emptyText: {
-    fontSize: hp(fontSizes.p),
+    fontSize: fontSizes.p,
     color: colors.gray,
     textAlign: "center",
     backgroundColor: "red",

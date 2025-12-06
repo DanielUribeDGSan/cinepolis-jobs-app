@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: hp("1%"),
-    marginBottom: hp(containers.bottomComponent),
+    marginBottom: containers.bottomComponent,
   },
   text: {
     ...TextStyles.p,

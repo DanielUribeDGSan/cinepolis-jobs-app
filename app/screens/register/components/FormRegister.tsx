@@ -22,7 +22,7 @@ const FormRegister = () => {
       <Text
         className="text-center"
         style={[
-          { marginVertical: height(containers.bottomComponent) },
+          { marginVertical: containers.bottomComponent },
           TextStylesTemplates.h1Primary,
         ]}
       >
@@ -72,7 +72,7 @@ const FormRegister = () => {
       <Button
         label="Crear una cuenta"
         style={{
-          marginVertical: height(containers.topComponent),
+          marginVertical: containers.topComponent,
           backgroundColor: colors.secondary,
         }}
         styleText={{ color: colors.white }}
@@ -90,7 +90,7 @@ const FormRegister = () => {
         }
         label="Inicia sesión"
         fontSize="p"
-        styleText={{ marginBottom: height(containers.bottomText) }}
+        styleText={{ marginBottom: containers.bottomText }}
         outline={false}
       />
     </LayoutForms>

@@ -2,7 +2,6 @@ import { FormattedText } from "@/app/modules/localization/translations/component
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { View } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { TextStyles } from "../../../theme/TextStyles";
 
 const BannerInfoVacancies = () => {
@@ -10,15 +9,15 @@ const BannerInfoVacancies = () => {
     <View>
       <View
         style={{
-          paddingTop: hp(containers.topScreen),
-          paddingBottom: hp(containers.bottomComponent),
+          paddingTop: containers.topScreen,
+          paddingBottom: containers.bottomComponent,
         }}
       >
         <FormattedText
           idResourceCode={2}
           style={{
             ...TextStyles.h1,
-            marginBottom: hp(containers.bottomParagraph),
+            marginBottom: containers.bottomParagraph,
             color: colors.primary,
           }}
         />
@@ -27,7 +26,7 @@ const BannerInfoVacancies = () => {
           idResourceCode={391}
           style={{
             ...TextStyles.p,
-            marginBottom: hp(containers.bottomParagraph),
+            marginBottom: containers.bottomParagraph,
           }}
         />
         <FormattedText

@@ -1,10 +1,9 @@
 import { TextStyles } from "@/app/theme/TextStyles";
 import { StyleProps } from "@/app/types/Style";
 import { colors } from "@/app/utils/sizes/constants/colors";
-import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
-import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
 import React from "react";
 import { StyleProp, Text, TextStyle, TouchableOpacity } from "react-native";
+import useButton from "./hooks/useButton";
 
 interface ButtonProps {
   label: string;
@@ -14,6 +13,7 @@ interface ButtonProps {
   styleText?: StyleProp<TextStyle>;
   onPress?: () => void;
   disabled?: boolean;
+  size?: "small" | "medium" | "large";
 }
 const Button: React.FC<ButtonProps> = ({
   label,
@@ -23,8 +23,10 @@ const Button: React.FC<ButtonProps> = ({
   styleText,
   onPress,
   disabled = false,
+  size = "large",
 }) => {
-  const { height, width } = useGetFontSize();
+  const { getSize } = useButton();
+
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -33,9 +35,7 @@ const Button: React.FC<ButtonProps> = ({
       className={`inline-flex bg-theme-secondary items-center justify-center ${className ?? ""}`}
       style={[
         {
-          borderRadius: height(spacesSizes.borderRadiusButton),
-          padding: width(spacesSizes.paddingButton),
-          height: height(spacesSizes.heightButton),
+          ...getSize(size),
           opacity: disabled ? 0.5 : 1,
         },
         style,

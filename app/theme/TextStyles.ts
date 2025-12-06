@@ -1,56 +1,55 @@
 import { StyleSheet } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { fontSizes } from "../utils/sizes/constants/fontSizes";
 
 export const TextStyles = StyleSheet.create({
   h1: {
-    fontSize: hp(fontSizes.h1),
+    fontSize: fontSizes.h1,
     fontWeight: "900",
-    lineHeight: hp(fontSizes.lineHeightH1),
+    lineHeight: fontSizes.lineHeightH1,
   },
   h2: {
-    fontSize: hp(fontSizes.h2),
+    fontSize: fontSizes.h2,
     fontWeight: "800",
-    lineHeight: hp(fontSizes.lineHeightH2),
+    lineHeight: fontSizes.lineHeightH2,
   },
   h3: {
-    fontSize: hp(fontSizes.h3),
+    fontSize: fontSizes.h3,
     fontWeight: "700",
-    lineHeight: hp(fontSizes.lineHeightH3),
+    lineHeight: fontSizes.lineHeightH3,
   },
   h4: {
-    fontSize: hp(fontSizes.h4),
+    fontSize: fontSizes.h4,
     fontWeight: "500",
-    lineHeight: hp(fontSizes.lineHeightH4),
+    lineHeight: fontSizes.lineHeightH4,
   },
   h5: {
-    fontSize: hp(fontSizes.h5),
+    fontSize: fontSizes.h5,
     fontWeight: "500",
-    lineHeight: hp(fontSizes.lineHeightH5),
+    lineHeight: fontSizes.lineHeightH5,
   },
   h6: {
-    fontSize: hp(fontSizes.h6),
+    fontSize: fontSizes.h6,
     fontWeight: "500",
-    lineHeight: hp(fontSizes.lineHeightH6),
+    lineHeight: fontSizes.lineHeightH6,
   },
   p: {
-    fontSize: hp(fontSizes.p),
-    lineHeight: hp(fontSizes.lineHeightP),
+    fontSize: fontSizes.p,
+    lineHeight: fontSizes.lineHeightP,
   },
   button: {
-    fontSize: hp(fontSizes.button),
-    lineHeight: hp(fontSizes.lineHeightButton),
+    fontSize: fontSizes.button,
+    lineHeight: fontSizes.lineHeightButton,
   },
   small: {
-    fontSize: hp(fontSizes.small),
-    lineHeight: hp(fontSizes.lineHeightSmall),
+    fontSize: fontSizes.small,
+    lineHeight: fontSizes.lineHeightSmall,
   },
   verySmall: {
-    fontSize: hp(fontSizes.verySmall),
-    lineHeight: hp(fontSizes.lineHeightVerySmall),
+    fontSize: fontSizes.verySmall,
+    lineHeight: fontSizes.lineHeightVerySmall,
   },
   medium: {
-    fontSize: hp(fontSizes.medium),
-    lineHeight: hp(fontSizes.lineHeightMedium),
+    fontSize: fontSizes.medium,
+    lineHeight: fontSizes.lineHeightMedium,
   },
 });

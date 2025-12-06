@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
     paddingBottom: hp("4%"),
-    paddingHorizontal: hp(containers.horizontalScreen),
+    paddingHorizontal: containers.horizontalScreen,
   },
   textContainer: {
     width: wp("100%"),

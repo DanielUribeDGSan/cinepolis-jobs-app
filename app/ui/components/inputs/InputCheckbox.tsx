@@ -1,20 +1,20 @@
-import React from "react";
-import { Checkbox } from "react-native-paper";
-import { Controller, Control, FieldError } from "react-hook-form";
-import {
-  TouchableOpacity,
-  StyleProp,
-  ViewStyle,
-  View,
-  Text,
-} from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { colors } from "@/app/utils/sizes/constants/colors";
 import { TextStyles } from "@/app/theme/TextStyles";
+import { colors } from "@/app/utils/sizes/constants/colors";
+import React from "react";
+import { Control, Controller, FieldError } from "react-hook-form";
+import {
+  StyleProp,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
+import { Checkbox } from "react-native-paper";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 interface InputCheckboxProps {
   name: string;
-  control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   error?: FieldError;
   disabled?: boolean;
   backgroundColor?: string;

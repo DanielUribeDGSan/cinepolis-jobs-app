@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { TextInput } from "react-native-paper";
-import { TouchableOpacity } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import InputBase from "./InputBase";
-import { InputsProps } from "./types/InputsProps";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import React, { useState } from "react";
+import { TouchableOpacity } from "react-native";
+import { TextInput } from "react-native-paper";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import InputBase from "./InputBase";
+import { InputsProps } from "./types/InputsProps";
 
 const InputPassword: React.FC<InputsProps> = ({
   name,
@@ -45,12 +46,12 @@ const InputPassword: React.FC<InputsProps> = ({
           icon={() => (
             <TouchableOpacity
               onPress={togglePasswordVisibility}
-              style={{ padding: 5 }} // Área de toque más grande
+              style={{ padding: hp("1%") }}
             >
               <Ionicons
                 name={showPassword ? "eye-off-outline" : "eye-outline"}
-                size={22}
-                color={error ? "#FF3B30" : "#666"}
+                size={hp("2.2%")}
+                color={error ? colors.error : colors.gray}
               />
             </TouchableOpacity>
           )}

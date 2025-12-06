@@ -19,7 +19,7 @@ export default function TabHomeScreen() {
       viewContainerContent={{
         paddingHorizontal: 0,
         paddingTop: 0,
-        paddingBottom: hp(containers.bottomComponent),
+        paddingBottom: containers.bottomComponent,
       }}
     >
       <LayoutForms>

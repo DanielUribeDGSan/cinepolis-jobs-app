@@ -3,7 +3,6 @@ import React from "react";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { ScrollView, StyleSheet } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { VacanciesFilter } from "../../types/Vacancies";
 import { CardVacancy } from "../card-vacancy/CardVacancy";
 import { useBottomSheetVacancies } from "./hooks/useBottomSheetVacancies";
@@ -51,6 +50,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: hp(containers.horizontalScreenContent),
+    padding: containers.horizontalScreenContent,
   },
 });

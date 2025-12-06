@@ -1,13 +1,15 @@
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+
 export const containers = {
-  horizontalScreen: "2%",
-  horizontalScreenContent: "1%",
-  topScreen: "1%",
-  bottomScreen: "1%",
-  bottomText: "1%",
-  topSection: "4%",
-  topComponent: "3%",
-  bottomComponent: "3%",
-  bottomTitle: "1.5%",
-  bottomParagraph: "1%",
-  bottomFooter: "3%",
+  horizontalScreen: hp("2%"),
+  horizontalScreenContent: hp("1%"),
+  topScreen: hp("1%"),
+  bottomScreen: hp("1%"),
+  bottomText: hp("1%"),
+  topSection: hp("4%"),
+  topComponent: hp("3%"),
+  bottomComponent: hp("3%"),
+  bottomTitle: hp("1.5%"),
+  bottomParagraph: hp("1%"),
+  bottomFooter: hp("3%"),
 };

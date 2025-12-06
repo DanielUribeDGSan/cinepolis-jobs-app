@@ -23,7 +23,7 @@ export const ShowVacancy = () => {
   }
 
   return (
-    <View style={{ paddingTop: hp(containers.topSection) }}>
+    <View style={{ paddingTop: containers.topSection }}>
       <BackButton label="Volver" />
       <Text style={[TextStyles.h1, { marginBottom: hp("2%") }]}>
         {data?.positionTitle}
