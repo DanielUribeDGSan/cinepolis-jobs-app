@@ -3,11 +3,7 @@ import { LayoutAppBar } from "@/app/ui/layouts/layout-app-bar/LayoutAppBar";
 
 export default function DetailVacancyScreen() {
   return (
-    <LayoutAppBar
-      showAppBar={true}
-      showSafeArea={true}
-      styleScrollViewContent={{ paddingTop: 0 }}
-    >
+    <LayoutAppBar showAppBar showSafeArea showBackButton showPaddingTop>
       <ShowVacancy />
     </LayoutAppBar>
   );

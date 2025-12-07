@@ -1,7 +1,5 @@
 import { TextStyles } from "@/app/theme/TextStyles";
-import BackButton from "@/app/ui/components/buttons/BackButton";
 import { colors } from "@/app/utils/sizes/constants/colors";
-import { containers } from "@/app/utils/sizes/constants/containers";
 import React from "react";
 import { Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
@@ -23,8 +21,7 @@ export const ShowVacancy = () => {
   }
 
   return (
-    <View style={{ paddingTop: containers.topSection }}>
-      <BackButton label="Volver" />
+    <View>
       <Text style={[TextStyles.h1, { marginBottom: hp("2%") }]}>
         {data?.positionTitle}
       </Text>

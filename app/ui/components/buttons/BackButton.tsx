@@ -1,4 +1,5 @@
 import { TextStyles } from "@/app/theme/TextStyles";
+import { StyleProps } from "@/app/types/Style";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
 import { FontAwesome } from "@expo/vector-icons";
@@ -9,14 +10,18 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 interface BackButtonProps {
   label: string;
+  styleContainer?: StyleProps;
 }
 
-const BackButton = ({ label }: BackButtonProps) => {
+const BackButton = ({ label, styleContainer }: BackButtonProps) => {
   const onPress = () => {
     router.back();
   };
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.container, styleContainer]}
+    >
       <FontAwesome name="arrow-left" size={hp("2%")} color={colors.primary} />
       <Text style={styles.text}>{label}</Text>
     </TouchableOpacity>

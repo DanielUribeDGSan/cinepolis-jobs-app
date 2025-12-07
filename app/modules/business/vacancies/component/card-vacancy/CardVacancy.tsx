@@ -5,15 +5,12 @@ import { router } from "expo-router";
 import React from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { Vacancy } from "../../types/Vacancies";
+
 import { RenderHTMLVacancy } from "../render-html-vacancy/RenderHTMLVacancy";
+import { useCardVacancy } from "./hooks/useCardVacancy";
 
-interface CardVacancyProps {
-  vacancies: Vacancy[];
-  isLoading: boolean;
-}
-
-export const CardVacancy = ({ vacancies, isLoading }: CardVacancyProps) => {
+export const CardVacancy = () => {
+  const { data, isLoading } = useCardVacancy();
   if (isLoading) {
     return (
       <ActivityIndicator
@@ -26,7 +23,7 @@ export const CardVacancy = ({ vacancies, isLoading }: CardVacancyProps) => {
 
   return (
     <View className="flex  w-full " style={styles.container}>
-      {vacancies.map((vacancy) => (
+      {data?.map((vacancy) => (
         <View
           className="flex border border-theme-borderColor w-full "
           style={styles.cardVacancy}

@@ -12,31 +12,26 @@ import {
   View,
 } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ScrollViewContentProps {
   children: React.ReactNode;
   styleScrollViewContent?: StyleProps;
   viewContainerContent?: StyleProps;
   showBottomFooter: boolean;
-  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   hasHeader?: boolean;
+  showPaddingTop?: boolean;
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
 export const ScrollViewContent = ({
   children,
   styleScrollViewContent,
   viewContainerContent,
-  showBottomFooter,
-  onScroll,
   hasHeader = false,
+  showPaddingTop = false,
+  onScroll,
 }: ScrollViewContentProps) => {
-  const insets = useSafeAreaInsets();
-
-  // Altura aproximada del Appbar.Header
   const headerHeight = hp("7%");
 
   const containerStyle = useMemo(
@@ -46,29 +41,16 @@ export const ScrollViewContent = ({
           ? containers.topScreen + headerHeight
           : containers.topScreen,
         paddingHorizontal: containers.horizontalScreen,
-        paddingBottom:
-          Platform.OS === "android"
-            ? showBottomFooter
-              ? containers.bottomFooter + insets.bottom
-              : Math.max(insets.bottom, 20)
-            : showBottomFooter
-              ? containers.bottomFooter + insets.bottom
-              : Math.max(insets.bottom, 20),
+
         flex: 1,
       },
       viewContainerContent,
     ],
-    [
-      hasHeader,
-      headerHeight,
-      showBottomFooter,
-      viewContainerContent,
-      insets.bottom,
-    ]
+    [hasHeader, headerHeight, viewContainerContent]
   );
 
   return Platform.OS === "ios" ? (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={[{ flex: 1 }, styleScrollViewContent]}
@@ -77,9 +59,13 @@ export const ScrollViewContent = ({
         }
       >
         <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
+          contentContainerStyle={[
+            {
+              flexGrow: 1,
+              paddingTop: showPaddingTop ? containers.topSection : 0,
+            },
+            styles.scrollContent,
+          ]}
           style={{ flex: 1 }}
           onScroll={onScroll}
           scrollEventThrottle={16}
@@ -94,10 +80,16 @@ export const ScrollViewContent = ({
       </KeyboardAvoidingView>
     </View>
   ) : (
-    <SafeAreaView style={styles.container} edges={["top"]}>
+    <SafeAreaView style={[styles.container]} edges={["top"]}>
       <KeyboardAvoidingView behavior={"height"} keyboardVerticalOffset={0}>
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[
+            {
+              flexGrow: 1,
+              paddingTop: showPaddingTop ? containers.topSection : 0,
+            },
+            styles.scrollContent,
+          ]}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           keyboardDismissMode="on-drag"
@@ -120,6 +112,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: hp(containers.bottomComponent),
+    paddingBottom: containers.bottomComponent,
   },
 });

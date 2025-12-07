@@ -4,6 +4,7 @@ import { MenuIcon } from "@/app/ui/components/icons/MenuIcon";
 import { UserIcon } from "@/app/ui/components/icons/UserIcon";
 import { useDrawer } from "@/app/ui/drawer/DrawerContext";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -15,6 +16,7 @@ import {
 interface useHeaderWithLogoProps {
   onMenuPress?: () => void;
   onUserPress?: () => void;
+  showBackButton?: boolean;
   logoType?: "svg" | "image";
   iconColor?: string;
   backgroundColor?: string;
@@ -23,6 +25,7 @@ interface useHeaderWithLogoProps {
 export const useHeaderWithLogo = ({
   onMenuPress,
   onUserPress,
+  showBackButton,
   logoType,
   iconColor,
   backgroundColor,
@@ -42,7 +45,6 @@ export const useHeaderWithLogo = ({
     if (onUserPress) {
       onUserPress();
     } else {
-      // Si hay sesión, ir al ProfileScreen, si no, ir al LoginScreen
       if (isAuthenticated) {
         router.push({
           pathname: "routes/home/ProfileScreen" as any,
@@ -55,6 +57,12 @@ export const useHeaderWithLogo = ({
     }
   }, [onUserPress, isAuthenticated]);
 
+  const handleBackPress = useCallback(() => {
+    if (showBackButton) {
+      router.back();
+    }
+  }, [showBackButton]);
+
   const renderLogo = useCallback(() => {
     if (logoType === "svg") {
       return <CinepolisLogo width={"40%"} height={"3.7%"} color={iconColor} />;
@@ -64,13 +72,27 @@ export const useHeaderWithLogo = ({
   const renderMenuIcon = useCallback(() => {
     return (
       <View style={[styles.header, { backgroundColor }]}>
-        <TouchableOpacity
-          onPress={handleMenuPress}
-          style={[styles.iconButton, { backgroundColor: colors.quinary }]}
-          activeOpacity={0.7}
-        >
-          <MenuIcon size={"5%"} color={iconColor} />
-        </TouchableOpacity>
+        {showBackButton ? (
+          <TouchableOpacity
+            onPress={handleBackPress}
+            style={[styles.iconButton, { backgroundColor: colors.quinary }]}
+            activeOpacity={0.7}
+          >
+            <FontAwesome
+              name="arrow-left"
+              size={hp("2%")}
+              color={colors.white}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={handleMenuPress}
+            style={[styles.iconButton, { backgroundColor: colors.quinary }]}
+            activeOpacity={0.7}
+          >
+            <MenuIcon size={"5%"} color={iconColor} />
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity
           onPress={() =>
@@ -93,11 +115,13 @@ export const useHeaderWithLogo = ({
       </View>
     );
   }, [
-    handleMenuPress,
-    handleUserPress,
-    renderLogo,
-    iconColor,
     backgroundColor,
+    showBackButton,
+    handleBackPress,
+    handleMenuPress,
+    iconColor,
+    renderLogo,
+    handleUserPress,
   ]);
 
   return {

@@ -21,6 +21,9 @@ interface LayoutAppBarProps {
   styleScrollViewContent?: StyleProps;
   showBottomFooter?: boolean;
   viewContainerContent?: StyleProps;
+  showBackButton?: boolean;
+  showPaddingTop?: boolean;
+  showPaddingBottom?: boolean;
   onBackPress?: () => void;
   onMenuPress?: () => void;
 }
@@ -30,6 +33,8 @@ export const LayoutAppBar = ({
   showAppBar = false,
   showSafeArea = false,
   showBottomFooter = true,
+  showBackButton = false,
+  showPaddingTop = false,
   styleScrollViewContent,
   viewContainerContent,
 }: LayoutAppBarProps) => {
@@ -82,7 +87,7 @@ export const LayoutAppBar = ({
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.white }}>
+    <View style={[{ flex: 1, backgroundColor: colors.white }]}>
       {showAppBar && (
         <>
           <Animated.View
@@ -97,7 +102,7 @@ export const LayoutAppBar = ({
               pointerEvents: isHeaderVisible ? "auto" : "none",
             }}
           >
-            <HeaderWithLogo />
+            <HeaderWithLogo showBackButton={showBackButton} />
           </Animated.View>
         </>
       )}
@@ -117,8 +122,9 @@ export const LayoutAppBar = ({
             styleScrollViewContent={styleScrollViewContent}
             viewContainerContent={viewContainerContent}
             showBottomFooter={showBottomFooter}
-            onScroll={handleCombinedScroll}
             hasHeader={showAppBar && isHeaderVisible}
+            showPaddingTop={showPaddingTop}
+            onScroll={handleCombinedScroll}
           >
             {children}
           </ScrollViewContent>
@@ -128,8 +134,9 @@ export const LayoutAppBar = ({
           styleScrollViewContent={styleScrollViewContent}
           viewContainerContent={viewContainerContent}
           showBottomFooter={showBottomFooter}
-          onScroll={handleCombinedScroll}
           hasHeader={showAppBar && isHeaderVisible}
+          showPaddingTop={showPaddingTop}
+          onScroll={handleCombinedScroll}
         >
           {children}
         </ScrollViewContent>

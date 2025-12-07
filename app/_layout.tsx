@@ -107,6 +107,11 @@ function RootLayoutNav() {
                         name="routes/vacancies/DetailVacancyScreen"
                         options={{ headerShown: false }}
                       />
+
+                      <Stack.Screen
+                        name="routes/vacancies/VacanciesScreen"
+                        options={{ headerShown: false }}
+                      />
                     </Stack>
                     <DrawerComponent />
                   </ThemeProvider>

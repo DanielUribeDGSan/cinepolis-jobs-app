@@ -196,7 +196,6 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.p,
     color: colors.gray,
     textAlign: "center",
-    backgroundColor: "red",
   },
   logoutContainer: {
     marginTop: containers.topComponent,

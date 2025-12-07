@@ -12,12 +12,14 @@ interface HeaderWithLogoProps {
   iconColor?: string;
   showSafeArea?: boolean;
   showStatusBar?: boolean;
+  showBackButton?: boolean;
   statusBarStyle?: "light-content" | "dark-content";
 }
 
 export const HeaderWithLogo: React.FC<HeaderWithLogoProps> = ({
   onMenuPress,
   onUserPress,
+  showBackButton,
   logoType = "svg",
   backgroundColor = colors.primary,
   iconColor = colors.white,
@@ -28,6 +30,7 @@ export const HeaderWithLogo: React.FC<HeaderWithLogoProps> = ({
   const { renderMenuIcon } = useHeaderWithLogo({
     onMenuPress,
     onUserPress,
+    showBackButton,
     backgroundColor,
     logoType,
     iconColor,
