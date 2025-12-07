@@ -16,7 +16,7 @@ interface FormHomeSearchProps {
 }
 
 const FormHomeSearch = ({ onSubmit }: FormHomeSearchProps) => {
-  const { control, textSearch, textButtonSearch, handleSubmit } =
+  const { control, textSearch, textLocation, textButtonSearch, handleSubmit } =
     useFormHomeSearch();
 
   return (
@@ -34,7 +34,7 @@ const FormHomeSearch = ({ onSubmit }: FormHomeSearchProps) => {
       <InputText
         name="location"
         control={control}
-        label={textSearch}
+        label={textLocation}
         leftIcon={{ name: "map-marker", size: "2.2%", color: colors.gray }}
         backgroundColor={colors.white}
       />
