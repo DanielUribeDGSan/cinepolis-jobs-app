@@ -54,13 +54,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: containers.horizontalScreen,
     backgroundColor: colors.lightBlue,
     padding: hp("1%"),
-    paddingBottom: hp("5%"), // Padding extra al final
+    paddingTop: hp("1%"),
+    paddingBottom: hp("5%"),
+    gap: hp("3%"),
   },
 
   button: {
     backgroundColor: colors.secondary,
     marginTop: hp("2%"), // Más espacio entre el último input y el botón
     marginBottom: hp("2%"),
+  },
+  spacer: {
+    height: hp("2%"), // Altura para capturar el espacio entre inputs
   },
 });
 

@@ -18,6 +18,7 @@ const InputText: React.FC<InputsProps> = ({
   error,
   backgroundColor = colors.inputsGray,
   borderRadius = spacesSizes.borderRadiusButton,
+  spaceBottom = false,
   ...restProps
 }) => {
   return (

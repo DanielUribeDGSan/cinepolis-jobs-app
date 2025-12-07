@@ -1,6 +1,8 @@
 import Button from "@/app/ui/components/buttons/Button";
 import InputText from "@/app/ui/components/inputs/InputText";
 import { colors } from "@/app/utils/sizes/constants/colors";
+import { containers } from "@/app/utils/sizes/constants/containers";
+import { fontSizes } from "@/app/utils/sizes/constants/fontSizes";
 import useGetFontSize from "@/app/utils/sizes/hooks/useGetFontSize";
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
@@ -160,35 +162,35 @@ const PersonalInfoSection: React.FC<PersonalInfoSectionProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 30,
+    marginBottom: hp("3%"),
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: hp("2%"),
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: fontSizes.small,
     fontWeight: "600",
     color: colors.primary,
   },
   editButton: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: hp("1%"),
   },
   editText: {
-    fontSize: 14,
+    fontSize: fontSizes.small,
     color: colors.secondary,
     fontWeight: "500",
   },
   fieldsContainer: {
-    marginBottom: 15,
+    gap: containers.bottomComponentInputs,
   },
   buttonContainer: {
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: hp("1%"),
   },
 });
 

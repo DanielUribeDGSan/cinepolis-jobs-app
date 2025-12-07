@@ -1,9 +1,9 @@
+import { colors } from "@/app/utils/sizes/constants/colors";
+import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import React from "react";
 import { TextInput as RNTextInput } from "react-native";
 import InputBase from "./InputBase";
 import { InputsProps } from "./types/InputsProps";
-import { colors } from "@/app/utils/sizes/constants/colors";
-import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 
 const InputNumber: React.FC<InputsProps> = ({
   name,
@@ -13,6 +13,7 @@ const InputNumber: React.FC<InputsProps> = ({
   error,
   backgroundColor = colors.inputsGray,
   borderRadius = spacesSizes.borderRadiusButton,
+  spaceBottom = false,
   disabled = false,
   maxLength,
   allowDecimals = false,

@@ -5,8 +5,7 @@ const LayoutForms = ({ children }: { children: React.ReactNode }) => {
     <Pressable
       className="flex-1"
       onPress={() => Keyboard.dismiss()}
-      onStartShouldSetResponder={() => false}
-      onMoveShouldSetResponder={() => false}
+      style={{ flex: 1 }}
     >
       <View className="flex-1" pointerEvents="box-none">
         {children}

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import LogoJobs from "@/app/ui/components/images/LogoJobs";
 
@@ -14,7 +14,6 @@ import TitleAndButton from "@/app/ui/components/utils/TitleAndButton";
 import LayoutForms from "@/app/ui/layouts/LayoutForms";
 import { colors } from "@/app/utils/sizes/constants/colors";
 import { containers } from "@/app/utils/sizes/constants/containers";
-import { spacesSizes } from "@/app/utils/sizes/constants/fontSizes";
 import { router } from "expo-router";
 
 const FormLogin = () => {
@@ -22,15 +21,16 @@ const FormLogin = () => {
 
   return (
     <LayoutForms>
-      <LogoJobs style={{ marginBottom: spacesSizes.bottomTitle }} />
+      <LogoJobs />
 
-      <View>
+      <View style={styles.container}>
         <InputEmail
           name="email"
           control={control}
           label="Email"
           containerStyle={{ marginBottom: height("1%") }}
           error={errors.email}
+          spaceBottom={true}
         />
         <InputPassword
           name="password"
@@ -38,6 +38,7 @@ const FormLogin = () => {
           label="password"
           containerStyle={{ marginBottom: height("1%") }}
           error={errors.password}
+          spaceBottom={true}
         />
       </View>
 
@@ -86,3 +87,10 @@ const FormLogin = () => {
 };
 
 export default FormLogin;
+
+const styles = StyleSheet.create({
+  container: {
+    gap: containers.bottomComponentInputs,
+    marginBottom: containers.bottomComponentInputs,
+  },
+});

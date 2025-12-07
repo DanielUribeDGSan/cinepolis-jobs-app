@@ -31,4 +31,5 @@ export interface InputsProps {
   containerStyle?: StyleProp<ViewStyle>;
   leftIcon?: IconConfig;
   rightIcon?: IconConfig;
+  spaceBottom?: boolean;
 }

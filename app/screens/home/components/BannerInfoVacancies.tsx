@@ -10,7 +10,6 @@ const BannerInfoVacancies = () => {
       <View
         style={{
           paddingTop: containers.topScreen,
-          paddingBottom: containers.bottomSection,
         }}
       >
         <FormattedText

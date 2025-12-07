@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, useMemo } from "react";
-import { useWatch, Control } from "react-hook-form";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Control, useWatch } from "react-hook-form";
 import { Animated, Easing } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 interface UseInputBaseProps {
-  control: Control<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   name: string;
   inputHeight?: number;
   fontSize?: number;

@@ -17,6 +17,7 @@ const InputPassword: React.FC<InputsProps> = ({
   backgroundColor = colors.inputsGray,
   borderRadius = spacesSizes.borderRadiusButton,
   disabled = false,
+  spaceBottom = false,
   ...restProps
 }) => {
   const [showPassword, setShowPassword] = useState(false);

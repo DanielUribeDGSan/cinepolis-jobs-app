@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { TextStylesTemplates } from "@/app/theme/TextStylesTemplates";
 import Button from "@/app/ui/components/buttons/Button";
@@ -22,14 +22,17 @@ const FormRegister = () => {
       <Text
         className="text-center"
         style={[
-          { marginVertical: containers.bottomComponent },
+          {
+            marginTop: containers.topContent,
+            marginBottom: containers.bottomContent,
+          },
           TextStylesTemplates.h1Primary,
         ]}
       >
         Crear cuenta
       </Text>
 
-      <View>
+      <View style={styles.container}>
         <InputEmail
           name="email"
           control={control}
@@ -98,3 +101,10 @@ const FormRegister = () => {
 };
 
 export default FormRegister;
+
+const styles = StyleSheet.create({
+  container: {
+    gap: containers.bottomComponentInputs,
+    marginBottom: containers.bottomComponentInputs,
+  },
+});

@@ -47,6 +47,7 @@ const InputBase: React.FC<InputBaseProps> = ({
   borderColor = "transparent",
   mode = "flat",
   style,
+
   contentStyle,
   underlineStyle,
   fontSize,
@@ -158,7 +159,6 @@ const InputBase: React.FC<InputBaseProps> = ({
             className={className ?? ""}
             style={{
               transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
-              marginBottom: 10, // Añadir margen inferior para evitar solapamientos
               ...(containerStyle && typeof containerStyle === "object"
                 ? containerStyle
                 : {}),

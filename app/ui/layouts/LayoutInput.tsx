@@ -1,6 +1,7 @@
 import React from "react";
 import { FieldError } from "react-hook-form";
 import { View } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 interface LayoutInputProps {
   backgroundColor: string;
@@ -9,6 +10,7 @@ interface LayoutInputProps {
   borderColor?: string;
   borderWidth?: number;
   children: React.ReactNode;
+  spaceBottom?: boolean;
 }
 
 const LayoutInput = ({
@@ -27,7 +29,7 @@ const LayoutInput = ({
         borderColor: borderColor,
         borderWidth: borderWidth,
         overflow: "hidden",
-        marginBottom: error ? 4 : 25,
+        marginBottom: error ? hp("3%") : 0,
       }}
     >
       {children}
