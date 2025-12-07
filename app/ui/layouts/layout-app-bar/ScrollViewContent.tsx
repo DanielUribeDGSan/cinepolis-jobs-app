@@ -80,23 +80,36 @@ export const ScrollViewContent = ({
       </KeyboardAvoidingView>
     </View>
   ) : (
-    <SafeAreaView style={[styles.container]} edges={["top"]}>
-      <KeyboardAvoidingView behavior={"height"} keyboardVerticalOffset={0}>
-        <ScrollView
-          contentContainerStyle={[
-            {
-              flexGrow: 1,
-              paddingTop: showPaddingTop ? containers.topSection : 0,
-            },
-            styles.scrollContent,
-          ]}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          keyboardDismissMode="on-drag"
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.primary }}
+      edges={["top"]}
+    >
+      <View style={[styles.container, { flex: 1 }]}>
+        <KeyboardAvoidingView
+          behavior={"height"}
+          keyboardVerticalOffset={0}
+          style={{ flex: 1, backgroundColor: colors.white }}
         >
-          <View style={containerStyle}>{children}</View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <ScrollView
+            contentContainerStyle={[
+              {
+                flexGrow: 1,
+                paddingTop: showPaddingTop ? containers.topSection : 0,
+              },
+              styles.scrollContent,
+            ]}
+            style={{ flex: 1, backgroundColor: colors.white }}
+            onScroll={onScroll}
+            scrollEventThrottle={16}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            keyboardDismissMode="on-drag"
+            nestedScrollEnabled={true}
+          >
+            <View style={containerStyle}>{children}</View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 };
