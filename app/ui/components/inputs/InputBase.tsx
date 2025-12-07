@@ -10,6 +10,7 @@ import {
   StyleProp,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  View,
   ViewStyle,
 } from "react-native";
 import { TextInput, TextInputProps } from "react-native-paper";
@@ -56,6 +57,7 @@ const InputBase: React.FC<InputBaseProps> = ({
   containerStyle,
   leftIcon,
   rightIcon,
+  disabled,
   ...restProps
 }) => {
   const {
@@ -110,10 +112,14 @@ const InputBase: React.FC<InputBaseProps> = ({
   const paperTheme = useMemo(
     () => ({
       colors: {
-        primary: colors.primary, // Color del label igual al texto
-        text: colors.primary, // Color del texto del input
-        placeholder: colors.gray, // Color del placeholder
-        error: colors.error, // Color del error
+        primary: colors.primary,
+        text: colors.primary,
+        placeholder: colors.gray,
+        error: colors.error,
+        disabled: colors.lightGray,
+        onSurfaceDisabled: colors.lightGray,
+        onSurfaceVariant: colors.lightGray,
+        onSurface: colors.lightGray,
       },
     }),
     []
@@ -159,6 +165,7 @@ const InputBase: React.FC<InputBaseProps> = ({
             className={className ?? ""}
             style={{
               transform: [{ scale: scaleAnim }, { scaleY: borderScaleAnim }],
+              opacity: disabled ? 1 : 1, // Mantener opacidad completa cuando está disabled
               ...(containerStyle && typeof containerStyle === "object"
                 ? containerStyle
                 : {}),
@@ -173,78 +180,83 @@ const InputBase: React.FC<InputBaseProps> = ({
               borderColor={getBorderColor()}
               borderWidth={error || isActive ? 2 : 0}
             >
-              <TextInput
-                {...restProps}
-                ref={(ref: any) => {
-                  // Asegurar que la referencia se pase correctamente tanto al ref interno como al externo
-                  inputRef.current = ref;
-                  if (typeof restProps.ref === "function") {
-                    restProps.ref(ref);
-                  } else if (restProps.ref) {
-                    restProps.ref.current = ref;
+              <View style={{ opacity: disabled ? 1 : 1 }}>
+                <TextInput
+                  {...restProps}
+                  ref={(ref: any) => {
+                    // Asegurar que la referencia se pase correctamente tanto al ref interno como al externo
+                    inputRef.current = ref;
+                    if (typeof restProps.ref === "function") {
+                      restProps.ref(ref);
+                    } else if (restProps.ref) {
+                      restProps.ref.current = ref;
+                    }
+                  }}
+                  label={getLabel()}
+                  value={value}
+                  onChangeText={(text) => {
+                    onChange(text);
+                  }}
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    onBlur();
+                  }}
+                  onFocus={(e) => {
+                    handleFocus(e);
+                  }}
+                  mode={mode}
+                  error={!!error}
+                  editable={!disabled}
+                  theme={paperTheme}
+                  textColor={colors.primary} // Color explícito del texto
+                  activeOutlineColor={colors.secondary} // Color del borde cuando está activo
+                  outlineColor="transparent" // Color del borde cuando no está activo
+                  // Propiedades adicionales para mejorar la detección del teclado en Android físico
+                  dense={Platform.OS === "android"}
+                  underlineColorAndroid="transparent"
+                  left={
+                    leftIcon ? (
+                      <TextInput.Icon icon={() => renderIcon(leftIcon)} />
+                    ) : undefined
                   }
-                }}
-                label={getLabel()}
-                value={value}
-                onChangeText={(text) => {
-                  onChange(text);
-                }}
-                onBlur={(e) => {
-                  handleBlur(e);
-                  onBlur();
-                }}
-                onFocus={(e) => {
-                  handleFocus(e);
-                }}
-                mode={mode}
-                error={!!error}
-                theme={paperTheme}
-                textColor={colors.primary} // Color explícito del texto
-                activeOutlineColor={colors.secondary} // Color del borde cuando está activo
-                outlineColor="transparent" // Color del borde cuando no está activo
-                // Propiedades adicionales para mejorar la detección del teclado en Android físico
-                dense={Platform.OS === "android"}
-                underlineColorAndroid="transparent"
-                left={
-                  leftIcon ? (
-                    <TextInput.Icon icon={() => renderIcon(leftIcon)} />
-                  ) : undefined
-                }
-                right={
-                  rightIcon ? (
-                    <TextInput.Icon icon={() => renderIcon(rightIcon)} />
-                  ) : undefined
-                }
-                underlineStyle={{
-                  display: "none",
-                  ...(underlineStyle && typeof underlineStyle === "object"
-                    ? underlineStyle
-                    : {}),
-                }}
-                contentStyle={{
-                  backgroundColor: "transparent",
-                  fontSize: responsiveFontSize,
-                  height: responsiveHeight,
-                  color: colors.primary, // Color explícito del texto en contentStyle
-                  ...(contentStyle && typeof contentStyle === "object"
-                    ? contentStyle
-                    : {}),
-                }}
-                style={[
-                  {
+                  right={
+                    rightIcon ? (
+                      <TextInput.Icon icon={() => renderIcon(rightIcon)} />
+                    ) : undefined
+                  }
+                  underlineStyle={{
+                    display: "none",
+                    ...(underlineStyle && typeof underlineStyle === "object"
+                      ? underlineStyle
+                      : {}),
+                  }}
+                  contentStyle={{
                     backgroundColor: "transparent",
                     fontSize: responsiveFontSize,
                     height: responsiveHeight,
-                    fontWeight: "600",
-                    color: colors.primary, // Color explícito del texto
-                  },
-                  style,
-                ]}
-                // Configuraciones adicionales para mejor manejo del teclado
-                returnKeyType="next"
-                blurOnSubmit={false}
-                enablesReturnKeyAutomatically={true}
-              />
+                    color: colors.primary, // Color explícito del texto en contentStyle
+                    opacity: disabled ? 1 : 1, // Mantener opacidad completa cuando está disabled
+                    ...(contentStyle && typeof contentStyle === "object"
+                      ? contentStyle
+                      : {}),
+                  }}
+                  style={[
+                    {
+                      backgroundColor: "transparent",
+                      fontSize: responsiveFontSize,
+                      height: responsiveHeight,
+                      fontWeight: "600",
+                      color: colors.primary, // Color explícito del texto
+                      opacity: disabled ? 1 : 1, // Mantener opacidad completa incluso cuando está disabled
+                    },
+                    style,
+                  ]}
+                  // Configuraciones adicionales para mejor manejo del teclado
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  enablesReturnKeyAutomatically={true}
+                />
+              </View>
             </LayoutInput>
           </Animated.View>
         </TouchableWithoutFeedback>
