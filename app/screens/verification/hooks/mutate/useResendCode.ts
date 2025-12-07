@@ -1,27 +1,21 @@
 import { cinepolisApi } from "@/app/modules/network/api/cinepolisApi";
 import { useMutate } from "@/app/modules/network/hooks/useMutate";
 import { ErrorMessage } from "@/app/modules/network/types/ErrorMessage";
+import { useFullScreenLoaderEffect } from "@/app/ui/components/loaders/full-screen/useFullScreenLoader";
 import { translationsMessages } from "@/app/ui/messages/constants/translations";
 import {
   showErrorMessage,
-  showLoadingMessage,
   showSuccessMessage,
   toastDismiss,
 } from "@/app/ui/messages/Messages";
 
 export const useResendCode = () => {
-  return useMutate({
+  const mutationResult = useMutate({
     mutationFn: async (email: string) => {
       const response = await cinepolisApi.post("/V1/Account/ResendCode", {
         email,
       });
       return response.data;
-    },
-    onMutate: () => {
-      showLoadingMessage({
-        title: translationsMessages.loadingData,
-        description: "Reenviando código...",
-      });
     },
     onSuccess: async () => {
       showSuccessMessage({
@@ -38,4 +32,8 @@ export const useResendCode = () => {
       });
     },
   });
+
+  useFullScreenLoaderEffect(mutationResult.isPending || false);
+
+  return mutationResult;
 };

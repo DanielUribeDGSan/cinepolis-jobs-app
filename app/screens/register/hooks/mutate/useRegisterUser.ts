@@ -1,9 +1,9 @@
 import { useMutate } from "@/app/modules/network/hooks/useMutate";
 import { ErrorMessage } from "@/app/modules/network/types/ErrorMessage";
+import { useFullScreenLoaderEffect } from "@/app/ui/components/loaders/full-screen/useFullScreenLoader";
 import { translationsMessages } from "@/app/ui/messages/constants/translations";
 import {
   showErrorMessage,
-  showLoadingMessage,
   showSuccessMessage,
   toastDismiss,
 } from "@/app/ui/messages/Messages";
@@ -14,16 +14,10 @@ import { translations } from "../../constants/translations";
 import { RegisterRequest } from "../../types/RegisterForm";
 
 export const useRegisterUser = () => {
-  return useMutate({
+  const mutationResult = useMutate({
     mutationFn: async (body: RegisterRequest) => {
       const response = await cinepolisApi.post("/V1/Account/Create", body);
       return response.data;
-    },
-    onMutate: () => {
-      showLoadingMessage({
-        title: translationsMessages.loadingData,
-        description: translationsMessages.loadingDataDetail,
-      });
     },
     onSuccess: async (response: any, variables: RegisterRequest) => {
       showSuccessMessage({
@@ -32,7 +26,6 @@ export const useRegisterUser = () => {
       });
       toastDismiss();
 
-      // Redirigir a la pantalla de verificación de código con el email
       router.push({
         pathname: "routes/auth/VerificationCodeScreen" as any,
         params: { email: variables.email },
@@ -46,4 +39,8 @@ export const useRegisterUser = () => {
       });
     },
   });
+
+  useFullScreenLoaderEffect(mutationResult.isPending || false);
+
+  return mutationResult;
 };
