@@ -11,6 +11,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -85,30 +86,30 @@ export const ScrollViewContent = ({
       edges={["top"]}
     >
       <View style={[styles.container, { flex: 1 }]}>
-        <KeyboardAvoidingView
-          behavior={"height"}
-          keyboardVerticalOffset={0}
+        <KeyboardAwareScrollView
+          contentContainerStyle={[
+            {
+              paddingTop: showPaddingTop ? containers.topSection : 0,
+              paddingBottom: containers.bottomComponent,
+            },
+          ]}
           style={{ flex: 1, backgroundColor: colors.white }}
+          onScroll={onScroll}
+          scrollEventThrottle={16}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          keyboardDismissMode="on-drag"
+          nestedScrollEnabled={true}
+          enableOnAndroid={true}
+          enableAutomaticScroll={true}
+          extraScrollHeight={150}
+          extraHeight={150}
+          keyboardOpeningTime={0}
+          scrollEnabled={true}
+          bounces={false}
         >
-          <ScrollView
-            contentContainerStyle={[
-              {
-                flexGrow: 1,
-                paddingTop: showPaddingTop ? containers.topSection : 0,
-              },
-              styles.scrollContent,
-            ]}
-            style={{ flex: 1, backgroundColor: colors.white }}
-            onScroll={onScroll}
-            scrollEventThrottle={16}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            keyboardDismissMode="on-drag"
-            nestedScrollEnabled={true}
-          >
-            <View style={containerStyle}>{children}</View>
-          </ScrollView>
-        </KeyboardAvoidingView>
+          <View style={containerStyle}>{children}</View>
+        </KeyboardAwareScrollView>
       </View>
     </SafeAreaView>
   );
